@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Windows shell redirection artifact (`>nul` accidentally creates this
+# file in the working directory). Keep it out of the repo.
+# The literal "nul" name conflicts with Windows' NUL device, so quote it.
+/nul
+
+# Local-only install helper + log, not part of the buildable project.
+/install-deps.bat
+/install-deps.log

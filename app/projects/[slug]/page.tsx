@@ -230,7 +230,7 @@ export default async function ProjectPage({ params }: PageProps) {
       <Container className="border-t border-border py-12">
         <Link
           href={`/projects/${nextProject.slug}`}
-          className="group flex items-center justify-between gap-6 rounded-xl border border-border bg-surface p-6 transition-colors hover:border-border-strong hover:bg-surface-hover"
+          className="group flex items-center justify-between gap-6 rounded-xl border border-border bg-surface p-6 transition-colors hover:border-border-strong hover:bg-surface-soft"
           aria-label={`Next project: ${nextProject.title}`}
         >
           <div>

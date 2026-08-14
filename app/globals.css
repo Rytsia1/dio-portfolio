@@ -53,6 +53,10 @@
   --color-earth: var(--earth);
   --color-earth-deep: var(--earth-deep);
   --color-grass: var(--grass);
+  /* Focus-ring offset colour — bound to the page background so the
+   * keyboard focus ring stays visible against any surface. Used by
+   * `ring-offset-ring-offset` in component Tailwind classes. */
+  --color-ring-offset: var(--bg);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -147,6 +151,16 @@ a {
     linear-gradient(to right, rgba(15, 27, 45, 0.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(15, 27, 45, 0.05) 1px, transparent 1px);
   background-size: 24px 24px;
+}
+
+/* Coarser editorial grid backdrop used by the 404 and project-detail
+ * hero sections. Slightly larger cells + lower contrast so it reads as a
+ * quiet surface pattern rather than a pixel grid. */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(15, 27, 45, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 27, 45, 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
 /* Soft sky gradient used at the top of the page. */
