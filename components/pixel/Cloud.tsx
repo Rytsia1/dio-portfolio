@@ -10,12 +10,13 @@ export interface CloudProps {
   opacity?: number;
   /**
    * Ambient horizontal drift speed.
-   * - `"slow"` (11s)
-   * - `"medium"` (8.5s)
-   * - `"fast"` (6.5s)
+   * - `"slow"` (22s)
+   * - `"medium"` (16s)
+   * - `"fast"` (11s)
+   * - `"reverse"` (19s, drifts leftwards)
    * - `false` or omitted: static position
    */
-  drift?: boolean | "slow" | "medium" | "fast";
+  drift?: boolean | "slow" | "medium" | "fast" | "reverse";
   className?: string;
   style?: CSSProperties;
   /** Supply only when the cloud conveys meaning; omit for decoration. */
@@ -77,6 +78,7 @@ const DRIFT_CLASSES: Record<string, string> = {
   slow: "animate-cloud-slow",
   medium: "animate-cloud-medium",
   fast: "animate-cloud-fast",
+  reverse: "animate-cloud-reverse",
 };
 
 export function Cloud({

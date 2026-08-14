@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
+import { CloudBackground } from "@/components/layout/CloudBackground";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
 
@@ -67,6 +68,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-bg text-fg">
+        {/* Fixed persistent ambient pixel cloud atmosphere */}
+        <CloudBackground />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-accent focus:px-3 focus:py-2 focus:text-sm focus:font-medium focus:text-white"
@@ -74,7 +77,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <Navbar />
-        <main id="main" className="flex flex-col">
+        <main id="main" className="relative z-10 flex flex-col">
           {children}
         </main>
       </body>

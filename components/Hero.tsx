@@ -1,7 +1,6 @@
 import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react";
 import { Container } from "@/components/Container";
 import { Button } from "@/components/Button";
-import { Cloud } from "@/components/pixel/Cloud";
 import { Mascot } from "@/components/pixel/Mascot";
 import { Decor } from "@/components/pixel/Decor";
 import { profile } from "@/data/profile";
@@ -100,16 +99,7 @@ export function Hero() {
        */}
       <style>{HERO_ANIM_CSS}</style>
 
-      {/* ── Static pixel-art decoration — no animation ─────────────────── */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-12 flex justify-between px-6 sm:px-12"
-      >
-        <Cloud size="md" variant={1} className="opacity-95" />
-        <Cloud size="sm" variant={2} className="hidden opacity-90 sm:block" />
-        <Cloud size="lg" variant={3} className="hidden opacity-90 md:block" />
-      </div>
-
+      {/* ── Pixel-art stars decoration ─────────────────────────────────── */}
       <Decor
         kind="star"
         size={24}

@@ -3,7 +3,6 @@ import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { Mascot } from "@/components/pixel/Mascot";
-import { Cloud } from "@/components/pixel/Cloud";
 import { Decor } from "@/components/pixel/Decor";
 import { profile } from "@/data/profile";
 
@@ -20,11 +19,6 @@ export function Contact() {
       description="I'm open to software engineering roles, internships, and serious project collaborations. The fastest way to reach me is email — feel free to add context about what you're working on."
       className="relative border-t border-border"
     >
-      <Cloud
-        size="sm"
-        variant={1}
-        className="absolute left-6 top-6 hidden sm:block"
-      />
       <Decor
         kind="star"
         size={20}

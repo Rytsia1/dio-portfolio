@@ -8,7 +8,6 @@ import { Achievements } from "@/components/sections/Achievements";
 import { Certificates } from "@/components/sections/Certificates";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/layout/Footer";
-import { CloudBackground } from "@/components/layout/CloudBackground";
 
 /**
  * Single-page home. The order is intentional — it walks the visitor
@@ -18,8 +17,7 @@ import { CloudBackground } from "@/components/layout/CloudBackground";
  */
 export default function Home() {
   return (
-    <div className="relative min-h-screen">
-      <CloudBackground />
+    <>
       <Hero />
       <About />
       <Timeline />
@@ -30,6 +28,6 @@ export default function Home() {
       <Certificates />
       <Contact />
       <Footer />
-    </div>
+    </>
   );
 }
