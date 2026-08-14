@@ -33,6 +33,18 @@ import { cn } from "@/lib/cn";
 const loadFeatures = () =>
   import("framer-motion").then((mod) => mod.domAnimation);
 
+/**
+ * Visual pose of the mascot.
+ *
+ * - `"default"` — eyes open, coding at laptop. Full cursor + scroll
+ *   interactivity applies when `trackCursor` / `reactToScroll` are set.
+ * - `"sleeping"` — eyes closed, head resting on folded arms over the
+ *   laptop. Intended for the Contact / bottom-of-page placement where
+ *   the mascot plays a "taking a break" role. Motion props are still
+ *   accepted but default to `false` for this pose.
+ */
+export type MascotPose = "default" | "sleeping";
+
 interface MascotProps {
   /** Rendered size of the SVG in CSS pixels. */
   size?: number;
@@ -40,14 +52,23 @@ interface MascotProps {
   /** Always hidden from screen readers by default — decorative. */
   ariaHidden?: boolean;
   /**
-   * Enable mouse-tracking parallax on the head. Defaults to `true`.
+   * Visual pose variant.
+   * - `"default"` — eyes open, working at laptop (Hero placement).
+   * - `"sleeping"` — eyes closed, dozing on keyboard (Contact placement).
+   * @default "default"
+   */
+  pose?: MascotPose;
+  /**
+   * Enable mouse-tracking parallax on the head. Defaults to `true` for
+   * the `"default"` pose and `false` for `"sleeping"`.
    * Auto-disabled on touch devices and when the user has requested
    * reduced motion (regardless of this prop).
    */
   trackCursor?: boolean;
   /**
-   * Enable scroll-driven bob + tilt. Defaults to `true`. Auto-disabled
-   * when the user has requested reduced motion.
+   * Enable scroll-driven bob + tilt. Defaults to `true` for the
+   * `"default"` pose and `false` for `"sleeping"`.
+   * Auto-disabled when the user has requested reduced motion.
    */
   reactToScroll?: boolean;
 }
@@ -124,9 +145,13 @@ export function Mascot({
   size = 96,
   className,
   ariaHidden = true,
-  trackCursor = true,
-  reactToScroll = true,
+  pose = "default",
+  trackCursor,
+  reactToScroll,
 }: MascotProps) {
+  // Sleeping mascots are purely decorative — no motion by default.
+  const effectiveTrackCursor = trackCursor ?? (pose === "sleeping" ? false : true);
+  const effectiveReactToScroll = reactToScroll ?? (pose === "sleeping" ? false : true);
   const reduce = useReducedMotion() ?? false;
 
   // ── Motion values (off the React render cycle) ──────────────────────
@@ -193,7 +218,7 @@ export function Mascot({
   // We mount-once check the pointer type and only attach the listener
   // if the device actually has a fine pointer (mouse / trackpad).
   useEffect(() => {
-    if (reduce || !trackCursor) return;
+    if (reduce || !effectiveTrackCursor) return;
 
     // Coarse = touch-first (phones, tablets). Fine = mouse/trackpad.
     // 2-in-1 laptops report fine even when they have a touch digitiser.
@@ -219,7 +244,7 @@ export function Mascot({
 
     window.addEventListener("mousemove", onMove, { passive: true });
     return () => window.removeEventListener("mousemove", onMove);
-  }, [reduce, trackCursor, mouseX, mouseY]);
+  }, [reduce, effectiveTrackCursor, mouseX, mouseY]);
 
   // ── Render ──────────────────────────────────────────────────────────
   // The whole tree is wrapped in its own `LazyMotion` so the `m.g`
@@ -240,19 +265,33 @@ export function Mascot({
         style={{ imageRendering: "pixelated" }}
       >
         {reduce ? (
-          // Reduced-motion fallback: a single static <g>. Same 9 paths,
+          // Reduced-motion fallback: a single static <g>. Same paths,
           // same paint order, same coordinates — pixel-perfect match
-          // for the no-motion rendering.
+          // for the no-motion rendering. Pose is reflected here too.
           <g ref={mascotGroupRef}>
             {/* 1 — Hair */}
             <path fill="#0f1b2d" d="M4,2h8v1h-8z M3,3h10v1h-10z" />
             {/* 2 — Face */}
             <path fill="#f4c89a" d="M4,4h8v4h-8z" />
-            {/* 3 — Eyes + smile */}
-            <path
-              fill="#0f1b2d"
-              d="M6,5h1v1h-1z M9,5h1v1h-1z M6,7h4v1h-4z"
-            />
+            {pose === "sleeping" ? (
+              // Sleeping: closed crescent eyes + Zzz dots above head
+              <>
+                {/* Closed eyes (arched line = two 1×1 blocks) */}
+                <path fill="#0f1b2d" d="M6,5h2v1h-2z M9,5h2v1h-2z" />
+                {/* Zzz — three diminishing dots floating top-right */}
+                <path fill="#0f1b2d" d="M13,1h1v1h-1z M14,0h1v1h-1z M12,0h2v1h-2z" />
+                {/* Resting arms — folded across the desk */}
+                <path fill="#f4c89a" d="M3,10h10v2h-10z" />
+                {/* Head slightly drooped onto arms */}
+                <path fill="#f4c89a" d="M5,9h6v1h-6z" />
+              </>
+            ) : (
+              // Default: open eyes + smile
+              <path
+                fill="#0f1b2d"
+                d="M6,5h1v1h-1z M9,5h1v1h-1z M6,7h4v1h-4z"
+              />
+            )}
             {/* 4 — Shirt collar + sleeves */}
             <path
               fill="#ff6b35"
@@ -260,11 +299,13 @@ export function Mascot({
             />
             {/* 5 — Shirt front */}
             <path fill="#ffede3" d="M5,10h6v3h-6z" />
-            {/* 6 — Arms + hands */}
-            <path
-              fill="#f4c89a"
-              d="M2,10h1v3h-1z M13,10h1v3h-1z M2,13h2v1h-2z M12,13h2v1h-2z"
-            />
+            {pose === "sleeping" ? null : (
+              // Default arms + hands
+              <path
+                fill="#f4c89a"
+                d="M2,10h1v3h-1z M13,10h1v3h-1z M2,13h2v1h-2z M12,13h2v1h-2z"
+              />
+            )}
             {/* 7 — Laptop hinge + base */}
             <path
               fill="#0f1b2d"
@@ -273,7 +314,9 @@ export function Mascot({
             {/* 8 — Laptop screen */}
             <path fill="#ff6b35" d="M5,11h6v2h-6z" />
             {/* 9 — Screen code-line details */}
-            <path fill="#ffffff" d="M6,12h1v1h-1z M8,12h2v1h-2z" />
+            {pose === "sleeping" ? null : (
+              <path fill="#ffffff" d="M6,12h1v1h-1z M8,12h2v1h-2z" />
+            )}
           </g>
         ) : (
           <>
@@ -284,8 +327,8 @@ export function Mascot({
               ref={mascotGroupRef}
               style={{
                 x: 0,
-                y: reactToScroll ? scrollBob : 0,
-                rotate: reactToScroll ? scrollTilt : 0,
+                y: effectiveReactToScroll ? scrollBob : 0,
+                rotate: effectiveReactToScroll ? scrollTilt : 0,
                 transformOrigin: "50% 50%",
                 transformBox: "fill-box",
                 willChange: "transform",
@@ -305,30 +348,45 @@ export function Mascot({
                 />
                 {/* 5 — Shirt front */}
                 <path fill="#ffede3" d="M5,10h6v3h-6z" />
-                {/* 6 — Arms + hands */}
-                <path
-                  fill="#f4c89a"
-                  d="M2,10h1v3h-1z M13,10h1v3h-1z M2,13h2v1h-2z M12,13h2v1h-2z"
-                />
+                {pose === "sleeping" ? (
+                  // Sleeping: folded arms resting across the keyboard area
+                  <path fill="#f4c89a" d="M3,10h10v2h-10z" />
+                ) : (
+                  // Default: normal arms + hands at sides of laptop
+                  <path
+                    fill="#f4c89a"
+                    d="M2,10h1v3h-1z M13,10h1v3h-1z M2,13h2v1h-2z M12,13h2v1h-2z"
+                  />
+                )}
                 {/* 7 — Laptop hinge + base */}
                 <path
                   fill="#0f1b2d"
                   d="M4,13h8v1h-8z M3,14h10v1h-10z"
                 />
-                {/* 8 — Laptop screen */}
-                <path fill="#ff6b35" d="M5,11h6v2h-6z" />
-                {/* 9 — Screen code-line details */}
-                <path fill="#ffffff" d="M6,12h1v1h-1z M8,12h2v1h-2z" />
+                {/* 8 — Laptop screen (closed/dim when sleeping) */}
+                <path
+                  fill={pose === "sleeping" ? "#3d4a58" : "#ff6b35"}
+                  d="M5,11h6v2h-6z"
+                />
+                {/* 9 — Screen code-line details (hidden while sleeping) */}
+                {pose !== "sleeping" && (
+                  <path fill="#ffffff" d="M6,12h1v1h-1z M8,12h2v1h-2z" />
+                )}
+                {pose === "sleeping" && (
+                  // Zzz dots floating top-right — only in body group so
+                  // they don't move with the head parallax layer.
+                  <path fill="#a0aec0" d="M13,1h1v1h-1z M14,0h1v1h-1z M12,0h2v1h-2z" />
+                )}
               </g>
 
-              {/* Head group — cursor parallax. Wraps the face + the
-                  eyes + smile. Sits on top of the body so the face is
-                  never obscured. */}
+              {/* Head group — cursor parallax (disabled for sleeping pose).
+                  Wraps the face + eyes/expression. Sits on top of the body
+                  so the face is never obscured by the shirt or laptop. */}
               <m.g
                 ref={headGroupRef}
                 style={{
-                  x: headX,
-                  y: headY,
+                  x: effectiveTrackCursor ? headX : 0,
+                  y: effectiveTrackCursor ? headY : 0,
                   transformOrigin: "50% 50%",
                   transformBox: "fill-box",
                   willChange: "transform",
@@ -336,11 +394,19 @@ export function Mascot({
               >
                 {/* 2 — Face */}
                 <path fill="#f4c89a" d="M4,4h8v4h-8z" />
-                {/* 3 — Eyes + smile (on top of face) */}
-                <path
-                  fill="#0f1b2d"
-                  d="M6,5h1v1h-1z M9,5h1v1h-1z M6,7h4v1h-4z"
-                />
+                {pose === "sleeping" ? (
+                  // Sleeping expression: closed arc-eyes, no smile
+                  <path
+                    fill="#0f1b2d"
+                    d="M6,5h2v1h-2z M9,5h2v1h-2z"
+                  />
+                ) : (
+                  // Default expression: open eyes + smile
+                  <path
+                    fill="#0f1b2d"
+                    d="M6,5h1v1h-1z M9,5h1v1h-1z M6,7h4v1h-4z"
+                  />
+                )}
               </m.g>
             </m.g>
           </>

@@ -1,11 +1,23 @@
+import type { CSSProperties } from "react";
 import { cn } from "@/lib/cn";
 
-interface CloudProps {
+export interface CloudProps {
   /** Visual size of the cloud. */
   size?: "sm" | "md" | "lg";
   /** Visual variant — three silhouettes for variety. */
   variant?: 1 | 2 | 3;
+  /** Opacity override from 0 to 1 (e.g. 0.65). */
+  opacity?: number;
+  /**
+   * Ambient horizontal drift speed.
+   * - `"slow"` (11s)
+   * - `"medium"` (8.5s)
+   * - `"fast"` (6.5s)
+   * - `false` or omitted: static position
+   */
+  drift?: boolean | "slow" | "medium" | "fast";
   className?: string;
+  style?: CSSProperties;
   /** Supply only when the cloud conveys meaning; omit for decoration. */
   ariaLabel?: string;
 }
@@ -13,41 +25,9 @@ interface CloudProps {
 /**
  * Decorative pixel-art cloud — performance-optimised SVG.
  *
- * Rendering strategy
- * ──────────────────
- * The original implementation mapped over a per-variant cell array at
- * render time, emitting one <rect> per pixel (40–62 DOM nodes per cloud,
- * up to ~180 for the three clouds on the hero page).
- *
- * This version encodes every variant as two pre-computed SVG compound
- * path strings (one for the white body, one for the drop-shadow strip).
- * The SVG tree contains exactly 2 <path> elements regardless of cloud
- * size or variant, and all data is resolved at module-import time — zero
- * runtime array mapping.
- *
- * Grid: 24 × 12 units. Adjacent horizontal pixel runs are merged into a
- * single subpath (M x,y h w v 1 h -w z) so the path strings are as
- * short as possible.
- *
- * shapeRendering="crispEdges" disables sub-pixel anti-aliasing on the
- * SVG rasteriser, keeping edges sharp at every rendered size.
- *
- * Server Component — zero client JS.
+ * Encodes variants as two pre-computed SVG compound paths (body + drop-shadow).
+ * shapeRendering="crispEdges" and imageRendering="pixelated" preserve 8-bit sharpness.
  */
-
-// ---------------------------------------------------------------------------
-// Pre-computed path data
-// ---------------------------------------------------------------------------
-// Each variant's full body silhouette and drop-shadow are encoded once.
-// Notation: M x,y h <width> v 1 h -<width> z   ← one 1-px-tall pixel run.
-//
-// Variant 1  – wide three-bump cloud
-// Variant 2  – slightly narrower, different bump spacing
-// Variant 3  – two-peak tall-ish cloud
-//
-// Shadow: one merged strip at row 4 (bottom row of grid + 1) so it
-// hugs the underside of the cloud regardless of variant width.
-
 const CLOUD_PATHS: Record<1 | 2 | 3, { body: string; shadow: string }> = {
   1: {
     // row 0 → runs: 6-7, 10-12, 16-17
@@ -93,18 +73,30 @@ const DIMS = {
   lg: { w: 144, h: 72 },
 } as const;
 
-// ---------------------------------------------------------------------------
-// Component
-// ---------------------------------------------------------------------------
+const DRIFT_CLASSES: Record<string, string> = {
+  slow: "animate-cloud-slow",
+  medium: "animate-cloud-medium",
+  fast: "animate-cloud-fast",
+};
 
 export function Cloud({
   size = "md",
   variant = 1,
+  opacity,
+  drift = false,
   className,
+  style,
   ariaLabel,
 }: CloudProps) {
   const { w, h } = DIMS[size];
   const { body, shadow } = CLOUD_PATHS[variant];
+
+  const driftClass =
+    drift === true
+      ? "animate-cloud-slow"
+      : typeof drift === "string"
+        ? DRIFT_CLASSES[drift] ?? "animate-cloud-slow"
+        : "";
 
   return (
     <svg
@@ -115,10 +107,15 @@ export function Cloud({
       height={h}
       viewBox="0 0 24 12"
       shapeRendering="crispEdges"
-      className={cn("block", className)}
+      className={cn("block pointer-events-none select-none", driftClass, className)}
+      style={{
+        imageRendering: "pixelated",
+        opacity: opacity !== undefined ? opacity : undefined,
+        ...style,
+      }}
     >
       {/* Shadow first (below) so body paints over it at the shared edge */}
-      <path d={shadow} fill="#dbe9f4" />
+      <path d={shadow} fill="#cce0f0" />
       <path d={body}   fill="#ffffff" />
     </svg>
   );

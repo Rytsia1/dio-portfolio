@@ -81,7 +81,7 @@ export function Projects() {
             <code className="font-mono text-fg">data/projects.ts</code>.
           </p>
         ) : (
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {games.map((project) => (
               <GameProjectCard
                 key={project.slug}

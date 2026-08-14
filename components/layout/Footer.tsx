@@ -1,6 +1,5 @@
 import { Github, Linkedin, Mail, FileText, Instagram, Twitter } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { Mascot } from "@/components/pixel/Mascot";
 import { profile } from "@/data/profile";
 
 // Base64-encoded 32x16 retro pixel-art grass & stepped dirt tile.
@@ -34,88 +33,84 @@ export function Footer() {
       {/* ── Dark brown earth body ───────────────────────────────────────── */}
       <div className="bg-earth">
         <Container className="py-10 sm:py-12">
-          <div className="grid gap-10 sm:grid-cols-3">
-            <div className="sm:col-span-2">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+            <div>
               <p className="text-base font-semibold text-white">
                 {profile.name}
               </p>
               <p className="mt-1 max-w-md text-sm text-white/75">
                 {profile.shortBio}
               </p>
-
-              <ul className="mt-6 flex flex-wrap items-center gap-2">
-                <li>
-                  <a
-                    href={profile.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`GitHub ${profile.githubHandle} (opens in new tab)`}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/85 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white"
-                  >
-                    <Github className="h-4 w-4" aria-hidden />
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={profile.linkedinUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`LinkedIn ${profile.linkedinHandle} (opens in new tab)`}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/85 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white"
-                  >
-                    <Linkedin className="h-4 w-4" aria-hidden />
-                  </a>
-                </li>
-                {showTwitter && (
-                  <li>
-                    <a
-                      href={profile.twitterUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Twitter ${profile.twitterHandle} (opens in new tab)`}
-                      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/85 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white"
-                    >
-                      <Twitter className="h-4 w-4" aria-hidden />
-                    </a>
-                  </li>
-                )}
-                <li>
-                  <a
-                    href={profile.email}
-                    aria-label={`Send email to ${profile.emailDisplay}`}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/85 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white"
-                  >
-                    <Mail className="h-4 w-4" aria-hidden />
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={profile.resumeUrl}
-                    aria-label={profile.resumeLabel}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/85 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white"
-                  >
-                    <FileText className="h-4 w-4" aria-hidden />
-                  </a>
-                </li>
-                {showInstagram && (
-                  <li>
-                    <a
-                      href={profile.instagramUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Instagram ${profile.instagramHandle} (opens in new tab)`}
-                      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/85 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white"
-                    >
-                      <Instagram className="h-4 w-4" aria-hidden />
-                    </a>
-                  </li>
-                )}
-              </ul>
             </div>
 
-            <div className="flex justify-end">
-              <Mascot size={96} className="opacity-95" />
-            </div>
+            <ul className="flex flex-wrap items-center gap-2">
+              <li>
+                <a
+                  href={profile.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`GitHub ${profile.githubHandle} (opens in new tab)`}
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/85 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white"
+                >
+                  <Github className="h-4 w-4" aria-hidden />
+                </a>
+              </li>
+              <li>
+                <a
+                  href={profile.linkedinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`LinkedIn ${profile.linkedinHandle} (opens in new tab)`}
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/85 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white"
+                >
+                  <Linkedin className="h-4 w-4" aria-hidden />
+                </a>
+              </li>
+              {showTwitter && (
+                <li>
+                  <a
+                    href={profile.twitterUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Twitter ${profile.twitterHandle} (opens in new tab)`}
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/85 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white"
+                  >
+                    <Twitter className="h-4 w-4" aria-hidden />
+                  </a>
+                </li>
+              )}
+              <li>
+                <a
+                  href={profile.email}
+                  aria-label={`Send email to ${profile.emailDisplay}`}
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/85 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white"
+                >
+                  <Mail className="h-4 w-4" aria-hidden />
+                </a>
+              </li>
+              <li>
+                <a
+                  href={profile.resumeUrl}
+                  aria-label={profile.resumeLabel}
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/85 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white"
+                >
+                  <FileText className="h-4 w-4" aria-hidden />
+                </a>
+              </li>
+              {showInstagram && (
+                <li>
+                  <a
+                    href={profile.instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Instagram ${profile.instagramHandle} (opens in new tab)`}
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/85 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white"
+                  >
+                    <Instagram className="h-4 w-4" aria-hidden />
+                  </a>
+                </li>
+              )}
+            </ul>
           </div>
 
           <div className="mt-10 flex flex-col items-start justify-between gap-2 border-t border-white/15 pt-6 text-xs text-white/65 sm:flex-row sm:items-center">

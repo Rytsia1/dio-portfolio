@@ -106,8 +106,18 @@ export function Contact() {
               Open to remote and relocation.
             </p>
           </div>
+          {/* ── Mascot — Contact / "sleeping" placement ──────────────────
+           *
+           * Distinct from the Hero instance: this mascot dozes on its
+           * keyboard (eyes closed, folded arms, dim screen, Zzz dots).
+           * Motion is intentionally off — it’s a decorative accent, not
+           * a live companion. The Hero mascot handles all interaction.
+           */}
           <Mascot
-            size={88}
+            size={96}
+            pose="sleeping"
+            trackCursor={false}
+            reactToScroll={false}
             className="absolute -bottom-4 -right-2 hidden lg:block"
           />
         </div>

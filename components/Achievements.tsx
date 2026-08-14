@@ -29,7 +29,7 @@ export function Achievements() {
       ) : (
         <>
           {heroes.length > 0 && (
-            <ul className="mb-8 grid gap-5 sm:mb-10 md:grid-cols-2">
+            <ul className="mb-8 grid gap-5 sm:mb-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {heroes.map((a, idx) => (
                 <Reveal as="li" key={a.id} delay={idx * 0.05} className="h-full">
                   <HeroAchievementCard achievement={a} />
@@ -77,11 +77,11 @@ function HeroAchievementCard({
         </span>
       </div>
 
-      <p className="mt-10 font-mono text-4xl font-bold uppercase leading-[0.95] tracking-[0.02em] text-fg sm:text-6xl">
+      <p className="mt-8 font-mono text-2xl font-bold uppercase tracking-tight text-fg md:text-3xl lg:text-4xl">
         {achievement.badge ?? achievement.title}
       </p>
       {achievement.subtitle && (
-        <p className="mt-2 font-mono text-xs font-semibold uppercase tracking-[0.22em] text-accent">
+        <p className="mt-2 font-mono text-xs font-semibold uppercase tracking-wider text-accent">
           {achievement.subtitle}
         </p>
       )}

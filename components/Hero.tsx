@@ -233,9 +233,20 @@ export function Hero() {
         </div>
       </Container>
 
-      {/* Mascot — static illustration, always visible, no animation */}
+      {/* ── Mascot — Hero placement ────────────────────────────────────────
+       *
+       * This is the ONE fully-interactive mascot instance on the page.
+       * It tracks the cursor (head parallax) and bobs/tilts with scroll.
+       *
+       * A second, distinct "sleeping" instance appears in the Contact
+       * section at the bottom of the page — see Contact.tsx.
+       * The Footer no longer renders a mascot to avoid a third duplicate.
+       */}
       <Mascot
         size={120}
+        pose="default"
+        trackCursor
+        reactToScroll
         className="absolute bottom-10 right-6 hidden md:block"
       />
     </section>

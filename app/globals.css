@@ -195,3 +195,43 @@ a {
 .card-shadow-soft {
   box-shadow: var(--shadow-soft);
 }
+
+/* Ambient pixel cloud floating / drifting keyframes */
+@keyframes cloud-drift-slow {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(16px, -4px, 0);
+  }
+}
+
+@keyframes cloud-drift-medium {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(-14px, 3px, 0);
+  }
+}
+
+@keyframes cloud-drift-fast {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(12px, -6px, 0);
+  }
+}
+
+.animate-cloud-slow {
+  animation: cloud-drift-slow 11s ease-in-out infinite;
+}
+
+.animate-cloud-medium {
+  animation: cloud-drift-medium 8.5s ease-in-out infinite;
+}
+
+.animate-cloud-fast {
+  animation: cloud-drift-fast 6.5s ease-in-out infinite;
+}
