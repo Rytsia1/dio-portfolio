@@ -1,5 +1,5 @@
 import { Github, Linkedin, Mail, FileText, Instagram, Twitter } from "lucide-react";
-import { Container } from "@/components/Container";
+import { Container } from "@/components/ui/Container";
 import { Mascot } from "@/components/pixel/Mascot";
 import { profile } from "@/data/profile";
 

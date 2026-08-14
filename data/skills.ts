@@ -4,106 +4,81 @@ import type { SkillCategory } from "@/types/portfolio";
  * Skills, grouped by domain.
  *
  * Only technologies actually represented in the project, experience,
- * or education data are listed. The order is intentional — it mirrors
- * the career narrative: software engineering first, then the
- * specialisations (frontend, backend, game development, quantitative
- * finance, data/ML), then day-to-day tooling.
+ * or education data are listed. The order mirrors the career
+ * narrative: game design & development first (the specialisation),
+ * then programming languages, full-stack web development, data and
+ * day-to-day tooling, and finally soft skills.
  */
 export const skillCategories: SkillCategory[] = [
   {
-    id: "software-engineering",
-    title: "Software Engineering",
+    id: "game-design-development",
+    title: "Game Design & Development",
     description:
-      "Primary languages used across projects, coursework, and professional work.",
+      "Engines, design craft, and the systems-thinking side of building games.",
     skills: [
-      { name: "Python" },
-      { name: "Java" },
-      { name: "C++" },
-      { name: "C#" },
-      { name: "JavaScript" },
-      { name: "TypeScript", emphasis: "accent" },
-      { name: "SQL" },
-    ],
-  },
-  {
-    id: "frontend",
-    title: "Frontend",
-    description: "Building interfaces that are fast and accessible.",
-    skills: [
-      { name: "React" },
-      { name: "Next.js", emphasis: "accent" },
-      { name: "Vue" },
-      { name: "Element Plus" },
-      { name: "Tailwind CSS" },
-      { name: "Axios" },
-    ],
-  },
-  {
-    id: "backend",
-    title: "Backend",
-    description: "Server-side systems, APIs, and data persistence.",
-    skills: [
-      { name: "Spring Boot" },
-      { name: "MyBatis" },
-      { name: "Node.js" },
-      { name: "REST APIs" },
-      { name: "MySQL" },
-      { name: "Token-based Auth" },
-      { name: "BCrypt" },
-    ],
-  },
-  {
-    id: "game-development",
-    title: "Game Development",
-    description:
-      "Engines, scripting, and the systems-thinking side of building games.",
-    skills: [
-      { name: "Unity" },
+      { name: "Game Design", emphasis: "accent" },
+      { name: "Unity", emphasis: "accent" },
       { name: "Godot" },
-      { name: "GDScript" },
       { name: "C#" },
-      { name: "Game Design" },
       { name: "Gameplay Systems" },
       { name: "Level Design" },
+      { name: "3ds Max 2018" },
       { name: "Procedural Generation" },
     ],
   },
   {
-    id: "quantitative-finance",
-    title: "Quantitative Finance",
+    id: "programming-languages",
+    title: "Programming Languages",
     description:
-      "Theoretical foundations and numerical methods used in finance.",
+      "Primary languages used across projects, coursework, and professional work.",
     skills: [
-      { name: "Modern Portfolio Theory" },
-      { name: "Portfolio Optimization" },
-      { name: "Efficient Frontier" },
-      { name: "Sharpe Ratio" },
-      { name: "Options Pricing" },
-      { name: "Black–Scholes" },
-      { name: "Monte Carlo Simulation" },
-      { name: "Numerical Methods" },
+      { name: "Python", emphasis: "accent" },
+      { name: "C++" },
+      { name: "C#" },
+      { name: "Java" },
+      { name: "TypeScript" },
+      { name: "SQL" },
     ],
   },
   {
-    id: "data-ml",
-    title: "Data / ML",
-    description: "Working with data and exploring machine learning.",
+    id: "full-stack-web",
+    title: "Full-Stack Web Development",
+    description:
+      "End-to-end web systems — interfaces, APIs, and data persistence.",
     skills: [
-      { name: "Python" },
-      { name: "Data Analysis" },
-      { name: "Machine Learning" },
+      { name: "React" },
+      { name: "Next.js" },
+      { name: "Vue" },
+      { name: "Spring Boot" },
+      { name: "Node.js" },
+      { name: "MySQL" },
+      { name: "Tailwind CSS" },
+    ],
+  },
+  {
+    id: "data-tools",
+    title: "Data & Tools",
+    description:
+      "Data apps, visualisation, and day-to-day development tooling.",
+    skills: [
+      { name: "Streamlit" },
+      { name: "Pandas" },
       { name: "Apache ECharts" },
-    ],
-  },
-  {
-    id: "tools",
-    title: "Tools",
-    description: "Day-to-day development, deployment, and collaboration tools.",
-    skills: [
       { name: "Git" },
       { name: "Docker" },
       { name: "Linux" },
-      { name: "Azure" },
+    ],
+  },
+  {
+    id: "soft-skills",
+    title: "Soft Skills",
+    description: "How I work with teams and communicate ideas.",
+    skills: [
+      { name: "Communication" },
+      { name: "Teamwork" },
+      { name: "Problem Solving" },
+      { name: "Team Leadership" },
+      { name: "Public Speaking" },
     ],
   },
 ];

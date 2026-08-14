@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Github, Layers } from "lucide-react";
-import { Container } from "@/components/Container";
-import { Tag } from "@/components/Tag";
-import { Button } from "@/components/Button";
-import { Reveal } from "@/components/Reveal";
+import { Container } from "@/components/ui/Container";
+import { Tag } from "@/components/ui/Tag";
+import { Button } from "@/components/ui/Button";
+import { Reveal } from "@/components/ui/Reveal";
 import {
   getAllProjectSlugs,
   getProjectBySlug,

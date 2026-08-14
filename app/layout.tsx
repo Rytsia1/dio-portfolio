@@ -1,8 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Navbar } from "@/components/Navbar";
-import { profile } from "@/data/profile";
-import { SITE_URL } from "@/lib/site";
+import { Navbar } from "@/components/layout/Navbar";
+import { siteConfig } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,35 +14,40 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+/**
+ * Global metadata. Every name / role / description / URL is read from
+ * the `siteConfig` SSOT in `lib/site.ts` — do not hard-code identity
+ * strings here.
+ */
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${profile.name} — ${profile.role}`,
-    template: `%s — ${profile.name}`,
+    default: `${siteConfig.name} — ${siteConfig.role}`,
+    template: `%s — ${siteConfig.name}`,
   },
-  description: profile.shortBio,
+  description: siteConfig.description,
   keywords: [
+    "Game Designer",
     "Software Engineer",
     "Game Technology",
     "Game Design",
-    "Quantitative Finance",
-    "FinTech",
+    "Software Engineering",
     "Portfolio",
   ],
-  authors: [{ name: profile.name }],
-  creator: profile.name,
+  authors: [{ name: siteConfig.name }],
+  creator: siteConfig.name,
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: SITE_URL,
-    title: `${profile.name} — ${profile.role}`,
-    description: profile.shortBio,
-    siteName: profile.name,
+    url: siteConfig.url,
+    title: `${siteConfig.name} — ${siteConfig.role}`,
+    description: siteConfig.description,
+    siteName: siteConfig.name,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${profile.name} — ${profile.role}`,
-    description: profile.shortBio,
+    title: `${siteConfig.name} — ${siteConfig.role}`,
+    description: siteConfig.description,
   },
   robots: {
     index: true,

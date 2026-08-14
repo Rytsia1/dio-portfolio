@@ -1,6 +1,6 @@
 import { GraduationCap, Briefcase, Trophy, Globe } from "lucide-react";
-import { Section } from "@/components/Section";
-import { Reveal } from "@/components/Reveal";
+import { Section } from "@/components/ui/Section";
+import { Reveal } from "@/components/ui/Reveal";
 import { education } from "@/data/education";
 import { experiences } from "@/data/experience";
 import { achievements } from "@/data/achievements";
@@ -10,8 +10,8 @@ import { cn } from "@/lib/cn";
  * Career & education timeline — light theme. White cards, soft shadows,
  * blue/orange accent dots, mono labels.
  *
- * Entries sourced from `Experience` with `isInternational: true` receive
- * a distinct visual treatment:
+ * Entries sourced from `Experience` or `Education` with
+ * `isInternational: true` receive a distinct visual treatment:
  *   - Globe icon on the timeline node instead of the default Briefcase
  *   - Sky-blue node border and fill
  *   - Sky-tinted card border, gradient background, and "International
@@ -30,9 +30,9 @@ interface TimelineEntry {
   description?: string;
   url?: string;
   /**
-   * Mirrors `Experience.isInternational`. When true the entry receives
-   * a globe-icon node and sky-blue card styling to immediately signal
-   * global academic exposure to the reader.
+   * Mirrors `Experience.isInternational` / `Education.isInternational`.
+   * When true the entry receives a globe-icon node and sky-blue card
+   * styling to immediately signal global academic exposure to the reader.
    */
   isInternational?: boolean;
 }

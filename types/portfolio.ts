@@ -7,10 +7,21 @@
  * Only fields that have a verified source are populated. Anything
  * missing is left undefined or marked `TODO:` in the data file — never
  * invented.
+ *
+ * ── Project type hierarchy ────────────────────────────────────────────
+ *
+ * Projects use inheritance + a discriminated union:
+ *
+ *   BaseProject                 shared fields (slug, title, tags, …)
+ *     ├─ GameProject            type: "game" + engine / assetsTools / coreMechanics
+ *     └─ WebProject             type: "web"  (game-only fields forbidden via `never`)
+ *
+ *   ProjectItem = GameProject | WebProject
+ *
+ * The `type` literal is the discriminator: narrowing on `project.type`
+ * (switch / if) gives full type safety in renderers — e.g. only a
+ * `GameProject` can be passed to `GameProjectCard`.
  */
-
-/** A project "track" — used to group projects on the home page. */
-export type ProjectTrack = "software" | "quant" | "game";
 
 /** A category used to group projects in detail and for filter labels. */
 export type ProjectCategory =
@@ -20,9 +31,17 @@ export type ProjectCategory =
   | "Game Technology"
   | "Machine Learning";
 
-/** A single featured project. */
-export interface Project {
-  /** URL slug used in /projects/[slug] */
+/**
+ * Fields shared by every project, regardless of type.
+ *
+ * Naming map vs. a generic CMS-style schema:
+ *   id          → `slug` (unique id *and* URL segment)
+ *   description → `shortDescription` (cards) + `overview` (detail page)
+ *   link        → `githubUrl` / `liveUrl`
+ *   imageUrl    → `thumbnail`
+ */
+export interface BaseProject {
+  /** URL slug used in /projects/[slug] — doubles as the unique id. */
   slug: string;
   /** Display title */
   title: string;
@@ -30,8 +49,6 @@ export interface Project {
   shortDescription: string;
   /** Long-form description used on the detail page */
   overview: string;
-  /** Track used to group the project on the home page */
-  track: ProjectTrack;
   /** Category label, free-form */
   category: ProjectCategory;
   /** Year shown on the card and detail hero. Prefer ISO YYYY. */
@@ -40,7 +57,7 @@ export interface Project {
   role?: string;
   /** Optional achievement badge text (e.g. "KMIPN 2025 Finalist"). */
   achievement?: string;
-  /** Technologies shown as tags */
+  /** Technologies shown as tags — the "tech stack" of the project. */
   tags: string[];
   /** Optional GitHub URL */
   githubUrl?: string;
@@ -60,22 +77,59 @@ export interface Project {
   lessons?: string;
   /** Optional list of bullet points shown as "Highlights" on the detail page */
   highlights?: string[];
+}
+
+/**
+ * A game development project.
+ *
+ * `engine` and `coreMechanics` are required — a game project without
+ * them is a modelling error, so the type system rejects it. These
+ * fields power the "Tech Stack" panel in `GameProjectCard`.
+ */
+export interface GameProject extends BaseProject {
+  /** Discriminator for the ProjectItem union. */
+  type: "game";
   /**
-   * Game engine used — game track only.
-   * Examples: "Godot 4", "Unity 2022 LTS"
+   * Game engine used.
+   * Examples: "Unity", "Godot 4", "Unity 2022 LTS"
    */
-  engine?: string;
+  engine: string;
   /**
-   * 3-D / 2-D asset creation tools — game track only.
+   * 3-D / 2-D asset creation tools.
    * Examples: ["3ds Max 2018", "Blender 4"]
    */
   assetsTools?: string[];
   /**
-   * Core gameplay mechanics or design pillars — game track only.
+   * Core gameplay mechanics or design pillars.
    * Examples: ["Procedural Generation", "Turn-Based Combat"]
    */
-  coreMechanics?: string[];
+  coreMechanics: string[];
 }
+
+/**
+ * A standard software / web project (full-stack, quant, tooling, …).
+ *
+ * Game-only fields are explicitly set to `never` so a `WebProject`
+ * can never accidentally carry game metadata — this keeps the union
+ * strictly separated and makes `project.type` narrowing exhaustive.
+ */
+export interface WebProject extends BaseProject {
+  /** Discriminator for the ProjectItem union. */
+  type: "web";
+  engine?: never;
+  assetsTools?: never;
+  coreMechanics?: never;
+}
+
+/** Any project — narrow on `type` to access type-specific fields. */
+export type ProjectItem = GameProject | WebProject;
+
+/**
+ * @deprecated Legacy alias kept only so the old flat `components/*.tsx`
+ * files (pending deletion) keep compiling. New code must use
+ * `ProjectItem`, `GameProject`, or `WebProject`.
+ */
+export type Project = ProjectItem;
 
 /** A single experience entry — internships, jobs, contracts. */
 export interface Experience {
@@ -116,6 +170,12 @@ export interface Education {
   notes?: string;
   /** Optional URL to the institution / program */
   url?: string;
+  /**
+   * Set to true for international exchange or study-abroad entries.
+   * Drives a distinct globe-icon node, sky-blue card treatment, and
+   * an "International Exchange" badge in the Timeline component.
+   */
+  isInternational?: boolean;
 }
 
 /** Categories of achievements. */
@@ -213,6 +273,9 @@ export interface Profile {
   githubHandle: string;
   linkedinUrl: string;
   linkedinHandle: string;
+  /** Optional Twitter / X profile. */
+  twitterUrl?: string;
+  twitterHandle?: string;
   /** Optional — only included if it fits the professional design. */
   instagramUrl?: string;
   instagramHandle?: string;

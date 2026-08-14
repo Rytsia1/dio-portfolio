@@ -5,63 +5,39 @@ import type { Experience } from "@/types/portfolio";
  *
  * Source: provided CV. Only verified facts are populated — no
  * fabricated responsibilities, metrics, or technologies.
+ *
+ * International exchanges are academic entries, so they live in
+ * `data/education.ts` (flagged with `isInternational: true`) rather
+ * than here.
  */
 export const experiences: Experience[] = [
+  {
+    id: "asah-dicoding-2026",
+    role: "AI Full-Stack Developer Apprenticeship",
+    organization: "Asah led by Dicoding",
+    startDate: "2026-08",
+    endDate: "Present",
+    responsibilities: [
+      "Selected for Asah, an AI full-stack developer apprenticeship program led by Dicoding.",
+      "Building production-oriented full-stack applications with integrated AI capabilities across the stack.",
+      "Completing rigorous professional technical and soft skills training for future career development.",
+    ],
+    technologies: ["Python", "AI / Machine Learning", "Full-Stack Web Development"],
+  },
   {
     id: "geech-2024-2025",
     role: "Junior Game Designer",
     organization: "Game for Education and Cultural Heritage",
-    // TODO: Replace with the exact start / end months (e.g. "2024-06", "2025-08").
-    startDate: "2024",
-    endDate: "2025",
+    startDate: "2024-06",
+    endDate: "2025-01",
     location: "Surabaya, Indonesia",
     description:
-      "Designed and built science-based educational games for elementary and middle-school students, contributing to the game design document, gameplay testing, and performance optimisation.",
+      "Designed science-based educational games for elementary and middle-school students, contributing from the game design document through gameplay testing and performance optimisation.",
     responsibilities: [
-      "Developed the Game Design Document (GDD) for science-based educational games.",
-      "Ran gameplay testing sessions and iterated on mechanics based on feedback.",
-      "Worked on performance optimisation to keep the experience smooth on target hardware.",
+      "Developed a comprehensive Game Design Document (GDD) covering mechanics, systems, and content for science-based educational games.",
+      "Conducted gameplay testing sessions and iterated on mechanics based on player feedback.",
+      "Optimized game performance to keep the experience smooth on target hardware.",
     ],
     technologies: ["Unity", "C#", "Game Design"],
-  },
-  {
-    id: "sdust-exchange-2026",
-    role: "Student Exchange Program",
-    organization: "Shandong University of Science and Technology",
-    startDate: "2026-03",
-    endDate: "Present",
-    location: "Qingdao, China",
-    description:
-      "Student exchange in Computer Software Engineering — studying software engineering in a cross-cultural academic environment at an internationally recognised Chinese university.",
-    url: "https://www.sdust.edu.cn/",
-    isInternational: true,
-  },
-  {
-    id: "software-production-internship-2026",
-    role: "Software Production Intern",
-    organization: "TODO: Replace with the actual host organisation",
-    // TODO: Replace with the actual start / end months.
-    startDate: "TODO: Start date",
-    endDate: "TODO: End date",
-    // TODO: Replace with the actual location.
-    location: "TODO: Location",
-    description:
-      "TODO: One-sentence description of the role. Book-it-quick was developed as a project during this internship — see the Projects section for the case study.",
-    responsibilities: [
-      "TODO: First responsibility",
-      "TODO: Second responsibility",
-      "TODO: Third responsibility",
-    ],
-    technologies: [
-      "Spring Boot",
-      "MyBatis",
-      "Vue",
-      "Element Plus",
-      "MySQL",
-      "Axios",
-      "BCrypt",
-      "Token Auth",
-      "Apache ECharts",
-    ],
   },
 ];

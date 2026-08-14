@@ -3,16 +3,17 @@ import type { Profile } from "@/types/portfolio";
 /**
  * Identity and high-level personal data.
  *
- * Source: provided CV. Email, GitHub, LinkedIn, and Instagram are
- * real. Location and resume path are accurate as of the latest update.
+ * Source: provided CV. Email, GitHub, LinkedIn, Twitter/X, and
+ * Instagram are real. Location and resume path are accurate as of
+ * the latest update.
  */
 export const profile: Profile = {
   name: "Dio Stania Adinata",
-  role: "Software Engineer",
+  role: "Game Designer & Software Engineer",
   tagline:
-    "I build software and explore technology across software engineering, quantitative finance, fintech, and game technology.",
+    "I design player-centric game systems and build robust software — bridging interactive media with rigorous software engineering.",
   shortBio:
-    "Software engineer with a background in Game Technology and Game Design, currently building across full-stack systems, quantitative finance, and data-driven applications.",
+    "Detail-oriented Game Designer bridging interactive media with rigorous software engineering principles. Demonstrated success in designing scalable gameplay systems and functional prototypes, earning finalist placements in national competitions. Leverages technical expertise in Python, C++, and cross-platform development within Unity to build robust, player-centric game architectures.",
   // Based in Indonesia.
   location: "Indonesia",
   email: "mailto:dioadinata520@gmail.com",
@@ -21,6 +22,8 @@ export const profile: Profile = {
   githubHandle: "@Rytsia1",
   linkedinUrl: "https://www.linkedin.com/in/dioadinata",
   linkedinHandle: "in/dioadinata",
+  twitterUrl: "https://x.com/distania_9",
+  twitterHandle: "@distania_9",
   // Instagram is included because the user confirmed it — but the
   // Hero/Footer only show it where it fits (it's a personal channel,
   // not a professional one). See Footer.tsx for the conditional render.

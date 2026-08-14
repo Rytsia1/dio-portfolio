@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { profile } from "@/data/profile";
+import { siteConfig } from "@/lib/site";
 
 // ---------------------------------------------------------------------------
 // Image metadata
@@ -8,7 +8,7 @@ import { profile } from "@/data/profile";
 // the route's <meta property="og:image:..."> tags automatically.
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = `${profile.name} — ${profile.role} | Game Technology Portfolio`;
+export const alt = `${siteConfig.name} — ${siteConfig.role} | Game Technology Portfolio`;
 
 // ---------------------------------------------------------------------------
 // Font: Press Start 2P (Google Fonts)
@@ -77,9 +77,13 @@ const COLORS = {
  *   3. A blinking-cursor `>` prompt line, then the name in 88 px Press
  *      Start 2P with a tight `0` letter-spacing so each pixel reads
  *      cleanly.
- *   4. A green subhead line: `> Game Developer | 3D Asset Creator`.
- *   5. A muted dim line: the real `profile.role` and the tagline.
+ *   4. A green subhead line: `> {siteConfig.role}`.
+ *   5. A muted dim line: `siteConfig.description` (SEO honesty — the
+ *      same string the meta description serves).
  *   6. A bottom strip with a `READY` badge and a `[PRESS START]` prompt.
+ *
+ * All identity text (name, role, description) is injected from the
+ * `siteConfig` SSOT in `lib/site.ts` — nothing is hard-coded here.
  */
 export default async function OpenGraphImage() {
   try {
@@ -233,7 +237,7 @@ export default async function OpenGraphImage() {
                 textShadow: `4px 4px 0 ${COLORS.accent}`,
               }}
             >
-              {profile.name}
+              {siteConfig.name}
             </div>
 
             {/* Subhead — green terminal line */}
@@ -249,12 +253,10 @@ export default async function OpenGraphImage() {
               }}
             >
               <span style={{ color: COLORS.accent }}>{`>`}</span>
-              <span>Game Developer</span>
-              <span style={{ color: COLORS.fgMuted }}>|</span>
-              <span>3D Asset Creator</span>
+              <span>{siteConfig.role}</span>
             </div>
 
-            {/* Real role + tagline — dim, for SEO honesty */}
+            {/* Real description — dim, for SEO honesty */}
             <div
               style={{
                 display: "flex",
@@ -275,10 +277,7 @@ export default async function OpenGraphImage() {
                 }}
               >
                 <span style={{ color: COLORS.cyan }}>{`>`}</span>
-                <span>
-                  {profile.role} — building across software engineering,
-                  quantitative finance, and game technology.
-                </span>
+                <span>{siteConfig.description}</span>
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import { Download, Github, Linkedin, Mail, Twitter, ArrowUpRight } from "lucide-react";
-import { Section } from "@/components/Section";
-import { Button } from "@/components/Button";
-import { Reveal } from "@/components/Reveal";
+import { Section } from "@/components/ui/Section";
+import { Button } from "@/components/ui/Button";
+import { Reveal } from "@/components/ui/Reveal";
 import { Mascot } from "@/components/pixel/Mascot";
 import { Cloud } from "@/components/pixel/Cloud";
 import { Decor } from "@/components/pixel/Decor";

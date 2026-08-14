@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { SITE_URL } from "@/lib/site";
+import { siteConfig } from "@/lib/site";
 import { getAllProjectSlugs } from "@/data/projects";
 
 /**
@@ -43,7 +43,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
   const topLevel: MetadataRoute.Sitemap = ROUTES.map((r) => ({
-    url: `${SITE_URL}${r.path}`,
+    url: `${siteConfig.url}${r.path}`,
     lastModified: now,
     changeFrequency: r.changeFrequency,
     priority: r.priority,
@@ -51,7 +51,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const projects: MetadataRoute.Sitemap = getAllProjectSlugs().map(
     (slug) => ({
-      url: `${SITE_URL}/projects/${slug}`,
+      url: `${siteConfig.url}/projects/${slug}`,
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.8,

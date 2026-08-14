@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { Container } from "@/components/Container";
+import { Container } from "@/components/ui/Container";
 
 /**
  * Rendered by Next.js when a project slug doesn't match any entry in
