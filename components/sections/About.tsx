@@ -21,7 +21,7 @@ export function About() {
         size={20}
         className="absolute right-8 top-8 hidden lg:block"
       />
-      <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+      <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
         <Reveal className="space-y-5 text-base leading-relaxed text-fg-muted lg:col-span-7">
           <p>
             I started in Game Technology at Politeknik Elektronika

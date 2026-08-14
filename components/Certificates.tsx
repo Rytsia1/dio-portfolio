@@ -73,7 +73,7 @@ export function Certificates() {
             const remaining = Math.max(0, list.length - visibleCount);
             const displayed = list.slice(0, visibleCount);
             return (
-              <div key={category} className="mb-10 last:mb-0">
+              <div key={category} className="mb-8 last:mb-0">
                 <div className="mb-4 flex items-end justify-between">
                   <h3 className="text-xs font-semibold uppercase tracking-[0.22em] text-fg-subtle">
                     {category}

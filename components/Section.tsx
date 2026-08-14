@@ -42,13 +42,13 @@ export function Section({
       id={id}
       className={cn(
         "scroll-mt-24",
-        flush ? "" : "py-20 sm:py-28",
+        flush ? "" : "py-12 md:py-20",
         className,
       )}
     >
       <Container narrow={narrow}>
         {hasHeader && (
-          <div className="mb-12 flex flex-col gap-4 sm:mb-16 sm:flex-row sm:items-end sm:justify-between">
+          <div className="mb-8 flex flex-col gap-3 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-2xl">
               {eyebrow && (
                 <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-accent-strong">

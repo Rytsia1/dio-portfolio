@@ -31,7 +31,7 @@ export function Projects() {
       />
 
       {/* Software & Quant — primary */}
-      <div className="mb-20">
+      <div className="mb-12 md:mb-14">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-3">
           <div>
             <p className="eyebrow">Current direction</p>

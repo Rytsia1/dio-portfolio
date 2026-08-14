@@ -47,7 +47,7 @@ export function Footer() {
       </div>
 
       <div className="bg-earth">
-        <Container className="py-14">
+        <Container className="py-10 sm:py-12">
           <div className="grid gap-10 sm:grid-cols-3">
             <div className="sm:col-span-2">
               <p className="text-base font-semibold text-white">

@@ -134,10 +134,10 @@ export function Hero() {
        *   socials → 250 ms
        *   scroll  → 300 ms
        */}
-      <Container className="relative flex min-h-[calc(100vh-6rem)] flex-col justify-center py-24 sm:py-32">
+      <Container className="relative flex min-h-[80vh] flex-col justify-center py-16 sm:py-20 md:py-24">
 
         {/* 1 — Availability badge ---------------------------------------- */}
-        <p className="hero-in mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 px-3 py-1 text-xs font-medium text-fg-muted backdrop-blur [animation-delay:0ms]">
+        <p className="hero-in mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 px-3 py-1 text-xs font-medium text-fg-muted backdrop-blur sm:mb-6 [animation-delay:0ms]">
           <span
             aria-hidden
             className="inline-block h-1.5 w-1.5 rounded-full bg-accent"
@@ -154,7 +154,7 @@ export function Hero() {
         </h1>
 
         {/* 3 — Role ------------------------------------------------------ */}
-        <p className="hero-in mt-5 text-lg font-semibold text-accent sm:text-xl [animation-delay:100ms]">
+        <p className="hero-in mt-4 text-lg font-semibold text-accent sm:text-xl [animation-delay:100ms]">
           {profile.role}
           <span className="ml-2 text-fg-muted">
             — building systems, exploring the craft.
@@ -162,12 +162,12 @@ export function Hero() {
         </p>
 
         {/* 4 — Tagline --------------------------------------------------- */}
-        <p className="hero-in mt-5 max-w-2xl text-base leading-relaxed text-fg-muted sm:text-lg [animation-delay:150ms]">
+        <p className="hero-in mt-4 max-w-2xl text-base leading-relaxed text-fg-muted sm:text-lg [animation-delay:150ms]">
           {profile.tagline}
         </p>
 
         {/* 5 — Primary CTAs ---------------------------------------------- */}
-        <div className="hero-in mt-10 flex flex-col gap-3 sm:flex-row [animation-delay:200ms]">
+        <div className="hero-in mt-8 flex flex-col gap-3 sm:flex-row [animation-delay:200ms]">
           <Button
             href="#projects"
             variant="primary"
@@ -189,7 +189,7 @@ export function Hero() {
         </div>
 
         {/* 6 — Social links ---------------------------------------------- */}
-        <ul className="hero-in mt-10 flex flex-wrap items-center gap-2 [animation-delay:250ms]">
+        <ul className="hero-in mt-8 flex flex-wrap items-center gap-2 [animation-delay:250ms]">
           <li>
             <a
               href={profile.githubUrl}
@@ -227,7 +227,7 @@ export function Hero() {
         </ul>
 
         {/* 7 — Scroll indicator ------------------------------------------ */}
-        <div className="hero-in mt-16 hidden items-center gap-3 text-xs font-mono uppercase tracking-[0.22em] text-fg-subtle sm:flex [animation-delay:300ms]">
+        <div className="hero-in mt-10 hidden items-center gap-3 text-xs font-mono uppercase tracking-[0.22em] text-fg-subtle sm:flex [animation-delay:300ms]">
           <span aria-hidden className="block h-px w-12 bg-border-strong" />
           Scroll
         </div>

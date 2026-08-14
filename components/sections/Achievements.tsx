@@ -29,7 +29,7 @@ export function Achievements() {
       ) : (
         <>
           {heroes.length > 0 && (
-            <ul className="mb-12 grid gap-5 md:grid-cols-2">
+            <ul className="mb-8 grid gap-5 sm:mb-10 md:grid-cols-2">
               {heroes.map((a, idx) => (
                 <Reveal as="li" key={a.id} delay={idx * 0.05} className="h-full">
                   <HeroAchievementCard achievement={a} />
