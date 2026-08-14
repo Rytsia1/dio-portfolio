@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dio Stania Adinata — Portfolio
 
-## Getting Started
+A professional personal portfolio for a Software Engineer with a
+background in Game Technology and Game Design.
 
-First, run the development server:
+The visual identity is a **light editorial** design: a soft sky-blue
+canvas, white content cards, dark navy text, warm orange accents, and
+small pixel-art decorations. The site is built as a fast, mostly-static
+Next.js project; every section reads from typed data files in `data/`,
+so the content can be edited without touching the UI.
+
+## Tech stack
+
+- [Next.js 16](https://nextjs.org) (App Router, Turbopack)
+- [React 19](https://react.dev)
+- [TypeScript](https://www.typescriptlang.org) (strict)
+- [Tailwind CSS v4](https://tailwindcss.com) — `@theme` tokens, no config file
+- [Framer Motion](https://www.framer.com/motion/) — subtle reveal animations
+- [Lucide React](https://lucide.dev) — icons
+- [ESLint](https://eslint.org) + `eslint-config-next`
+
+No backend, no database, no CMS. Hosting target is Vercel.
+
+## Visual identity
+
+| Token | Value | Used for |
+| --- | --- | --- |
+| `--bg` | `#dceeff` (sky blue) | Page background |
+| `--surface` | `#ffffff` | White content cards |
+| `--fg` | `#0f1b2d` (dark navy) | Primary text |
+| `--accent` | `#ff6b35` (warm orange) | Highlights, CTAs |
+| `--earth` | `#5a3a22` | Footer body |
+| `--grass` | `#6cc04a` | Pixel-grass transition |
+
+Pixel-art decorations are inline SVG (no external image files needed)
+and live in `components/pixel/`. They are always `aria-hidden` and only
+ever decorative.
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open <http://localhost:3000>.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+app/                Next.js App Router
+  layout.tsx
+  page.tsx
+  globals.css       (light theme design tokens)
+  opengraph-image.tsx
+  robots.ts
+  sitemap.ts
+  not-found.tsx
+  projects/[slug]/
 
-## Learn More
+components/         UI components
+  About, Achievements, Button, Certificates, Contact, Container,
+  Experience, Footer, GameProjectCard, Hero, Navbar, ProjectCard,
+  Projects, Reveal, Section, Skills, Tag, Timeline
+  pixel/            (Cloud, Mascot, Decor)
 
-To learn more about Next.js, take a look at the following resources:
+data/               Typed content
+  profile, nav, skills, projects, experience, education, achievements,
+  certificates
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+lib/cn.ts
+types/portfolio.ts
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Editing content
 
-## Deploy on Vercel
+Everything visible on the site is driven from `data/*.ts`. See the
+"Editing content" table in this README for the full mapping, and grep
+for `TODO:` to see which fields still need real data.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Caveats
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- The shell wrapper in this environment did not reliably execute
+  commands. I could not run `npm run build` / `npm run lint` to verify.
+  Please run them once locally and let me know if anything fails.
+- No new dependencies. The pixel-art decorations are inline SVG, so
+  the project works without any image assets in `public/`.
