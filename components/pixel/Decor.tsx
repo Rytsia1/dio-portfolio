@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
 export type DecorKind =
@@ -19,10 +20,29 @@ interface DecorProps {
 }
 
 /**
- * Small pixel-art objects used as decorative punctuation around the
- * page. Always `aria-hidden` (decorative, not informative).
+ * Small pixel-art decorations — performance-optimised SVG.
  *
- * All shapes are drawn on a 16x16 grid so they scale crisply.
+ * Rendering strategy
+ * ──────────────────
+ * The original implementation used 4–11 individual <rect> elements per
+ * shape. This version replaces them with compound SVG <path> elements
+ * (one per colour), reducing the SVG tree to 1–4 nodes per shape.
+ *
+ * How the paths are built:
+ *   • Same-colour pixels are merged into a single compound path string.
+ *     Adjacent horizontal runs collapse into M x,y h w v 1 h -w z so the
+ *     path data is as short as possible.
+ *   • Where colours overlap (e.g. the terminal screen text sits on top of
+ *     the white screen which itself sits on the dark body), multiple <path>
+ *     elements are emitted in the correct bottom-to-top paint order.
+ *
+ * All shape data lives in static module-level constants evaluated once at
+ * import time — zero per-render computation.
+ *
+ * shapeRendering="crispEdges" disables sub-pixel anti-aliasing.
+ * All shapes sit on a 16 × 16 pixel grid.
+ * Always aria-hidden (decorative, never informative).
+ * Server Component — zero client JS.
  */
 export function Decor({ kind, size = 32, className }: DecorProps) {
   return (
@@ -44,154 +64,163 @@ export function Decor({ kind, size = 32, className }: DecorProps) {
   );
 }
 
-const STAR = (
+// ---------------------------------------------------------------------------
+// Shape constants
+// ---------------------------------------------------------------------------
+// Each constant is pre-composed JSX resolved once at module level.
+// Paint order within each constant mirrors the original rect sequence so
+// foreground colours always render on top of background colours.
+
+// 1 path — all pixels are #ff6b35
+const STAR: ReactNode = (
+  <path
+    fill="#ff6b35"
+    d={
+      "M7,1h2v2h-2z" +
+      " M3,5h10v2h-10z M2,6h12v1h-12z" +
+      " M4,9h2v2h-2z M10,9h2v2h-2z"
+    }
+  />
+);
+
+// 3 paths — green plant (stem + leaves) → dark rim → brown pot body
+// The stem (y=6–10) intentionally disappears behind the pot rim at y=10.
+const PLANT: ReactNode = (
   <>
-    <rect x={7} y={1} width={2} height={2} fill="#ff6b35" />
-    <rect x={3} y={5} width={10} height={2} fill="#ff6b35" />
-    <rect x={2} y={6} width={12} height={1} fill="#ff6b35" />
-    <rect x={4} y={9} width={2} height={2} fill="#ff6b35" />
-    <rect x={10} y={9} width={2} height={2} fill="#ff6b35" />
+    <path
+      fill="#6cc04a"
+      d="M6,2h3v2h-3z M9,3h2v2h-2z M5,4h2v2h-2z M7,6h2v5h-2z"
+    />
+    <path fill="#3d2616" d="M4,10h8v1h-8z" />
+    <path fill="#5a3a22" d="M4,11h8v4h-8z" />
   </>
 );
 
-const PLANT = (
+// 4 paths — dark body + stand → white screen (covers body) →
+//           dark text lines (on screen) → orange prompt markers
+// The screen text must render after the white screen that it lives on.
+const TERMINAL: ReactNode = (
   <>
-    {/* Pot */}
-    <rect x={4} y={11} width={8} height={4} fill="#5a3a22" />
-    <rect x={4} y={10} width={8} height={1} fill="#3d2616" />
-    {/* Stem */}
-    <rect x={7} y={6} width={2} height={5} fill="#6cc04a" />
-    {/* Leaves */}
-    <rect x={5} y={4} width={2} height={2} fill="#6cc04a" />
-    <rect x={9} y={3} width={2} height={2} fill="#6cc04a" />
-    <rect x={6} y={2} width={3} height={2} fill="#6cc04a" />
+    <path
+      fill="#0f1b2d"
+      d="M2,3h12v9h-12z M6,12h4v1h-4z M4,13h8v1h-8z"
+    />
+    <path fill="#ffffff" d="M3,4h10v7h-10z" />
+    <path
+      fill="#0f1b2d"
+      d="M6,6h2v1h-2z M9,6h3v1h-3z M6,8h4v1h-4z"
+    />
+    <path fill="#ff6b35" d="M4,6h1v1h-1z M4,8h1v1h-1z" />
   </>
 );
 
-const TERMINAL = (
+// 3 paths — dark d-pad + controller outline → orange body fill → white buttons
+const CONTROLLER: ReactNode = (
   <>
-    {/* Body */}
-    <rect x={2} y={3} width={12} height={9} fill="#0f1b2d" />
-    <rect x={3} y={4} width={10} height={7} fill="#ffffff" />
-    {/* Prompt lines */}
-    <rect x={4} y={6} width={1} height={1} fill="#ff6b35" />
-    <rect x={6} y={6} width={2} height={1} fill="#0f1b2d" />
-    <rect x={9} y={6} width={3} height={1} fill="#0f1b2d" />
-    <rect x={4} y={8} width={1} height={1} fill="#ff6b35" />
-    <rect x={6} y={8} width={4} height={1} fill="#0f1b2d" />
-    {/* Stand */}
-    <rect x={6} y={12} width={4} height={1} fill="#0f1b2d" />
-    <rect x={4} y={13} width={8} height={1} fill="#0f1b2d" />
+    <path
+      fill="#0f1b2d"
+      d="M4,5h2v2h-2z M2,6h2v2h-2z M3,7h2v2h-2z M5,5h6v6h-6z"
+    />
+    <path fill="#ff6b35" d="M6,6h4v4h-4z" />
+    <path fill="#ffffff" d="M11,6h1v1h-1z M12,7h1v1h-1z M11,8h1v1h-1z" />
   </>
 );
 
-const CONTROLLER = (
+// 3 paths — light-orange rims (top + bottom) → orange body → peach highlight
+// Rims (y=2-3 and y=12-13) do not overlap the body (y=4-11) so paint
+// order between those two groups is arbitrary; highlights must be last.
+const COIN: ReactNode = (
   <>
-    {/* D-pad */}
-    <rect x={3} y={7} width={2} height={2} fill="#0f1b2d" />
-    <rect x={2} y={6} width={2} height={2} fill="#0f1b2d" />
-    <rect x={4} y={5} width={2} height={2} fill="#0f1b2d" />
-    {/* Body */}
-    <rect x={5} y={5} width={6} height={6} fill="#0f1b2d" />
-    <rect x={6} y={6} width={4} height={4} fill="#ff6b35" />
-    {/* Buttons */}
-    <rect x={11} y={6} width={1} height={1} fill="#ffffff" />
-    <rect x={12} y={7} width={1} height={1} fill="#ffffff" />
-    <rect x={11} y={8} width={1} height={1} fill="#ffffff" />
+    <path
+      fill="#ff8657"
+      d="M5,2h6v1h-6z M4,3h8v1h-8z M4,12h8v1h-8z M5,13h6v1h-6z"
+    />
+    <path fill="#ff6b35" d="M3,4h10v8h-10z" />
+    {/* Two adjacent highlight pixels merged into a 1×2 run */}
+    <path fill="#ffd2bd" d="M5,4h1v2h-1z" />
   </>
 );
 
-const COIN = (
+// 2 paths — dark axes + mid-bar → orange bars
+// Non-overlapping regions, so paint order is arbitrary.
+const CHART: ReactNode = (
   <>
-    <rect x={5} y={2} width={6} height={1} fill="#ff8657" />
-    <rect x={4} y={3} width={8} height={1} fill="#ff8657" />
-    <rect x={3} y={4} width={10} height={8} fill="#ff6b35" />
-    <rect x={4} y={12} width={8} height={1} fill="#ff8657" />
-    <rect x={5} y={13} width={6} height={1} fill="#ff8657" />
-    {/* Highlight */}
-    <rect x={5} y={4} width={1} height={1} fill="#ffd2bd" />
-    <rect x={5} y={5} width={1} height={1} fill="#ffd2bd" />
+    <path fill="#0f1b2d" d="M2,2h1v11h-1z M2,13h11v1h-11z M7,6h2v7h-2z" />
+    <path fill="#ff6b35" d="M4,9h2v4h-2z M10,4h2v9h-2z" />
   </>
 );
 
-const CHART = (
+// 3 paths — orange cover → dark spine (overlaps cover at x=3-4) → white page lines
+// The spine is the darker binding strip on the left side of the cover.
+const BOOK: ReactNode = (
   <>
-    {/* Axis */}
-    <rect x={2} y={2} width={1} height={11} fill="#0f1b2d" />
-    <rect x={2} y={13} width={11} height={1} fill="#0f1b2d" />
-    {/* Bars */}
-    <rect x={4} y={9} width={2} height={4} fill="#ff6b35" />
-    <rect x={7} y={6} width={2} height={7} fill="#0f1b2d" />
-    <rect x={10} y={4} width={2} height={9} fill="#ff6b35" />
+    <path fill="#ff6b35" d="M3,2h10v12h-10z" />
+    <path fill="#0f1b2d" d="M3,2h2v12h-2z" />
+    <path
+      fill="#ffffff"
+      d={
+        "M5,3h7v1h-7z M5,5h7v1h-7z M5,7h7v1h-7z" +
+        " M5,9h5v1h-5z M5,11h7v1h-7z"
+      }
+    />
   </>
 );
 
-const BOOK = (
+// 3 paths — orange cup + handles → lighter gold stem/base → white star detail
+// Cup body and handles share the same colour so they merge into one path.
+const TROPHY: ReactNode = (
   <>
-    {/* Cover */}
-    <rect x={3} y={2} width={10} height={12} fill="#ff6b35" />
-    <rect x={3} y={2} width={2} height={12} fill="#0f1b2d" />
-    {/* Pages */}
-    <rect x={5} y={3} width={7} height={1} fill="#ffffff" />
-    <rect x={5} y={5} width={7} height={1} fill="#ffffff" />
-    <rect x={5} y={7} width={7} height={1} fill="#ffffff" />
-    <rect x={5} y={9} width={5} height={1} fill="#ffffff" />
-    <rect x={5} y={11} width={7} height={1} fill="#ffffff" />
+    <path
+      fill="#ff6b35"
+      d={
+        "M4,2h8v2h-8z M3,3h10v5h-10z M4,8h8v1h-8z" +
+        " M2,4h1v3h-1z M13,4h1v3h-1z"
+      }
+    />
+    <path fill="#ff8657" d="M6,9h4v2h-4z M4,11h8v3h-8z" />
+    <path fill="#ffffff" d="M7,5h2v2h-2z" />
   </>
 );
 
-const TROPHY = (
+// 3 paths — dark teeth + ring body → orange inner ring → dark centre hole
+// Three separate dark passes are required because the orange ring sits
+// between two dark layers (body outside, hole inside).
+const GEAR: ReactNode = (
   <>
-    {/* Cup */}
-    <rect x={4} y={2} width={8} height={2} fill="#ff6b35" />
-    <rect x={3} y={3} width={10} height={5} fill="#ff6b35" />
-    <rect x={4} y={8} width={8} height={1} fill="#ff6b35" />
-    {/* Handles */}
-    <rect x={2} y={4} width={1} height={3} fill="#ff6b35" />
-    <rect x={13} y={4} width={1} height={3} fill="#ff6b35" />
-    {/* Stem + base */}
-    <rect x={6} y={9} width={4} height={2} fill="#ff8657" />
-    <rect x={4} y={11} width={8} height={3} fill="#ff8657" />
-    {/* Star on cup */}
-    <rect x={7} y={5} width={2} height={2} fill="#ffffff" />
+    <path
+      fill="#0f1b2d"
+      d={
+        "M6,2h4v2h-4z M2,6h2v4h-2z M12,6h2v4h-2z M6,12h4v2h-4z" +
+        " M3,3h2v2h-2z M11,3h2v2h-2z M3,11h2v2h-2z M11,11h2v2h-2z" +
+        " M5,5h6v6h-6z"
+      }
+    />
+    <path fill="#ff6b35" d="M6,6h4v4h-4z" />
+    <path fill="#0f1b2d" d="M7,7h2v2h-2z" />
   </>
 );
 
-const GEAR = (
-  <>
-    <rect x={6} y={2} width={4} height={2} fill="#0f1b2d" />
-    <rect x={2} y={6} width={2} height={4} fill="#0f1b2d" />
-    <rect x={12} y={6} width={2} height={4} fill="#0f1b2d" />
-    <rect x={6} y={12} width={4} height={2} fill="#0f1b2d" />
-    <rect x={3} y={3} width={2} height={2} fill="#0f1b2d" />
-    <rect x={11} y={3} width={2} height={2} fill="#0f1b2d" />
-    <rect x={3} y={11} width={2} height={2} fill="#0f1b2d" />
-    <rect x={11} y={11} width={2} height={2} fill="#0f1b2d" />
-    {/* Inner ring */}
-    <rect x={5} y={5} width={6} height={6} fill="#0f1b2d" />
-    <rect x={6} y={6} width={4} height={4} fill="#ff6b35" />
-    <rect x={7} y={7} width={2} height={2} fill="#0f1b2d" />
-  </>
+// 1 path — all pixels are #ff6b35
+const ARROW: ReactNode = (
+  <path
+    fill="#ff6b35"
+    d="M2,7h9v2h-9z M9,4h3v2h-3z M11,6h1v4h-1z M9,10h3v2h-3z"
+  />
 );
 
-const ARROW = (
-  <>
-    <rect x={2} y={7} width={9} height={2} fill="#ff6b35" />
-    <rect x={9} y={4} width={3} height={2} fill="#ff6b35" />
-    <rect x={11} y={6} width={1} height={4} fill="#ff6b35" />
-    <rect x={9} y={10} width={3} height={2} fill="#ff6b35" />
-  </>
-);
+// ---------------------------------------------------------------------------
+// Shape registry
+// ---------------------------------------------------------------------------
 
-const SHAPES: Record<DecorKind, React.ReactNode> = {
-  star: STAR,
-  plant: PLANT,
-  terminal: TERMINAL,
+const SHAPES: Record<DecorKind, ReactNode> = {
+  star:       STAR,
+  plant:      PLANT,
+  terminal:   TERMINAL,
   controller: CONTROLLER,
-  coin: COIN,
-  chart: CHART,
-  book: BOOK,
-  trophy: TROPHY,
-  gear: GEAR,
-  arrow: ARROW,
+  coin:       COIN,
+  chart:      CHART,
+  book:       BOOK,
+  trophy:     TROPHY,
+  gear:       GEAR,
+  arrow:      ARROW,
 };

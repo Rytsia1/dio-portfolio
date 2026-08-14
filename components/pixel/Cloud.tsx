@@ -3,247 +3,123 @@ import { cn } from "@/lib/cn";
 interface CloudProps {
   /** Visual size of the cloud. */
   size?: "sm" | "md" | "lg";
-  /** Visual variant. */
+  /** Visual variant — three silhouettes for variety. */
   variant?: 1 | 2 | 3;
   className?: string;
-  /** Optional aria-label for screen readers. */
+  /** Supply only when the cloud conveys meaning; omit for decoration. */
   ariaLabel?: string;
 }
 
 /**
- * Decorative pixel-art cloud, drawn as inline SVG so it stays crisp
- * at any size and never depends on external image files.
+ * Decorative pixel-art cloud — performance-optimised SVG.
  *
- * Three shapes are available so the clouds around the page feel like
- * a small, slightly varied family.
+ * Rendering strategy
+ * ──────────────────
+ * The original implementation mapped over a per-variant cell array at
+ * render time, emitting one <rect> per pixel (40–62 DOM nodes per cloud,
+ * up to ~180 for the three clouds on the hero page).
+ *
+ * This version encodes every variant as two pre-computed SVG compound
+ * path strings (one for the white body, one for the drop-shadow strip).
+ * The SVG tree contains exactly 2 <path> elements regardless of cloud
+ * size or variant, and all data is resolved at module-import time — zero
+ * runtime array mapping.
+ *
+ * Grid: 24 × 12 units. Adjacent horizontal pixel runs are merged into a
+ * single subpath (M x,y h w v 1 h -w z) so the path strings are as
+ * short as possible.
+ *
+ * shapeRendering="crispEdges" disables sub-pixel anti-aliasing on the
+ * SVG rasteriser, keeping edges sharp at every rendered size.
+ *
+ * Server Component — zero client JS.
  */
+
+// ---------------------------------------------------------------------------
+// Pre-computed path data
+// ---------------------------------------------------------------------------
+// Each variant's full body silhouette and drop-shadow are encoded once.
+// Notation: M x,y h <width> v 1 h -<width> z   ← one 1-px-tall pixel run.
+//
+// Variant 1  – wide three-bump cloud
+// Variant 2  – slightly narrower, different bump spacing
+// Variant 3  – two-peak tall-ish cloud
+//
+// Shadow: one merged strip at row 4 (bottom row of grid + 1) so it
+// hugs the underside of the cloud regardless of variant width.
+
+const CLOUD_PATHS: Record<1 | 2 | 3, { body: string; shadow: string }> = {
+  1: {
+    // row 0 → runs: 6-7, 10-12, 16-17
+    // row 1 → runs: 5-13, 15-18
+    // row 2 → run:  3-20  (18 wide)
+    // row 3 → run:  4-19  (16 wide)
+    body:
+      "M6,0h2v1h-2z M10,0h3v1h-3z M16,0h2v1h-2z" +
+      " M5,1h9v1h-9z M15,1h4v1h-4z" +
+      " M3,2h18v1h-18z" +
+      " M4,3h16v1h-16z",
+    shadow: "M4,4h16v0.4h-16z",
+  },
+  2: {
+    // row 0 → runs: 4-5, 9-11, 15-16
+    // row 1 → runs: 3-12, 14-18
+    // row 2 → run:  2-19  (18 wide)
+    // row 3 → run:  3-18  (16 wide)
+    body:
+      "M4,0h2v1h-2z M9,0h3v1h-3z M15,0h2v1h-2z" +
+      " M3,1h10v1h-10z M14,1h5v1h-5z" +
+      " M2,2h18v1h-18z" +
+      " M3,3h16v1h-16z",
+    shadow: "M3,4h16v0.4h-16z",
+  },
+  3: {
+    // row 0 → runs: 8-10, 14-16
+    // row 1 → runs: 7-11, 13-17
+    // row 2 → run:  5-19  (15 wide)
+    // row 3 → run:  6-18  (13 wide)
+    body:
+      "M8,0h3v1h-3z M14,0h3v1h-3z" +
+      " M7,1h5v1h-5z M13,1h5v1h-5z" +
+      " M5,2h15v1h-15z" +
+      " M6,3h13v1h-13z",
+    shadow: "M6,4h13v0.4h-13z",
+  },
+};
+
+const DIMS = {
+  sm: { w: 72,  h: 36 },
+  md: { w: 108, h: 54 },
+  lg: { w: 144, h: 72 },
+} as const;
+
+// ---------------------------------------------------------------------------
+// Component
+// ---------------------------------------------------------------------------
+
 export function Cloud({
   size = "md",
   variant = 1,
   className,
   ariaLabel,
 }: CloudProps) {
-  const dims =
-    size === "lg"
-      ? { w: 144, h: 72 }
-      : size === "sm"
-        ? { w: 72, h: 36 }
-        : { w: 108, h: 54 };
-
-  // Pixel grid: 8 wide x 4 tall, each cell = 18px at md.
-  const cell = dims.w / 24;
-  const base = "#ffffff";
-  const shadow = "#dbe9f4";
-
-  // Each variant is a 24x12 bitmask-ish rect list, hand-tuned to look
-  // like a chunky pixel cloud.
-  const cells =
-    variant === 1
-      ? [
-          // Top bumps
-          [6, 0],
-          [7, 0],
-          [10, 0],
-          [11, 0],
-          [12, 0],
-          [16, 0],
-          [17, 0],
-          // Second row
-          [5, 1],
-          [6, 1],
-          [7, 1],
-          [8, 1],
-          [9, 1],
-          [10, 1],
-          [11, 1],
-          [12, 1],
-          [13, 1],
-          [15, 1],
-          [16, 1],
-          [17, 1],
-          [18, 1],
-          // Middle (widest)
-          [3, 2],
-          [4, 2],
-          [5, 2],
-          [6, 2],
-          [7, 2],
-          [8, 2],
-          [9, 2],
-          [10, 2],
-          [11, 2],
-          [12, 2],
-          [13, 2],
-          [14, 2],
-          [15, 2],
-          [16, 2],
-          [17, 2],
-          [18, 2],
-          [19, 2],
-          [20, 2],
-          // Bottom row
-          [4, 3],
-          [5, 3],
-          [6, 3],
-          [7, 3],
-          [8, 3],
-          [9, 3],
-          [10, 3],
-          [11, 3],
-          [12, 3],
-          [13, 3],
-          [14, 3],
-          [15, 3],
-          [16, 3],
-          [17, 3],
-          [18, 3],
-          [19, 3],
-        ]
-      : variant === 2
-        ? [
-            // Slightly different silhouette
-            [4, 0],
-            [5, 0],
-            [9, 0],
-            [10, 0],
-            [11, 0],
-            [15, 0],
-            [16, 0],
-            [3, 1],
-            [4, 1],
-            [5, 1],
-            [6, 1],
-            [7, 1],
-            [8, 1],
-            [9, 1],
-            [10, 1],
-            [11, 1],
-            [12, 1],
-            [14, 1],
-            [15, 1],
-            [16, 1],
-            [17, 1],
-            [18, 1],
-            [2, 2],
-            [3, 2],
-            [4, 2],
-            [5, 2],
-            [6, 2],
-            [7, 2],
-            [8, 2],
-            [9, 2],
-            [10, 2],
-            [11, 2],
-            [12, 2],
-            [13, 2],
-            [14, 2],
-            [15, 2],
-            [16, 2],
-            [17, 2],
-            [18, 2],
-            [19, 2],
-            [3, 3],
-            [4, 3],
-            [5, 3],
-            [6, 3],
-            [7, 3],
-            [8, 3],
-            [9, 3],
-            [10, 3],
-            [11, 3],
-            [12, 3],
-            [13, 3],
-            [14, 3],
-            [15, 3],
-            [16, 3],
-            [17, 3],
-            [18, 3],
-          ]
-        : [
-            // Tall, narrow cloud
-            [8, 0],
-            [9, 0],
-            [10, 0],
-            [14, 0],
-            [15, 0],
-            [16, 0],
-            [7, 1],
-            [8, 1],
-            [9, 1],
-            [10, 1],
-            [11, 1],
-            [13, 1],
-            [14, 1],
-            [15, 1],
-            [16, 1],
-            [17, 1],
-            [5, 2],
-            [6, 2],
-            [7, 2],
-            [8, 2],
-            [9, 2],
-            [10, 2],
-            [11, 2],
-            [12, 2],
-            [13, 2],
-            [14, 2],
-            [15, 2],
-            [16, 2],
-            [17, 2],
-            [18, 2],
-            [19, 2],
-            [6, 3],
-            [7, 3],
-            [8, 3],
-            [9, 3],
-            [10, 3],
-            [11, 3],
-            [12, 3],
-            [13, 3],
-            [14, 3],
-            [15, 3],
-            [16, 3],
-            [17, 3],
-            [18, 3],
-          ];
+  const { w, h } = DIMS[size];
+  const { body, shadow } = CLOUD_PATHS[variant];
 
   return (
     <svg
       role={ariaLabel ? "img" : "presentation"}
       aria-label={ariaLabel}
       aria-hidden={ariaLabel ? undefined : true}
-      width={dims.w}
-      height={dims.h}
+      width={w}
+      height={h}
       viewBox="0 0 24 12"
       shapeRendering="crispEdges"
       className={cn("block", className)}
     >
-      {/* Subtle bottom shadow row */}
-      {cells
-        .filter(([, y]) => y === 3)
-        .map(([x, y], i) => (
-          <rect
-            key={`s-${i}`}
-            x={x}
-            y={y + 1}
-            width={1}
-            height={0.4}
-            fill={shadow}
-          />
-        ))}
-      {/* Cloud body */}
-      {cells.map(([x, y], i) => (
-        <rect
-          key={i}
-          x={x}
-          y={y}
-          width={1}
-          height={1}
-          fill={base}
-        />
-      ))}
-      {/* A tiny highlight pixel to feel handcrafted */}
-      <rect x={5} y={2} width={1} height={1} fill="#ffffff" />
+      {/* Shadow first (below) so body paints over it at the shared edge */}
+      <path d={shadow} fill="#dbe9f4" />
+      <path d={body}   fill="#ffffff" />
     </svg>
   );
 }
