@@ -92,6 +92,12 @@ export interface Experience {
   technologies?: string[];
   /** Optional link to the organization */
   url?: string;
+  /**
+   * Set to true for international exchange or study-abroad entries.
+   * Drives a distinct globe-icon node, sky-blue card treatment, and
+   * an "International Exchange" badge in the Timeline component.
+   */
+  isInternational?: boolean;
 }
 
 /** A single education entry. */
@@ -139,6 +145,14 @@ export interface Achievement {
   url?: string;
   /** When true, this achievement is rendered as a large hero card. */
   hero?: boolean;
+  /**
+   * When true, this achievement is surfaced as a top-tier result
+   * (national / international scale). UI components may use this flag
+   * to apply distinct styling — e.g. a glowing border, a "Featured"
+   * pip badge, or an elevated background — independently of the
+   * `hero` layout flag.
+   */
+  isFeatured?: boolean;
 }
 
 /** Categories of certificates. */

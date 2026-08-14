@@ -26,14 +26,15 @@ export const experiences: Experience[] = [
   },
   {
     id: "sdust-exchange-2026",
-    role: "Student Exchange — Computer Software Engineering",
+    role: "Student Exchange Program",
     organization: "Shandong University of Science and Technology",
     startDate: "2026-03",
-    endDate: "2026-07",
+    endDate: "Present",
     location: "Qingdao, China",
     description:
-      "One-semester student exchange in Computer Software Engineering — exposure to Chinese-language software engineering coursework and a Chinese university engineering environment.",
+      "Student exchange in Computer Software Engineering — studying software engineering in a cross-cultural academic environment at an internationally recognised Chinese university.",
     url: "https://www.sdust.edu.cn/",
+    isInternational: true,
   },
   {
     id: "software-production-internship-2026",
