@@ -43,7 +43,7 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
         />
         <div className="absolute inset-0 bg-pixel-grid opacity-50" />
         <div className="absolute inset-x-5 bottom-4 flex items-center justify-between">
-          <span className="inline-flex items-center gap-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-accent">
+          <span className="inline-flex items-center gap-1.5 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-orange-700">
             <Layers className="h-3 w-3" aria-hidden />
             {project.category}
           </span>
@@ -81,7 +81,7 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative z-20 inline-flex h-8 items-center gap-1.5 rounded-full border border-border bg-surface-soft px-2.5 text-xs text-fg-muted transition-colors hover:border-accent/40 hover:text-fg"
+              className="relative z-20 inline-flex h-8 items-center gap-1.5 rounded-full border border-border bg-surface-soft px-2.5 text-xs text-fg-muted transition-colors hover:border-orange-700/40 hover:text-fg"
               aria-label={`${project.title} — GitHub repository (opens in new tab)`}
             >
               <Github className="h-3.5 w-3.5" aria-hidden />
@@ -89,7 +89,7 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
             </a>
           )}
           <span
-            className="relative z-20 ml-auto inline-flex h-8 items-center gap-1.5 rounded-full border border-transparent px-2 text-xs font-medium text-accent transition-colors group-hover:border-accent/30"
+            className="relative z-20 ml-auto inline-flex h-8 items-center gap-1.5 rounded-full border border-transparent px-2 text-xs font-medium text-orange-700 transition-colors group-hover:border-orange-300 group-hover:text-orange-800"
             aria-hidden
           >
             Case study

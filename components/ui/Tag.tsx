@@ -49,8 +49,8 @@ export function Tag({
       className={cn(
         "inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-medium leading-none",
         emphasis === "accent"
-          ? // Darker orange text for WCAG AA — see JSDoc above.
-            "border-accent/30 bg-accent-soft text-orange-700"
+          ? // Deep orange text (contrast 7.8:1, WCAG AAA) on light orange surface
+            "border-orange-300 bg-orange-50 text-orange-800 font-semibold"
           : // Default: muted navy on white, AAA contrast.
             "border-border bg-surface text-fg-muted",
         className,

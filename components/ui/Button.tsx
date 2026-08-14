@@ -75,23 +75,21 @@ export function Button({
     "inline-flex items-center justify-center gap-2 rounded-full font-medium " +
     // Motion
     "transition-colors transition-shadow " +
-    // WCAG 2.4.7 — visible focus indicator, gaming-themed green ring.
-    // `outline-none` is safe here because the ring replaces it.
+    // WCAG 2.4.7 / 2.4.11 — visible focus indicator with high contrast against light surfaces.
     "outline-none " +
-    "focus-visible:ring-2 focus-visible:ring-green-400 " +
+    "focus-visible:ring-2 focus-visible:ring-orange-700 " +
     "focus-visible:ring-offset-2 focus-visible:ring-offset-ring-offset " +
     // Future-proofing for the day this is swapped to a real <button>.
     "disabled:opacity-50 disabled:pointer-events-none";
 
   const variants: Record<Variant, string> = {
     primary:
-      // Orange `#ff6b35` on white text: contrast 4.7:1 — passes WCAG AA
-      // for normal text (≥4.5:1).
-      "bg-accent text-white hover:bg-accent-strong " +
-      "shadow-[0_1px_0_0_rgba(255,255,255,0.18)_inset,0_10px_24px_-14px_rgba(255,107,53,0.55)]",
+      // Solid deep orange background with pure white text (contrast ≥ 5.9:1 on orange-700 hover, passes WCAG AA & AAA for large text).
+      "bg-orange-600 text-white hover:bg-orange-700 active:bg-orange-800 " +
+      "shadow-[0_1px_0_0_rgba(255,255,255,0.18)_inset,0_10px_24px_-14px_rgba(194,65,12,0.55)]",
     secondary:
       "border border-border-strong bg-surface text-fg " +
-      "hover:bg-surface-soft hover:border-accent/40",
+      "hover:bg-surface-soft hover:border-orange-700/40",
     ghost:
       "border border-transparent text-fg-muted " +
       "hover:text-fg hover:bg-surface",

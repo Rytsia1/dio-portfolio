@@ -23,13 +23,13 @@
   --fg: #0f1b2d;
   --fg-muted: #4a5a6e;
   --fg-subtle: #7a8aa0;
-  --accent: #ff6b35;
-  --accent-strong: #ff8657;
+  --accent: #c2410c;
+  --accent-strong: #9a3412;
   --accent-soft: #ffede3;
   --earth: #5a3a22;
   --earth-deep: #3d2616;
   --grass: #6cc04a;
-  --ring: rgba(255, 107, 53, 0.4);
+  --ring: rgba(194, 65, 12, 0.45);
   --shadow-card: 0 8px 24px -12px rgba(15, 27, 45, 0.12);
   --shadow-soft: 0 2px 8px -2px rgba(15, 27, 45, 0.06);
   --cloud: #ffffff;

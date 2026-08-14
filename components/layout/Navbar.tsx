@@ -44,9 +44,9 @@ import { cn } from "@/lib/cn";
  * destination document to prefetch.
  */
 const navLinkRing =
-  // Consistent focus-ring across every interactive element in the nav.
+  // High-contrast focus-ring (contrast ≥4.5:1) meeting WCAG 2.4.7 / 2.4.11 on light surfaces.
   "outline-none " +
-  "focus-visible:ring-2 focus-visible:ring-green-400 " +
+  "focus-visible:ring-2 focus-visible:ring-orange-700 " +
   "focus-visible:ring-offset-2 focus-visible:ring-offset-ring-offset";
 
 export function Navbar() {
@@ -147,7 +147,7 @@ export function Navbar() {
         >
           <span
             aria-hidden
-            className="grid h-7 w-7 place-items-center rounded-md bg-accent text-[11px] font-mono font-bold text-white"
+            className="grid h-7 w-7 place-items-center rounded-md bg-orange-600 text-[11px] font-mono font-bold text-white"
           >
             D
           </span>
