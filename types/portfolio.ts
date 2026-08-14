@@ -60,6 +60,21 @@ export interface Project {
   lessons?: string;
   /** Optional list of bullet points shown as "Highlights" on the detail page */
   highlights?: string[];
+  /**
+   * Game engine used — game track only.
+   * Examples: "Godot 4", "Unity 2022 LTS"
+   */
+  engine?: string;
+  /**
+   * 3-D / 2-D asset creation tools — game track only.
+   * Examples: ["3ds Max 2018", "Blender 4"]
+   */
+  assetsTools?: string[];
+  /**
+   * Core gameplay mechanics or design pillars — game track only.
+   * Examples: ["Procedural Generation", "Turn-Based Combat"]
+   */
+  coreMechanics?: string[];
 }
 
 /** A single experience entry — internships, jobs, contracts. */

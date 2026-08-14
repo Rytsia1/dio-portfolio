@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, Github, Gamepad2 } from "lucide-react";
+import { ArrowUpRight, Github, Gamepad2, Cpu, Wrench, Zap } from "lucide-react";
 import type { Project } from "@/types/portfolio";
 import { Tag } from "@/components/Tag";
 import { cn } from "@/lib/cn";
@@ -14,12 +14,24 @@ interface GameProjectCardProps {
  * Game development project card — light theme. Slightly more playful
  * than the standard card (a Gamepad2 icon and an achievement badge)
  * but uses the same white-card-on-sky-blue treatment.
+ *
+ * When the project supplies `engine`, `assetsTools`, and/or
+ * `coreMechanics`, a dedicated "Tech Stack" panel is rendered between
+ * the description and the general tag list. The engine badge uses the
+ * site accent colour so it stands out immediately to recruiters; asset
+ * tools use a complementary sky-blue tone; mechanics appear as smaller
+ * indigo pills.
  */
 export function GameProjectCard({
   project,
   githubHandle,
   className,
 }: GameProjectCardProps) {
+  const hasEngine = Boolean(project.engine);
+  const hasAssets = Boolean(project.assetsTools?.length);
+  const hasMechanics = Boolean(project.coreMechanics?.length);
+  const hasTechStack = hasEngine || hasAssets || hasMechanics;
+
   return (
     <article
       className={cn(
@@ -36,6 +48,7 @@ export function GameProjectCard({
         <span className="sr-only">Open case study: {project.title}</span>
       </Link>
 
+      {/* ── Card header ──────────────────────────────────────────────────── */}
       <div
         aria-hidden
         className="relative h-40 overflow-hidden border-b border-border bg-surface-soft"
@@ -64,16 +77,17 @@ export function GameProjectCard({
         </div>
       </div>
 
+      {/* ── Card body ────────────────────────────────────────────────────── */}
       <div className="relative z-0 flex flex-1 flex-col p-6">
+
+        {/* Achievement badge */}
         {project.achievement && (
           <span className="mb-3 inline-flex w-fit items-center gap-1.5 rounded-full border border-accent/30 bg-accent-soft px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-accent">
-            <span
-              aria-hidden
-              className="h-1.5 w-1.5 rounded-full bg-accent"
-            />
+            <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent" />
             {project.achievement}
           </span>
         )}
+
         <h3 className="text-lg font-semibold tracking-tight text-fg">
           {project.title}
         </h3>
@@ -81,8 +95,82 @@ export function GameProjectCard({
           {project.shortDescription}
         </p>
 
+        {/* ── Tech Stack panel ─────────────────────────────────────────── */}
+        {hasTechStack && (
+          <div className="mt-5 rounded-xl border border-border bg-surface-soft p-3">
+
+            {/* Section label */}
+            <p
+              aria-label="Tech stack"
+              className="mb-2.5 font-mono text-[9px] font-semibold uppercase tracking-[0.2em] text-fg-subtle"
+            >
+              Tech Stack
+            </p>
+
+            {/* Engine + Asset-tool badges ─────────────────────────────── */}
+            {(hasEngine || hasAssets) && (
+              <div className="flex flex-wrap gap-2">
+
+                {/* Engine: most prominent — accent orange, bold mono */}
+                {project.engine && (
+                  <div
+                    className="flex items-center gap-1.5 rounded-lg border border-accent/35 bg-accent-soft px-2.5 py-1.5"
+                    title="Game engine"
+                  >
+                    <Cpu
+                      className="h-3 w-3 shrink-0 text-accent"
+                      aria-hidden
+                    />
+                    <span className="font-mono text-[11px] font-bold uppercase tracking-wide text-accent">
+                      {project.engine}
+                    </span>
+                  </div>
+                )}
+
+                {/* Asset tools: sky-blue — visually distinct, still crisp */}
+                {project.assetsTools?.map((tool) => (
+                  <div
+                    key={tool}
+                    className="flex items-center gap-1.5 rounded-lg border border-sky-200 bg-sky-50 px-2.5 py-1.5"
+                    title="Asset creation tool"
+                  >
+                    <Wrench
+                      className="h-3 w-3 shrink-0 text-sky-600"
+                      aria-hidden
+                    />
+                    <span className="font-mono text-[11px] font-semibold text-sky-700">
+                      {tool}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Core mechanics: small indigo pill tags ─────────────────── */}
+            {hasMechanics && (
+              <ul
+                aria-label="Core mechanics"
+                className={cn(
+                  "flex flex-wrap gap-1.5",
+                  (hasEngine || hasAssets) && "mt-2",
+                )}
+              >
+                {project.coreMechanics!.map((mechanic) => (
+                  <li key={mechanic}>
+                    <span className="inline-flex items-center gap-1 rounded-full border border-indigo-200 bg-indigo-50 px-2 py-0.5 text-[10px] font-medium text-indigo-700">
+                      <Zap className="h-2.5 w-2.5 shrink-0" aria-hidden />
+                      {mechanic}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+
+        {/* ── General tech tags ────────────────────────────────────────── */}
         {project.tags.length > 0 && (
-          <ul className="mt-5 flex flex-wrap gap-1.5">
+          <ul className="mt-4 flex flex-wrap gap-1.5">
             {project.tags.slice(0, 5).map((tag) => (
               <li key={tag}>
                 <Tag>{tag}</Tag>
@@ -91,7 +179,8 @@ export function GameProjectCard({
           </ul>
         )}
 
-        <div className="mt-6 flex items-center gap-2 pt-2">
+        {/* ── Footer actions ───────────────────────────────────────────── */}
+        <div className="mt-auto flex items-center gap-2 pt-5">
           {project.githubUrl && (
             <a
               href={project.githubUrl}
