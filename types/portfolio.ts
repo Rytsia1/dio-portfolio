@@ -26,6 +26,7 @@
 /** A category used to group projects in detail and for filter labels. */
 export type ProjectCategory =
   | "Full-Stack Engineering"
+  | "Full-Stack Web Development"
   | "Quantitative Finance"
   | "Software Engineering"
   | "Game Technology"

@@ -32,47 +32,36 @@ export const projects: ProjectItem[] = [
   {
     type: "web",
     slug: "book-it-quick",
-    title: "Book-it-Quick",
-    shortDescription:
-      "A full-stack personal online bookkeeping system built during a Software Production Internship.",
-    overview:
-      "Book-it-Quick is a personal online bookkeeping system — track income, expenses, and budgets from a single responsive web app. Built as a production-oriented full-stack web development project during a software production internship, with a Spring Boot backend, a Vue frontend, and a MySQL data layer.",
-    category: "Full-Stack Engineering",
+    title: "Book-it-quick",
+    tagline: "Enterprise-Grade Personal Bookkeeping System with High-Precision Ledger",
+    shortDescription: "A full-stack, enterprise-grade personal bookkeeping and financial analytics platform developed during an intensive 2-week Software Production Internship.",
+    overview: "A full-stack, enterprise-grade personal bookkeeping and financial analytics platform developed during an intensive 2-week Software Production Internship at Shandong University of Science and Technology. Engineered from the ground up to eliminate floating-point arithmetic drift, the system integrates high-precision monetary ledgers, automated recurring billing, real-time analytics dashboards, and robust stateless authentication.",
+    category: "Full-Stack Web Development",
     year: "2026",
-    role: "Full-stack developer (internship project)",
-    tags: [
-      "Full-Stack Web Development",
-      "Spring Boot",
-      "Vue",
-      "Element Plus",
-      "MySQL",
-      "Token Auth",
-      "Apache ECharts",
+    role: "Full-Stack Software Engineer Intern",
+    team: "Internship Project (Shandong University of Science and Technology)",
+    tags: ["Spring Boot", "Java 25", "Vue 3", "MyBatis", "MySQL", "Vite", "Element Plus", "ECharts", "JWT & Spring Security", "Pinia", "i18n"],
+    githubUrl: "https://github.com/Rytsia1/Book-it-quick",
+    coverImage: "/projects/book-it-quick/cover.png",
+    gallery: [
+      { src: "/projects/book-it-quick/screen1.png", alt: "Financial Dashboard & ECharts Trends", caption: "Interactive financial dashboard displaying real-time balance KPIs and cash-flow charts." },
+      { src: "/projects/book-it-quick/screen2.png", alt: "Multi-Currency & Bill Management", caption: "High-precision bill ledger with pagination, category filtering, and multi-currency conversion." },
+      { src: "/projects/book-it-quick/screen4.png", alt: "Savings Goals & Financial Targets", caption: "Track financial wishlists and seamlessly allocate surplus funds toward each target." }
     ],
-    // TODO: Replace with the real repository URL.
-    githubUrl: "https://github.com/Rytsia1",
-    // TODO: Replace with the real live demo URL once deployed.
-    liveUrl: undefined,
     featured: true,
-    problem:
-      "TODO: Describe the real motivation behind Book-it-Quick (e.g. a need to track day-to-day finances without depending on third-party SaaS, or a production-internship brief).",
-    solution:
-      "TODO: Describe the high-level solution — a Vue single-page app talking to a Spring Boot REST API, persisting data in MySQL, with token-based authentication and BCrypt-hashed credentials.",
-    architecture:
-      "TODO: Document the architecture in your own words — frontend (Vue + Element Plus + Axios), backend (Spring Boot + MyBatis), database (MySQL), and the auth flow (token-based, BCrypt password hashing).",
-    implementation:
-      "TODO: List the notable implementation details — e.g. how the REST endpoints are organised, how MyBatis mappers are structured, how Apache ECharts is wired into the dashboard, how the auth token is issued and validated.",
-    challenges:
-      "TODO: Document the most interesting engineering challenges you ran into while building Book-it-Quick.",
-    results:
-      "TODO: Summarise the outcome (qualitative — no fabricated metrics).",
-    lessons:
-      "TODO: Note the most valuable lessons from the internship project.",
+    problem: "Personal finance tools often suffer from floating-point calculation drift, rigid single-currency setups, and vulnerable session management. The challenge was building an end-to-end production-ready financial platform from scratch in just 10 working days, enforcing strict monetary precision (BigDecimal/DECIMAL(15,2)), enterprise auth hygiene, and automated background jobs.",
+    solution: "High-Precision Financial Core: End-to-end BigDecimal in Java and DECIMAL(15,2) in MySQL, completely preventing floating-point calculation drift across all monetary operations.\n\nEnterprise Security Architecture: Stateless JWT authentication with rotating SHA-256 refresh tokens, auto-pruning token denylist, login rate limiting, and RBAC (USER/ADMIN).\n\nAutomated Cron Operations: Spring @Scheduled background workers for daily currency exchange sync, recurring monthly bill generation, recycle bin pruning, and token cleanup.\n\nInteractive Dashboard & 5-Locale i18n: Vue 3 + Element Plus UI with Apache ECharts visualization, persistent dark mode, and runtime switching across 5 languages (English, Indonesian, Japanese, Simplified Chinese, Traditional Chinese).",
+    architecture: "Layered Backend Architecture: Strict separation across Security Filters -> Controllers -> Services -> MyBatis Mappers -> MySQL with idempotent migration scripts.\n\nMulti-Currency Pipeline: Automated daily cron syncing live exchange rates via external API, dynamically recalculating dashboard totals across currencies.\n\nSoft-Delete & Audit Pattern: Non-destructive deletion flags with user-facing Recycle Bin recovery and automated retention cleanup.",
+    implementation: "Security Layer: BCrypt password hashing, HS256 JWT with RBAC claims, token rotation chaining via replaced_by, and denylist middleware.\n\nQuery Optimization: Composite index on (user_id, bill_date) ensuring fast paginated transaction queries.\n\nData Visualization: Real-time category distribution pie charts and 7-day cash-flow trends powered by Apache ECharts.",
+    challenges: "Enforcing strict arithmetic precision across all API serialization, database queries, and client-side aggregations.\n\nTransitioning from Game Technology to full-stack enterprise Java/Vue architecture under an intensive 10-day deadline.",
+    results: "Successfully engineered and delivered within the 10-day deadline at Shandong University of Science and Technology. Open-source on GitHub with comprehensive test endpoints and architecture documentation.",
+    lessons: "Financial software demands strict data integrity (BigDecimal over float/double) and atomic transactions.\n\nCore software engineering patterns—such as modular REST layering, stateless auth hygiene, and automated cron jobs—translate seamlessly across both game engines and web platforms.",
     highlights: [
-      "Full-stack: Spring Boot + MyBatis backend, Vue + Element Plus frontend.",
-      "MySQL schema with MyBatis mappers and BCrypt-hashed credentials.",
-      "Token-based authentication and a responsive dashboard UI.",
-      "Apache ECharts for financial visualisation.",
+      "End-to-end BigDecimal & DECIMAL(15,2) precision.",
+      "Stateless JWT auth with refresh token rotation and denylist.",
+      "Vue 3 + Element Plus dashboard with 5-locale i18n.",
+      "Apache ECharts for real-time financial visualization.",
+      "Spring @Scheduled cron jobs for daily operations.",
     ],
   },
   {
