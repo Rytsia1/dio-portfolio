@@ -166,33 +166,23 @@ export default async function ProjectPage({ params }: PageProps) {
         </Container>
       </header>
 
-      {/* Cover image — prominent artwork at the top of the case study */}
-      <Container className="pt-10 sm:pt-12">
-        <Reveal>
-          {project.coverImage ? (
-            <div className="relative aspect-video w-full overflow-hidden rounded-2xl border-2 border-slate-200 bg-surface shadow-md">
+      {/* Cover image */}
+      {project.coverImage && (
+        <Container className="pt-8 sm:pt-10">
+          <Reveal>
+            <div className="relative w-full aspect-video md:aspect-[21/9] rounded-2xl overflow-hidden border-2 border-slate-200 shadow-md">
               <Image
                 src={project.coverImage}
-                alt={`${project.title} — cover artwork`}
+                alt={project.title}
                 fill
                 priority
                 sizes="(max-width: 1152px) 100vw, 1152px"
-                className="object-cover w-full h-full"
+                className="object-cover"
               />
             </div>
-          ) : (
-            /* Fallback: decorative placeholder until artwork is added. */
-            <div
-              aria-hidden
-              className="bg-grid relative grid aspect-video place-items-center overflow-hidden rounded-2xl border border-dashed border-border-strong bg-surface-soft"
-            >
-              <span className="font-mono text-xs uppercase tracking-[0.22em] text-fg-subtle">
-                {project.slug}
-              </span>
-            </div>
-          )}
-        </Reveal>
-      </Container>
+          </Reveal>
+        </Container>
+      )}
 
       {/* Case-study body */}
       <Container className="py-12 sm:py-16">

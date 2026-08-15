@@ -151,17 +151,17 @@ export const projects: ProjectItem[] = [
     gallery: [
       {
         src: "/projects/wacky-whackers/screen1.png",
-        alt: "Village Exploration",
+        alt: "Exploration",
         caption: "First-person village roaming and stick hunting.",
       },
       {
         src: "/projects/wacky-whackers/screen2.png",
-        alt: "Stick Appraisal",
+        alt: "Appraisal",
         caption: "The eccentric NPC appraiser rating stick rarity, stats, and naming lore.",
       },
       {
         src: "/projects/wacky-whackers/screen3.png",
-        alt: "Turn-Based Combat",
+        alt: "Combat",
         caption: "Side-view combat duel arena with strategic options (Attack, Skill, Defense, Dodge).",
       },
     ],
