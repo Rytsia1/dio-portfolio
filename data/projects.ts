@@ -145,7 +145,6 @@ export const projects: ProjectItem[] = [
       "Exploration",
       "Game Jam",
     ],
-    githubUrl: "https://github.com/Rytsia1",
     liveUrl:
       "https://zenomaru.itch.io/142-kanvas-kosong-student-whacky-whackers-the-ultimate-stick-battle",
     coverImage: "/projects/wacky-whackers/cover.png",
@@ -193,41 +192,61 @@ export const projects: ProjectItem[] = [
     type: "game",
     slug: "makan-siang-bergizi",
     title: "Makan Siang Bergizi",
+    tagline: "Asymmetric Co-op Nutrition Management & School Lunch Simulation",
     shortDescription:
-      "A cooperative two-player online game about cooking and nutrition management — KMIPN 2025 finalist.",
+      "A two-player cooperative online simulation game about cooking and nutrition management — KMIPN 2025 finalist.",
     overview:
-      "A cooperative online game where two players work together to cook and manage nutrition in a school-lunch context. Built in Unity with Proton-powered online multiplayer. Selected as a KMIPN 2025 finalist.",
-    category: "Game Technology",
+      "A two-player cooperative online simulation game where players assume distinct roles—a cafeteria chef and a nutritionist—collaborating in real-time to prepare balanced, nutritious meals for school children with varying dietary needs across Indonesia. Selected as a National Finalist at KMIPN 2025.",
+    category: "Game Development",
     year: "2025",
-    role: "TODO: Replace with your actual role (e.g. gameplay programmer, designer)",
+    role: "Game Designer & Multiplayer Programmer",
     achievement: "KMIPN 2025 Finalist",
-    engine: "Unity · Proton",
+    engine: "Unity",
     coreMechanics: [
       "Online Cooperative Play",
       "Cooking & Nutrition Management",
+      "Asymmetric Gameplay",
     ],
-    tags: ["Unity", "C#", "Proton", "Multiplayer", "Educational", "Co-op"],
-    githubUrl: "https://github.com/Rytsia1",
+    tags: ["Unity", "C#", "Online Co-op", "Asymmetric Gameplay", "Simulation", "KMIPN 2025 Finalist"],
+    liveUrl: "https://zenomaru.itch.io/makansiangbergizi",
+    coverImage: "/projects/makan-siang-bergizi/cover.png",
+    gallery: [
+      {
+        src: "/projects/makan-siang-bergizi/screen1.png",
+        alt: "Nutritionist Dashboard & Student Profile",
+        caption: "Nutritionist HUD analyzing dietary targets and student traits.",
+      },
+      {
+        src: "/projects/makan-siang-bergizi/screen2.png",
+        alt: "Cafeteria Kitchen Stations",
+        caption: "Chef cooking stations and real-time food preparation.",
+      },
+      {
+        src: "/projects/makan-siang-bergizi/screen3.png",
+        alt: "Asymmetric Role Selection",
+        caption: "Players must choose between the Chef and Nutritionist (Ahli Gizi) roles before starting.",
+      },
+    ],
     featured: true,
     problem:
-      "TODO: Describe the design motivation (e.g. making nutrition education engaging through co-op gameplay).",
+      "Educational games about health and dietary balance often struggle with player engagement due to passive quiz formats. The design challenge was turning complex nutritional guidelines into a fun, fast-paced asymmetric cooperative experience that demands active verbal communication and teamwork.",
     solution:
-      "TODO: Describe the high-level solution — two-player cooperative loop, cooking and nutrition management mechanics, and the multiplayer architecture.",
+      "• Asymmetric Cooperative Roles: One player manages the nutritional balance and patient data, while the other executes the physical cooking and meal assembly.\n• Dynamic Student Demographics: Procedural customer generation reflecting diverse dietary restrictions, allergies, and caloric requirements across Indonesian schools.\n• Point-and-Click Time Management: Intuitive interaction mechanics designed for cooperative synchronization under tight time constraints.",
     architecture:
-      "TODO: Describe the technical architecture (e.g. the online multiplayer layer, session flow, client synchronisation).",
+      "• Multiplayer Synchronization Layer: Online room matchmaking and client synchronization for kitchen stations, ingredient states, and order progress.\n• Asymmetric Role-Specific UI: Independent UI viewports tailored for each role's distinct workflow.\n• Nutritional Scoring Engine: Real-time calculation formula comparing dish composition against target nutrient quotas.",
     implementation:
-      "TODO: List notable implementation details — networking, gameplay systems, UI flow, art pipeline.",
+      "• Networked State Management: Deterministic station timers, ingredient transformations, and order submission verification.\n• Data-Driven Recipe Architecture: ScriptableObject database containing nutritional values, recipe combos, and student demographic data.\n• Feedback & Alerts: Dynamic warning systems for overcooked items and order deadlines.",
     challenges:
-      "TODO: Document the most interesting engineering / design challenges.",
+      "• Synchronizing fast-paced cooking interactions and ingredient transfers reliably across network clients.\n• Balancing the nutritionist role to ensure analytical gameplay felt just as urgent and fun as the physical cooking role.",
     results:
-      "Selected as a KMIPN 2025 finalist.",
+      "National Finalist at KMIPN 2025. Published and playable on Itch.io.",
     lessons:
-      "TODO: Note the most valuable lessons from this project.",
+      "• Asymmetric information distribution naturally drives organic verbal communication and player engagement.\n• Decoupling server-authoritative logic from immediate client-side UI feedback is essential for smooth multiplayer responsiveness.",
     highlights: [
-      "Cooperative two-player online gameplay in Unity.",
-      "Cooking and nutrition management as a core gameplay loop.",
-      "Online multiplayer functionality.",
-      "Selected as a KMIPN 2025 finalist.",
+      "Asymmetric Co-op Gameplay between Chef and Nutritionist.",
+      "Real-time Multiplayer Synchronization via Proton.",
+      "Dynamic procedural student generation based on Indonesian demographics.",
+      "National Finalist at KMIPN 2025.",
     ],
   },
   {

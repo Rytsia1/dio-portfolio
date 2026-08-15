@@ -151,7 +151,7 @@ export default async function ProjectPage({ params }: PageProps) {
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  variant="secondary"
+                  variant="primary"
                   size="lg"
                   aria-label={`${project.title} — ${liveCtaLabel(project.liveUrl)} (opens in new tab)`}
                 >
@@ -178,7 +178,7 @@ export default async function ProjectPage({ params }: PageProps) {
                 fill
                 priority
                 sizes="(max-width: 1152px) 100vw, 1152px"
-                className="object-cover w-full h-full"
+                className="object-contain w-full h-full p-4"
                 style={{ imageRendering: "pixelated" }}
               />
             </div>
