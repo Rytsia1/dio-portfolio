@@ -26,6 +26,7 @@ import type { GameProject, ProjectItem, WebProject } from "@/types/portfolio";
  * in later without inventing facts.
  */
 export const projects: ProjectItem[] = [
+
   // ─────────────────────────── WEB / SOFTWARE ─────────────────────────────
 
   {
@@ -150,20 +151,20 @@ export const projects: ProjectItem[] = [
     coverImage: "/projects/wacky-whackers/cover.png",
     gallery: [
       {
-        src: "/projects/wacky-whackers/screen1.png",
+        src: "/projects/wacky-whackers/screen4.png",
         alt: "Exploration",
         caption: "First-person village roaming and stick hunting.",
       },
       {
-        src: "/projects/wacky-whackers/screen2.png",
+        src: "/projects/wacky-whackers/screen5.png",
         alt: "Appraisal",
         caption: "The eccentric NPC appraiser rating stick rarity, stats, and naming lore.",
       },
       {
-        src: "/projects/wacky-whackers/screen3.png",
+        src: "/projects/wacky-whackers/screen1.png",
         alt: "Combat",
         caption: "Side-view combat duel arena with strategic options (Attack, Skill, Defense, Dodge).",
-      },
+      }
     ],
     featured: true,
     problem:

@@ -67,6 +67,7 @@ function liveCtaLabel(url: string): string {
 
 export default async function ProjectPage({ params }: PageProps) {
   const { slug } = await params;
+  console.log(`[ProjectPage] Re-rendering slug: ${slug}`);
   const project = getProjectBySlug(slug);
   if (!project) notFound();
 
@@ -167,22 +168,23 @@ export default async function ProjectPage({ params }: PageProps) {
       </header>
 
       {/* Cover image */}
-      {project.coverImage && (
-        <Container className="pt-8 sm:pt-10">
+      {project.coverImage ? (
+        <Container>
           <Reveal>
-            <div className="relative w-full aspect-video md:aspect-[21/9] rounded-2xl overflow-hidden border-2 border-slate-200 shadow-md">
+            <div className="relative w-full aspect-video md:aspect-[21/9] rounded-2xl overflow-hidden border-2 border-slate-200 shadow-md my-8">
               <Image
                 src={project.coverImage}
                 alt={project.title}
                 fill
                 priority
                 sizes="(max-width: 1152px) 100vw, 1152px"
-                className="object-cover"
+                className="object-cover w-full h-full"
+                style={{ imageRendering: "pixelated" }}
               />
             </div>
           </Reveal>
         </Container>
-      )}
+      ) : null}
 
       {/* Case-study body */}
       <Container className="py-12 sm:py-16">

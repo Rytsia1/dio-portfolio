@@ -75,8 +75,8 @@ export function ImageGallery({ items }: ImageGalleryProps) {
 
   return (
     <>
-      {/* Thumbnail grid — card containers with hover zoom */}
-      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Thumbnail grid — clean responsive cards with pixelated rendering and lightbox */}
+      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item, index) => (
           <li key={item.src}>
             <button
@@ -86,18 +86,19 @@ export function ImageGallery({ items }: ImageGalleryProps) {
                 setActiveIndex(index);
               }}
               aria-label={`${item.alt} — open full-size preview`}
-              className="group block w-full overflow-hidden rounded-xl border border-border bg-surface text-left card-shadow-soft transition-colors hover:border-accent/40"
+              className="group block w-full overflow-hidden rounded-xl border border-slate-200 bg-surface text-left shadow-sm transition-all hover:border-accent hover:shadow-md"
             >
-              <span className="relative block aspect-[4/3] overflow-hidden">
+              <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
                 <Image
                   src={item.src}
-                  alt={item.alt}
+                  alt={item.alt || "Project screenshot"}
                   fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  style={{ imageRendering: "pixelated" }}
                 />
-              </span>
-              <span className="block border-t border-border px-3.5 py-2.5">
+              </div>
+              <div className="border-t border-slate-200 px-3.5 py-2.5">
                 <span className="block text-sm font-medium text-fg">
                   {item.alt}
                 </span>
@@ -106,7 +107,7 @@ export function ImageGallery({ items }: ImageGalleryProps) {
                     {item.caption}
                   </span>
                 )}
-              </span>
+              </div>
             </button>
           </li>
         ))}
