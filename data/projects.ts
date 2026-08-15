@@ -251,31 +251,45 @@ export const projects: ProjectItem[] = [
   },
   {
     type: "game",
-    slug: "project-moon-sky",
-    title: "Project : Moon Sky",
+    slug: "moon-sky",
+    title: "Moon Sky",
+    tagline: "2.5D Mobile Arcade Shooter with Tactical Bullet-Time Evading Mechanics",
     shortDescription:
-      "A 2.5D vertical side-scrolling game with touch controls, built in Unity.",
+      "A high-octane 2.5D vertical mobile arcade shooter featuring gesture-based navigation and bullet-time mechanics.",
     overview:
-      "Project : Moon Sky is a 2.5D vertical side-scrolling game built in Unity, designed around touch controls for mobile play.",
-    category: "Game Technology",
-    year: "TODO: Year",
-    role: "TODO: Replace with your actual role",
+      "A high-octane 2.5D vertical mobile arcade shooter where players pilot an advanced space fighter to defend the Moon from an alien armada. Designed natively for mobile touch screens, featuring fluid 1:1 gesture navigation, weapon switching, and an adrenaline-pumping risk-reward near-miss barrel roll mechanic that triggers dynamic slow motion.",
+    category: "Mobile Game Development",
+    year: "2025",
+    role: "Game Designer & Gameplay Programmer",
     engine: "Unity",
-    coreMechanics: ["2.5D Vertical Side-Scrolling", "Touch Controls"],
-    tags: ["Unity", "C#", "2.5D", "Side-Scroller", "Mobile", "Touch Controls"],
-    githubUrl: "https://github.com/Rytsia1",
+    coreMechanics: [
+      "Gesture-Based Navigation",
+      "Bullet-Time Evading",
+      "Weapon Switching"
+    ],
+    tags: ["Unity", "C#", "Mobile", "2.5D", "Shmup", "Touch Controls", "Arcade"],
+    liveUrl: "https://kanvas-kosong.itch.io/project-pew-pew",
+    coverImage: "/projects/moon-sky/cover.png",
     featured: true,
-    problem: "TODO: Describe the design motivation behind Project : Moon Sky.",
+    problem:
+      "Mobile shooters often struggle with cumbersome virtual joysticks that obscure screen viewports or feel sluggish. The design challenge was engineering responsive, natural touch-gesture controls paired with a high-stakes evasion mechanic that rewards risky, close-call positioning.",
     solution:
-      "TODO: Describe the high-level solution — the 2.5D vertical side-scrolling structure and the touch-control scheme.",
-    architecture: "TODO: Describe the technical architecture.",
-    implementation: "TODO: List notable implementation details.",
-    challenges: "TODO: Document the most interesting engineering challenges.",
-    results: "TODO: Summarise the result qualitatively.",
-    lessons: "TODO: Note the most valuable lessons learned.",
+      "• Direct Touch-Drag Navigation: 1:1 finger-following flight controls allowing pinpoint precision dodging without on-screen buttons.\n• Risk-Reward Barrel Roll & Bullet Time: Double-tap dodge roll granting brief invulnerability (i-frames) and triggering slow motion when executed close to enemies.\n• Gesture-Based Weapon Switching: Quick swipe gestures to cycle arsenals on-the-fly to adapt against varied alien armor types.",
+    architecture:
+      "• Mobile Gesture Recognition Engine: High-tolerance input parsing separating micro-drags, rapid double taps, and directional swipe gestures.\n• Time Dilation Controller: Smooth Time.timeScale interpolation system managing cinematic bullet-time transitions with unscaled audio cues.\n• Zero-Allocation Object Pooling: High-performance memory management for hundreds of active projectiles, lasers, and particle effects.",
+    implementation:
+      "• ScriptableObject Weapon Architecture: Data-driven weapon profiles controlling spread patterns, fire rates, and visual effects.\n• Mobile Performance Optimization: Batch-rendered 2.5D assets and low-draw-call shaders ensuring a locked 60 FPS on mobile chipsets.\n• Wave Spawner State Machine: Scalable wave spawning system managing increasing formation complexity and enemy assault frequencies.",
+    challenges:
+      "• Disambiguating rapid drag motions from double-tap evasion triggers during intense bullet hell situations.\n• Maintaining smooth physics calculations and audio transitions during sudden slow-motion time dilation.",
+    results:
+      "Published and playable on mobile browsers and Android devices via Itch.io.",
+    lessons:
+      "• Designing around native mobile gestures provides far superior tactile satisfaction than emulated virtual joysticks.\n• Near-miss risk-reward mechanics elevate arcade shooters from simple avoidance into aggressive tactical positioning.",
     highlights: [
-      "2.5D vertical side-scrolling built in Unity.",
-      "Touch-first controls designed for mobile play.",
+      "Natively designed 2.5D mobile arcade shooter.",
+      "Custom Gesture Recognition Engine for 1:1 touch control.",
+      "High-stakes bullet-time evasion mechanics.",
+      "Optimized for 60 FPS performance on mobile."
     ],
   },
   {
