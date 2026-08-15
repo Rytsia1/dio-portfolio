@@ -29,6 +29,8 @@ export type ProjectCategory =
   | "Quantitative Finance"
   | "Software Engineering"
   | "Game Technology"
+  | "Game Development"
+  | "Mobile Game Development"
   | "Machine Learning";
 
 /** A single screenshot in a project's detail-page gallery. */
