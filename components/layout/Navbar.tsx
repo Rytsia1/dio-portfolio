@@ -69,9 +69,9 @@ export function Navbar() {
   }, []);
 
   useEffect(() => {
-    const ids = navItems.map((n) => n.href.slice(1));
+    const ids = navItems.map((n) => n.href.split("#")[1]);
     const sections = ids
-      .map((id) => document.getElementById(id))
+      .map((id) => document.getElementById(id as string))
       .filter((el): el is HTMLElement => el !== null);
 
     if (sections.length === 0) return;
@@ -138,7 +138,7 @@ export function Navbar() {
         )}
       >
         <Link
-          href="#top"
+          href="/#top"
           aria-label={`${profile.name} — home (top of page)`}
           className={cn(
             "flex items-center gap-2 rounded-full px-1 py-1 text-sm font-semibold tracking-tight text-fg",
@@ -162,7 +162,7 @@ export function Navbar() {
           className="hidden items-center gap-1 lg:flex"
         >
           {navItems.map((item) => {
-            const id = item.href.slice(1);
+            const id = item.href.split("#")[1];
             const isActive = activeId === id;
             return (
               <Link
@@ -246,7 +246,7 @@ export function Navbar() {
                   className="flex flex-col gap-1"
                 >
                   {navItems.map((item) => {
-                    const id = item.href.slice(1);
+                    const id = item.href.split("#")[1];
                     const isActive = activeId === id;
                     return (
                       <Link
