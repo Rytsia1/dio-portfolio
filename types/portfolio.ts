@@ -31,6 +31,16 @@ export type ProjectCategory =
   | "Game Technology"
   | "Machine Learning";
 
+/** A single screenshot in a project's detail-page gallery. */
+export interface GalleryImage {
+  /** Path in /public, e.g. "/projects/wacky-whackers/screen1.png" */
+  src: string;
+  /** Accessible alt text (also used as the card / lightbox title). */
+  alt: string;
+  /** Optional one-line caption shown under the image. */
+  caption?: string;
+}
+
 /**
  * Fields shared by every project, regardless of type.
  *
@@ -38,13 +48,15 @@ export type ProjectCategory =
  *   id          → `slug` (unique id *and* URL segment)
  *   description → `shortDescription` (cards) + `overview` (detail page)
  *   link        → `githubUrl` / `liveUrl`
- *   imageUrl    → `thumbnail`
+ *   imageUrl    → `thumbnail` (cards) + `coverImage` (detail hero) + `gallery`
  */
 export interface BaseProject {
   /** URL slug used in /projects/[slug] — doubles as the unique id. */
   slug: string;
   /** Display title */
   title: string;
+  /** Optional short tagline shown under the title on the detail-page hero. */
+  tagline?: string;
   /** One-sentence summary used in cards */
   shortDescription: string;
   /** Long-form description used on the detail page */
@@ -65,6 +77,16 @@ export interface BaseProject {
   liveUrl?: string;
   /** Optional path to a thumbnail in /public, e.g. "/projects/portfolio-optimizer.png" */
   thumbnail?: string;
+  /**
+   * Optional cover image (path in /public) rendered prominently at the
+   * top of the case-study page, e.g. "/projects/wacky-whackers/cover.png".
+   */
+  coverImage?: string;
+  /**
+   * Optional screenshot gallery rendered as a responsive grid with a
+   * lightbox preview at the bottom of the case-study page.
+   */
+  gallery?: GalleryImage[];
   /** Whether to surface this project on the home page */
   featured: boolean;
   /** Case-study content (all optional — placeholders are fine). */

@@ -1,11 +1,20 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight, Github, Layers } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowUpRight,
+  Gamepad2,
+  Github,
+  Images,
+  Layers,
+} from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Tag } from "@/components/ui/Tag";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
+import { ImageGallery } from "@/components/ui/ImageGallery";
 import {
   getAllProjectSlugs,
   getProjectBySlug,
@@ -39,13 +48,21 @@ export async function generateMetadata({
       title: project.title,
       description: project.shortDescription,
       type: "article",
+      images: project.coverImage ? [project.coverImage] : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title: project.title,
       description: project.shortDescription,
+      images: project.coverImage ? [project.coverImage] : undefined,
     },
   };
+}
+
+/** Pick a CTA label that matches the live-link destination. */
+function liveCtaLabel(url: string): string {
+  if (url.includes("itch.io")) return "Play on Itch.io";
+  return "Live demo";
 }
 
 export default async function ProjectPage({ params }: PageProps) {
@@ -65,7 +82,7 @@ export default async function ProjectPage({ params }: PageProps) {
           aria-hidden
           className="bg-grid pointer-events-none absolute inset-0 opacity-50"
         />
-        <Container className="relative py-16 sm:py-20">
+        <Container className="relative py-12 sm:py-16">
           <Reveal>
             <Link
               href="/#projects"
@@ -89,6 +106,14 @@ export default async function ProjectPage({ params }: PageProps) {
             </h1>
           </Reveal>
 
+          {project.tagline && (
+            <Reveal delay={0.12}>
+              <p className="mt-3 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-accent-strong sm:text-sm">
+                {project.tagline}
+              </p>
+            </Reveal>
+          )}
+
           <Reveal delay={0.15}>
             <p className="mt-5 max-w-3xl text-base leading-relaxed text-fg-muted sm:text-lg">
               {project.overview}
@@ -106,7 +131,7 @@ export default async function ProjectPage({ params }: PageProps) {
           </Reveal>
 
           <Reveal delay={0.25}>
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               {project.githubUrl && (
                 <Button
                   href={project.githubUrl}
@@ -127,9 +152,12 @@ export default async function ProjectPage({ params }: PageProps) {
                   rel="noopener noreferrer"
                   variant="secondary"
                   size="lg"
-                  aria-label={`${project.title} — Live demo (opens in new tab)`}
+                  aria-label={`${project.title} — ${liveCtaLabel(project.liveUrl)} (opens in new tab)`}
                 >
-                  Live demo
+                  {project.liveUrl.includes("itch.io") && (
+                    <Gamepad2 className="h-4 w-4" aria-hidden />
+                  )}
+                  {liveCtaLabel(project.liveUrl)}
                   <ArrowUpRight className="h-4 w-4" aria-hidden />
                 </Button>
               )}
@@ -138,8 +166,36 @@ export default async function ProjectPage({ params }: PageProps) {
         </Container>
       </header>
 
+      {/* Cover image — prominent artwork at the top of the case study */}
+      <Container className="pt-10 sm:pt-12">
+        <Reveal>
+          {project.coverImage ? (
+            <div className="relative aspect-video overflow-hidden rounded-2xl border border-border bg-surface card-shadow-soft">
+              <Image
+                src={project.coverImage}
+                alt={`${project.title} — cover artwork`}
+                fill
+                preload
+                sizes="(max-width: 1152px) 100vw, 1152px"
+                className="object-cover"
+              />
+            </div>
+          ) : (
+            /* Fallback: decorative placeholder until artwork is added. */
+            <div
+              aria-hidden
+              className="bg-grid relative grid aspect-video place-items-center overflow-hidden rounded-2xl border border-dashed border-border-strong bg-surface-soft"
+            >
+              <span className="font-mono text-xs uppercase tracking-[0.22em] text-fg-subtle">
+                {project.slug}
+              </span>
+            </div>
+          )}
+        </Reveal>
+      </Container>
+
       {/* Case-study body */}
-      <Container className="py-16 sm:py-20">
+      <Container className="py-12 sm:py-16">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-8">
             <CaseStudySection
@@ -224,6 +280,19 @@ export default async function ProjectPage({ params }: PageProps) {
             </div>
           </aside>
         </div>
+
+        {/* Screenshot gallery — full width below the case-study grid */}
+        {project.gallery && project.gallery.length > 0 && (
+          <Reveal className="mt-14 sm:mt-16">
+            <div className="mb-6 flex items-center gap-2.5">
+              <Images className="h-4 w-4 text-accent-strong" aria-hidden />
+              <h2 className="text-xl font-semibold tracking-tight text-fg">
+                Screenshots
+              </h2>
+            </div>
+            <ImageGallery items={project.gallery} />
+          </Reveal>
+        )}
       </Container>
 
       {/* Next-project footer */}
@@ -258,7 +327,7 @@ interface CaseStudySectionProps {
 
 function CaseStudySection({ title, content }: CaseStudySectionProps) {
   return (
-    <Reveal className="mb-12 last:mb-0">
+    <Reveal className="mb-10 last:mb-0">
       <h2 className="text-xl font-semibold tracking-tight text-fg">{title}</h2>
       <p className="mt-3 whitespace-pre-line text-base leading-relaxed text-fg-muted">
         {content}

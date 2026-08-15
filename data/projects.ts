@@ -120,38 +120,72 @@ export const projects: ProjectItem[] = [
   {
     type: "game",
     slug: "wacky-whackers",
-    title: "Wacky Whackers",
+    title: "Wacky Whackers: The Ultimate Stick Battle",
+    tagline: "Find your stick, Fight with stick",
     shortDescription:
-      "A first-person exploration game with turn-based combat — Top 60 at Gameseed 2025.",
+      "A quirky first-person exploration and turn-based stick-battling game — Top 60 national placement at Gameseed 2025, playable on Itch.io.",
     overview:
-      "A first-person exploration game with turn-based combat, built in Unity. Reached the Top 60 at Gameseed 2025.",
+      "A quirky exploration and turn-based battle game where players roam a village to discover, appraise, and duel with unique wooden sticks in a quest to become the Ultimate Whacker. Built for Gameseed 2025 under the theme 'Real Life Experience', achieving Top 60 national placement.",
     category: "Game Technology",
     year: "2025",
     role: "TODO: Replace with your actual role",
     achievement: "Gameseed 2025 — Top 60",
     engine: "Unity",
-    coreMechanics: ["First-Person Exploration", "Turn-Based Combat"],
-    tags: ["Unity", "C#", "First-Person", "Turn-Based Combat", "Exploration"],
+    coreMechanics: [
+      "First-Person Exploration",
+      "Stick Appraisal",
+      "Turn-Based Combat",
+    ],
+    tags: [
+      "Unity",
+      "C#",
+      "First-Person",
+      "Turn-Based Combat",
+      "Exploration",
+      "Game Jam",
+    ],
     githubUrl: "https://github.com/Rytsia1",
+    liveUrl:
+      "https://zenomaru.itch.io/142-kanvas-kosong-student-whacky-whackers-the-ultimate-stick-battle",
+    coverImage: "/projects/wacky-whackers/cover.png",
+    gallery: [
+      {
+        src: "/projects/wacky-whackers/screen1.png",
+        alt: "Village Exploration",
+        caption: "First-person village roaming and stick hunting.",
+      },
+      {
+        src: "/projects/wacky-whackers/screen2.png",
+        alt: "Stick Appraisal",
+        caption: "The eccentric NPC appraiser rating a stick's rarity, stats, and lore.",
+      },
+      {
+        src: "/projects/wacky-whackers/screen3.png",
+        alt: "Turn-Based Combat",
+        caption: "Side-view duel arena — Attack, Skill, Defense, Dodge.",
+      },
+    ],
     featured: true,
     problem:
-      "TODO: Describe the design motivation behind Wacky Whackers.",
+      "Childhood nostalgia often involves turning everyday objects into legendary artifacts—specifically, picking up tree sticks and pretending they are mythical swords. The design challenge was capturing this universal childhood fantasy into an engaging game loop that bridges exploration with tactical combat without losing its comedic charm.",
     solution:
-      "TODO: Describe the high-level solution — first-person exploration, turn-based combat, and the systems that tie them together.",
+      "• First-Person Exploration: An immersive village roaming mode where players hunt for procedurally scattered or hidden sticks across riverbanks, bushes, and trails.\n• Appraisal System: An eccentric NPC appraiser who rates stick rarity, stats, absurd naming lore, and combat potential.\n• Turn-Based Duel Arena: Side-view combat transitions with strategic options (Attack, Skill, Defense, Dodge) where victory depends on matching stick attributes against rival wielders.",
     architecture:
-      "TODO: Describe the technical architecture.",
+      "• Camera & Viewport Controller: Seamless switching between first-person navigation and fixed 2.5D side-view framing during combat encounters.\n• Inventory & Stick Data Structure: ScriptableObject-driven architecture storing stick parameters (rarity, stats, flavor lore, and 3D visual anchors).\n• Turn-Based Battle State Machine: Modular combat loop managing turn order, action resolution (Attack/Defense/Skill/Dodge), animation triggers, and damage calculation.",
     implementation:
-      "TODO: List notable implementation details.",
+      "• Gameplay Loop: Integrated dynamic interaction triggers (E to inspect/pickup, G to drop, I to inspect stats) with responsive UI HUD overlays.\n• Combat Timing & Mechanics: Risk-reward defense and dodge mechanics to reward calculated tactical decisions over simple button mashing.\n• Art & Asset Pipeline: Stylized environment coupled with 3D stick variations and expressive retro-inspired visual effects.",
     challenges:
-      "TODO: Document the most interesting engineering / design challenges.",
+      "• State Transition Consistency: Handling smooth camera, UI, and input switching when transitioning from freeform 3D first-person exploration into grid-locked side-view turn-based battles.\n• Balancing Humor vs Depth: Designing combat modifiers that make absurd sticks mechanically distinctive rather than just purely aesthetic.",
     results:
-      "Reached the Top 60 at Gameseed 2025.",
+      "Top 60 National Placement at Gameseed 2025. Published and fully playable on Itch.io.",
     lessons:
-      "TODO: Note the most valuable lessons from this project.",
+      "Grounding game concepts in relatable childhood memories creates instant player empathy. Decoupling item statistics from visual meshes via modular data structures vastly speeds up prototyping and item balancing.",
     highlights: [
-      "First-person exploration built in Unity.",
-      "Turn-based combat system.",
-      "Reached the Top 60 at Gameseed 2025.",
+      "First-person village exploration with procedurally scattered stick hunting.",
+      "Eccentric NPC appraisal system rating stick rarity, stats, and naming lore.",
+      "Turn-based duel arena with Attack / Skill / Defense / Dodge actions.",
+      "Top 60 National Placement at Gameseed 2025.",
+      "Published and fully playable on Itch.io.",
     ],
   },
   {

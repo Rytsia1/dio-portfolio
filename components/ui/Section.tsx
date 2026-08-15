@@ -24,6 +24,12 @@ interface SectionProps {
 /**
  * Standard vertical section block with consistent spacing and an
  * optional heading group. Children are rendered inside a `Container`.
+ *
+ * Vertical rhythm is standardized at `py-10 md:py-16` (40 → 64 px).
+ * Adjacent sections stack their top/bottom padding, so the effective
+ * gap between two sections is 80 px on mobile and 128 px on desktop —
+ * tight enough to avoid scroll fatigue while keeping sections visually
+ * distinct. `flush` opts out entirely (the Hero manages its own height).
  */
 export function Section({
   id,
@@ -42,7 +48,7 @@ export function Section({
       id={id}
       className={cn(
         "scroll-mt-24",
-        flush ? "" : "py-12 md:py-20",
+        flush ? "" : "py-10 md:py-16",
         className,
       )}
     >

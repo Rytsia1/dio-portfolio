@@ -124,7 +124,15 @@ export function Hero() {
        *   socials → 250 ms
        *   scroll  → 300 ms
        */}
-      <Container className="relative flex min-h-[80vh] flex-col justify-center py-16 sm:py-20 md:py-24">
+      {/*
+       * Height: `min-h-[80vh]` keeps the hero near-viewport-sized without
+       * forcing a massive empty band below it. Padding is capped at
+       * `py-12 sm:py-16` — the flex centring already distributes free
+       * space, so larger padding only creates dead space under the hero
+       * (and on mobile, where the stacked content exceeds 80vh, it made
+       * the block far taller than necessary).
+       */}
+      <Container className="relative flex min-h-[80vh] flex-col justify-center py-12 sm:py-16">
 
         {/* 1 — Availability badge ---------------------------------------- */}
         <p className="hero-in mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 px-3 py-1 text-xs font-medium text-fg-muted backdrop-blur sm:mb-6 [animation-delay:0ms]">
