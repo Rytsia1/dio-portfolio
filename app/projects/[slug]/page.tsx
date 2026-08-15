@@ -170,14 +170,14 @@ export default async function ProjectPage({ params }: PageProps) {
       <Container className="pt-10 sm:pt-12">
         <Reveal>
           {project.coverImage ? (
-            <div className="relative aspect-video overflow-hidden rounded-2xl border border-border bg-surface card-shadow-soft">
+            <div className="relative aspect-video w-full overflow-hidden rounded-2xl border-2 border-slate-200 bg-surface shadow-md">
               <Image
                 src={project.coverImage}
                 alt={`${project.title} — cover artwork`}
                 fill
-                preload
+                priority
                 sizes="(max-width: 1152px) 100vw, 1152px"
-                className="object-cover"
+                className="object-cover w-full h-full"
               />
             </div>
           ) : (
@@ -210,13 +210,13 @@ export default async function ProjectPage({ params }: PageProps) {
             )}
             {project.architecture && (
               <CaseStudySection
-                title="Architecture"
+                title="Architecture & Core Systems"
                 content={project.architecture}
               />
             )}
             {project.implementation && (
               <CaseStudySection
-                title="Technical implementation"
+                title="Technical Implementation"
                 content={project.implementation}
               />
             )}
@@ -231,7 +231,7 @@ export default async function ProjectPage({ params }: PageProps) {
             )}
             {project.lessons && (
               <CaseStudySection
-                title="Lessons learned"
+                title="Lessons Learned"
                 content={project.lessons}
               />
             )}
@@ -239,7 +239,7 @@ export default async function ProjectPage({ params }: PageProps) {
 
           <aside className="lg:col-span-4">
             <div className="sticky top-24 space-y-6">
-              <div className="rounded-xl border border-border bg-surface p-5">
+              <div className="rounded-xl border border-border bg-surface p-5 card-shadow-soft">
                 <h2 className="text-sm font-semibold text-fg">Highlights</h2>
                 {project.highlights && project.highlights.length > 0 ? (
                   <ul className="mt-4 space-y-3 text-sm text-fg-muted">
@@ -264,7 +264,7 @@ export default async function ProjectPage({ params }: PageProps) {
                 )}
               </div>
 
-              <div className="rounded-xl border border-border bg-surface p-5">
+              <div className="rounded-xl border border-border bg-surface p-5 card-shadow-soft">
                 <h2 className="flex items-center gap-2 text-sm font-semibold text-fg">
                   <Layers className="h-4 w-4 text-accent-strong" aria-hidden />
                   Tech stack
@@ -281,14 +281,19 @@ export default async function ProjectPage({ params }: PageProps) {
           </aside>
         </div>
 
-        {/* Screenshot gallery — full width below the case-study grid */}
+        {/* Screenshot gallery — dedicated Screenshots & Gameplay section */}
         {project.gallery && project.gallery.length > 0 && (
-          <Reveal className="mt-14 sm:mt-16">
+          <Reveal className="mt-14 border-t border-border pt-12 sm:mt-16">
             <div className="mb-6 flex items-center gap-2.5">
-              <Images className="h-4 w-4 text-accent-strong" aria-hidden />
-              <h2 className="text-xl font-semibold tracking-tight text-fg">
-                Screenshots
-              </h2>
+              <Images className="h-5 w-5 text-accent-strong" aria-hidden />
+              <div>
+                <h2 className="text-2xl font-semibold tracking-tight text-fg">
+                  Screenshots & Gameplay
+                </h2>
+                <p className="mt-1 text-sm text-fg-muted">
+                  Visual assets and in-game captures from {project.title}. Click any image to open the full-resolution preview.
+                </p>
+              </div>
             </div>
             <ImageGallery items={project.gallery} />
           </Reveal>
@@ -326,12 +331,59 @@ interface CaseStudySectionProps {
 }
 
 function CaseStudySection({ title, content }: CaseStudySectionProps) {
+  const lines = content.split("\n").filter((line) => line.trim().length > 0);
+  const isBulletList =
+    lines.length > 0 &&
+    lines.every(
+      (line) => line.trim().startsWith("•") || line.trim().startsWith("-"),
+    );
+
   return (
     <Reveal className="mb-10 last:mb-0">
       <h2 className="text-xl font-semibold tracking-tight text-fg">{title}</h2>
-      <p className="mt-3 whitespace-pre-line text-base leading-relaxed text-fg-muted">
-        {content}
-      </p>
+      {isBulletList ? (
+        <ul className="mt-4 space-y-3.5">
+          {lines.map((line, idx) => {
+            const clean = line.replace(/^[•\-]\s*/, "");
+            const colonIndex = clean.indexOf(":");
+            if (colonIndex > -1) {
+              const label = clean.slice(0, colonIndex);
+              const rest = clean.slice(colonIndex + 1);
+              return (
+                <li
+                  key={idx}
+                  className="flex items-start gap-3 text-base leading-relaxed text-fg-muted"
+                >
+                  <span
+                    aria-hidden
+                    className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
+                  />
+                  <span>
+                    <strong className="font-semibold text-fg">{label}:</strong>
+                    {rest}
+                  </span>
+                </li>
+              );
+            }
+            return (
+              <li
+                key={idx}
+                className="flex items-start gap-3 text-base leading-relaxed text-fg-muted"
+              >
+                <span
+                  aria-hidden
+                  className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
+                />
+                <span>{clean}</span>
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <p className="mt-3 whitespace-pre-line text-base leading-relaxed text-fg-muted">
+          {content}
+        </p>
+      )}
     </Reveal>
   );
 }

@@ -123,12 +123,12 @@ export const projects: ProjectItem[] = [
     title: "Wacky Whackers: The Ultimate Stick Battle",
     tagline: "Find your stick, Fight with stick",
     shortDescription:
-      "A quirky first-person exploration and turn-based stick-battling game — Top 60 national placement at Gameseed 2025, playable on Itch.io.",
+      "A quirky exploration and turn-based stick-battling game — Top 60 national placement at Gameseed 2025, playable on Itch.io.",
     overview:
       "A quirky exploration and turn-based battle game where players roam a village to discover, appraise, and duel with unique wooden sticks in a quest to become the Ultimate Whacker. Built for Gameseed 2025 under the theme 'Real Life Experience', achieving Top 60 national placement.",
     category: "Game Technology",
     year: "2025",
-    role: "TODO: Replace with your actual role",
+    role: "Game Designer & Gameplay Programmer",
     achievement: "Gameseed 2025 — Top 60",
     engine: "Unity",
     coreMechanics: [
@@ -157,12 +157,12 @@ export const projects: ProjectItem[] = [
       {
         src: "/projects/wacky-whackers/screen2.png",
         alt: "Stick Appraisal",
-        caption: "The eccentric NPC appraiser rating a stick's rarity, stats, and lore.",
+        caption: "The eccentric NPC appraiser rating stick rarity, stats, and naming lore.",
       },
       {
         src: "/projects/wacky-whackers/screen3.png",
         alt: "Turn-Based Combat",
-        caption: "Side-view duel arena — Attack, Skill, Defense, Dodge.",
+        caption: "Side-view combat duel arena with strategic options (Attack, Skill, Defense, Dodge).",
       },
     ],
     featured: true,

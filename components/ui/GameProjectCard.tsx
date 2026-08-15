@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Github, Gamepad2, Cpu, Wrench, Zap } from "lucide-react";
 import type { GameProject } from "@/types/portfolio";
@@ -51,27 +52,52 @@ export function GameProjectCard({
       {/* ── Card header ──────────────────────────────────────────────────── */}
       <div
         aria-hidden
-        className="relative h-40 overflow-hidden border-b border-border bg-surface-soft"
+        className="relative h-44 overflow-hidden border-b border-border bg-surface-soft"
       >
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(circle at 30% 30%, rgba(194,65,12,0.12) 0%, rgba(220,238,255,0) 55%)",
-          }}
-        />
-        <div className="absolute inset-0 bg-pixel-grid opacity-50" />
+        {project.coverImage ? (
+          <>
+            <Image
+              src={project.coverImage}
+              alt=""
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-fg/80 via-fg/20 to-transparent" />
+          </>
+        ) : (
+          <>
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(circle at 30% 30%, rgba(194,65,12,0.12) 0%, rgba(220,238,255,0) 55%)",
+              }}
+            />
+            <div className="absolute inset-0 bg-pixel-grid opacity-50" />
+          </>
+        )}
         <span
           aria-hidden
-          className="absolute right-5 top-5 grid h-9 w-9 place-items-center rounded-full border border-border bg-surface text-orange-700"
+          className="absolute right-5 top-5 grid h-9 w-9 place-items-center rounded-full border border-border/80 bg-surface/90 text-orange-700 backdrop-blur-sm card-shadow-soft"
         >
           <Gamepad2 className="h-4 w-4" />
         </span>
         <div className="absolute inset-x-5 bottom-4 flex items-center justify-between">
-          <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-orange-700">
+          <span
+            className={cn(
+              "font-mono text-[10px] font-semibold uppercase tracking-[0.18em]",
+              project.coverImage ? "text-white" : "text-orange-700",
+            )}
+          >
             {project.category}
           </span>
-          <span className="font-mono text-[10px] text-fg-subtle">
+          <span
+            className={cn(
+              "font-mono text-[10px]",
+              project.coverImage ? "text-white/85" : "text-fg-subtle",
+            )}
+          >
             {project.year ?? "—"} · {`/${project.slug}`}
           </span>
         </div>
