@@ -32,7 +32,8 @@ export type ProjectCategory =
   | "Game Technology"
   | "Game Development"
   | "Mobile Game Development"
-  | "Machine Learning";
+  | "Machine Learning"
+  | "Data Science & Fintech";
 
 /** A single screenshot in a project's detail-page gallery. */
 export interface GalleryImage {

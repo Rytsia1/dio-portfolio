@@ -67,41 +67,37 @@ export const projects: ProjectItem[] = [
   {
     type: "web",
     slug: "portfolio-optimizer",
-    title: "Stock Portofolio Optimizer",
-    shortDescription:
-      "A stock portfolio optimisation app built with Python and Streamlit, implementing Modern Portfolio Theory.",
-    overview:
-      "An end-to-end stock portfolio construction tool with an interactive Streamlit interface. It takes a universe of assets, computes expected returns and the covariance matrix, then runs mean-variance optimisation to produce efficient allocations — visualised as the efficient frontier with the maximum-Sharpe portfolio highlighted.",
-    category: "Quantitative Finance",
+    title: "Stock Portfolio Optimizer",
+    tagline: "Quantitative Asset Allocation & Risk Analytics Platform using Modern Portfolio Theory",
+    shortDescription: "An interactive quantitative finance web application engineered to compute optimal asset allocations using Modern Portfolio Theory.",
+    overview: "An interactive quantitative finance web application engineered to compute optimal asset allocations using Modern Portfolio Theory (MPT). The platform maximizes risk-adjusted returns (Sharpe Ratio) through non-linear constrained optimization (SciPy SLSQP), simulates a 10,000-iteration Monte Carlo Efficient Frontier, computes parametric risk metrics (VaR/CVaR), and stress-tests portfolio resilience against historical market crashes.",
+    category: "Data Science & Fintech",
     year: "2026",
-    role: "Solo project",
-    tags: [
-      "Python",
-      "Streamlit",
-      "Modern Portfolio Theory",
-      "Efficient Frontier",
-      "Pandas",
+    role: "Quantitative Software Engineer",
+    team: "Solo Project",
+    tags: ["Python", "Streamlit", "SciPy (SLSQP)", "Modern Portfolio Theory", "Plotly", "Pandas", "NumPy", "yfinance", "Monte Carlo", "Risk Analytics (VaR/CVaR)"],
+    githubUrl: "https://github.com/Rytsia1/Portofolio-Optimizer",
+    liveUrl: "https://stockportofolio-optimizer.streamlit.app/",
+    coverImage: "/projects/portfolio-optimizer/cover.png",
+    gallery: [
+      { src: "/projects/portfolio-optimizer/screen1.png", alt: "Optimization Results & Efficient Frontier", caption: "Interactive Plotly Efficient Frontier chart with 10,000 Monte Carlo iterations and optimal Sharpe Ratio weights." },
+      { src: "/projects/portfolio-optimizer/screen2.png", alt: "Historical Backtest & Growth Comparison", caption: "Cumulative portfolio growth backtesting compared against market benchmarks (SPY) and equal-weight allocations." },
+      { src: "/projects/portfolio-optimizer/screen3.png", alt: "Historical Stress Testing & Drawdowns", caption: "Stress-testing module calculating Maximum Drawdowns (MDD) across the 2008 GFC, COVID-19, and 2022 Tech Bear Market." }
     ],
-    githubUrl: "https://github.com/Rytsia1",
     featured: true,
-    problem:
-      "TODO: Describe the problem this project solves (e.g. helping users build diversified stock portfolios without a quant background).",
-    solution:
-      "TODO: Describe the high-level solution — a Streamlit interface that ingests historical prices, computes risk/return statistics, and outputs an efficient frontier with the optimal weights highlighted.",
-    architecture:
-      "TODO: Describe the architecture — e.g. data ingestion → statistical estimation → optimisation solver → Streamlit visualisation layer.",
-    implementation:
-      "TODO: List the notable implementation details — e.g. convex optimisation, Monte Carlo simulation for the efficient frontier, caching of historical data in Streamlit.",
-    challenges:
-      "TODO: Document the most interesting engineering challenges you ran into.",
-    results:
-      "TODO: Summarise the result (qualitative — no fabricated metrics).",
-    lessons:
-      "TODO: Note the most valuable lessons from building this project.",
+    problem: "Retail investors and analysts often rely on intuitive or equal-weight allocation strategies that ignore asset covariance and downside tail risk. The challenge was building an interactive, responsive analytical tool that translates complex financial mathematics into real-time interactive charts with defensive data caching and stress-testing capabilities.",
+    solution: "Constrained Numerical Optimization: Uses SciPy's Sequential Least Squares Programming (SLSQP) to find the maximum Sharpe Ratio allocation under realistic constraints (no short-selling, custom asset weight caps).\n\nMonte Carlo Efficient Frontier: Generates 10,000 randomized portfolios plotted as an interactive Plotly scatter chart to visualize risk vs. expected return.\n\nParametric Tail-Risk Modeling: Calculates Value at Risk (VaR) and Conditional VaR (CVaR / Expected Shortfall) at configurable confidence intervals.\n\nBacktesting & Stress Testing: Simulates cumulative portfolio growth against benchmarks (SPY) and models drawdown resilience during historical crises (2008 GFC, COVID-19 Crash, 2022 Tech Bear Market).",
+    architecture: "Modular Quant Pipeline: Clean separation of concerns between data ingestion (yfinance + caching), metrics calculation, SciPy optimization, and visualization.\n\nStateful Streamlit UI: Full reactive interface with sidebar configuration controls, multi-tab result views, and auto-themed Plotly charts.\n\nDual Execution Engine: Supports both an interactive Streamlit Cloud web deployment and a standalone CLI runner (main.py).",
+    implementation: "Performance Caching: Integrated Streamlit @st.cache_data to memoize time-series downloads, avoiding redundant API calls and rate-limiting.\n\nDefensive Data Alignment: Automated forward/backward fill algorithms handling timezone discrepancies and non-trading days across multiple tickers.\n\nVectorized Math: Fast vectorized matrix operations via NumPy and Pandas for sub-second 10k-point Monte Carlo simulations.",
+    challenges: "Ensuring sub-second real-time responsiveness while computing large covariance matrices and non-linear multi-asset constraints.\n\nAccurately modeling tail-risk metrics (CVaR) to represent realistic downside risk during catastrophic market conditions.",
+    results: "Successfully deployed and live on Streamlit Cloud. Open-source on GitHub with complete modular architecture and CLI support.",
+    lessons: "Translating financial theory into functional software requires robust data sanitization and defensive exception handling.\n\nExpected Shortfall (CVaR) provides significantly more actionable downside protection insights than standard volatility alone.",
     highlights: [
-      "Interactive Streamlit dashboard for portfolio construction.",
-      "End-to-end pipeline from raw price data to optimal weights.",
-      "Efficient frontier visualisation with the maximum-Sharpe portfolio highlighted.",
+      "SciPy SLSQP for non-linear constrained optimization.",
+      "10k-iteration Monte Carlo Efficient Frontier via Plotly.",
+      "Parametric VaR & CVaR risk modeling.",
+      "Automated backtesting and historical stress testing.",
+      "Performance-optimized with vectorized NumPy math and data caching.",
     ],
   },
 
