@@ -1,87 +1,105 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Cloud } from "@/components/pixel/Cloud";
 
 /**
- * Persistent global viewport-wide ambient cloud atmosphere.
- *
- * Rendered with `fixed inset-0 pointer-events-none z-0 overflow-hidden w-full h-full`
- * so that ambient floating clouds sit directly on top of the sky background and remain
- * constantly visible across the entire vertical scroll of the webpage.
- *
- * - Non-blocking: `pointer-events-none` on all containers and clouds.
- * - Stacking context: `z-0` sits on top of the sky-blue background, behind the main
- *   content cards (`relative z-10`).
- * - Varied motion: Desynchronized looping drift animations (`slow`, `medium`, `fast`, `reverse`).
- * - Responsive: Peripheral clouds adjust and gracefully hide on small devices.
+ * Dynamic Multi-Layer Parallax Background
+ * 
+ * Tracks the user's vertical scroll position and moves three distinct depth layers
+ * of clouds at different speeds to create a 2.5D parallax effect.
  */
 export function CloudBackground() {
+  const [mounted, setMounted] = useState(false);
+  const { scrollYProgress } = useScroll();
+
+  // Parallax translation ranges mapped dynamically to total page scroll percentage.
+  // Using vh ensures they smoothly drift exactly this far by the absolute bottom of the page,
+  // preventing them from ever freezing halfway down or flying completely off-screen.
+  const yBg = useTransform(scrollYProgress, [0, 1], ["0vh", "-20vh"]);
+  const yMid = useTransform(scrollYProgress, [0, 1], ["0vh", "-45vh"]);
+  const yFg = useTransform(scrollYProgress, [0, 1], ["0vh", "-75vh"]);
+
+  // Prevent hydration mismatch by only rendering after mount
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null; // Return null on server and initial render
+  }
+
   return (
     <div
       aria-hidden
       className="fixed inset-0 pointer-events-none z-0 overflow-hidden w-full h-full select-none"
     >
-      {/* ── Top Viewport (~4% - 20%) ──────────────────────────────────── */}
-      {/* Upper-left cloud — visible on all screens */}
-      <div className="absolute left-[2%] top-[4%] sm:left-[3%] lg:left-[4%]">
-        <Cloud size="md" variant={1} opacity={0.75} drift="slow" />
-      </div>
+      {/* ── Background Layer (Slow, Small, Low Opacity) ────────────────── */}
+      <motion.div 
+        style={{ y: yBg }}
+        className="absolute inset-0 w-full h-full will-change-transform"
+      >
+        <div className="absolute left-[3%] top-[5%]">
+          <Cloud size="sm" variant={1} opacity={0.4} drift="slow" />
+        </div>
+        <div className="absolute right-[4%] top-[25%] hidden sm:block">
+          <Cloud size="sm" variant={3} opacity={0.35} drift="reverse" />
+        </div>
+        <div className="absolute left-[6%] top-[45%] hidden md:block">
+          <Cloud size="sm" variant={2} opacity={0.3} drift="medium" />
+        </div>
+        <div className="absolute right-[5%] top-[75%]">
+          <Cloud size="sm" variant={1} opacity={0.4} drift="slow" />
+        </div>
+        {/* Extended vertical coverage */}
+        <div className="absolute left-[5%] top-[105vh]">
+          <Cloud size="sm" variant={3} opacity={0.35} drift="reverse" />
+        </div>
+      </motion.div>
 
-      {/* Upper-right cloud — wide header decoration */}
-      <div className="absolute right-[3%] top-[11%] sm:right-[4%] lg:right-[5%] hidden sm:block">
-        <Cloud size="lg" variant={2} opacity={0.68} drift="medium" />
-      </div>
+      {/* ── Midground Layer (Medium Speed, Medium Size/Opacity) ────────── */}
+      <motion.div 
+        style={{ y: yMid }}
+        className="absolute inset-0 w-full h-full will-change-transform"
+      >
+        <div className="absolute right-[6%] top-[10%] hidden md:block">
+          <Cloud size="md" variant={3} opacity={0.55} drift="fast" />
+        </div>
+        <div className="absolute left-[5%] top-[30%]">
+          <Cloud size="md" variant={1} opacity={0.60} drift="reverse" />
+        </div>
+        <div className="absolute right-[5%] top-[52%] hidden sm:block">
+          <Cloud size="md" variant={2} opacity={0.50} drift="medium" />
+        </div>
+        <div className="absolute left-[4%] top-[70%] hidden lg:block">
+          <Cloud size="md" variant={3} opacity={0.55} drift="slow" />
+        </div>
+        {/* Extended vertical coverage */}
+        <div className="absolute right-[7%] top-[115vh]">
+          <Cloud size="md" variant={1} opacity={0.60} drift="reverse" />
+        </div>
+      </motion.div>
 
-      {/* Upper-mid left — peripheral cloud */}
-      <div className="absolute left-[12%] top-[18%] hidden 2xl:block">
-        <Cloud size="sm" variant={3} opacity={0.45} drift="reverse" />
-      </div>
-
-      {/* ── Upper-Mid Viewport (~24% - 44%) ─────────────────────────────── */}
-      {/* Mid-left cloud */}
-      <div className="absolute left-[1%] top-[24%] sm:left-[2%] lg:left-[3%] hidden md:block">
-        <Cloud size="sm" variant={3} opacity={0.55} drift="fast" />
-      </div>
-
-      {/* Mid-right cloud */}
-      <div className="absolute right-[2%] top-[34%] sm:right-[3%] lg:right-[4%] hidden sm:block">
-        <Cloud size="md" variant={1} opacity={0.70} drift="reverse" />
-      </div>
-
-      {/* ── Lower-Mid Viewport (~46% - 66%) ─────────────────────────────── */}
-      {/* Center-left large cloud */}
-      <div className="absolute left-[2%] top-[46%] sm:left-[3%] lg:left-[4%] hidden lg:block">
-        <Cloud size="lg" variant={2} opacity={0.60} drift="slow" />
-      </div>
-
-      {/* Lower-center-right cloud */}
-      <div className="absolute right-[3%] top-[56%] sm:right-[4%] lg:right-[5%]">
-        <Cloud size="sm" variant={3} opacity={0.65} drift="fast" />
-      </div>
-
-      {/* ── Lower Viewport (~68% - 94%) ──────────────────────────────────── */}
-      {/* Lower-left cloud */}
-      <div className="absolute left-[1%] top-[68%] sm:left-[2%] lg:left-[3%] hidden sm:block">
-        <Cloud size="md" variant={1} opacity={0.72} drift="medium" />
-      </div>
-
-      {/* Lower-right cloud */}
-      <div className="absolute right-[2%] top-[78%] sm:right-[3%] lg:right-[4%] hidden md:block">
-        <Cloud size="lg" variant={2} opacity={0.58} drift="reverse" />
-      </div>
-
-      {/* Deep-lower peripheral right */}
-      <div className="absolute right-[14%] top-[82%] hidden 2xl:block">
-        <Cloud size="sm" variant={1} opacity={0.45} drift="slow" />
-      </div>
-
-      {/* Bottom-left near-footer cloud */}
-      <div className="absolute left-[3%] top-[88%] sm:left-[4%] lg:left-[5%] hidden lg:block">
-        <Cloud size="sm" variant={3} opacity={0.55} drift="fast" />
-      </div>
-
-      {/* Bottom-right near-footer cloud */}
-      <div className="absolute right-[3%] top-[93%] sm:right-[4%] lg:right-[5%] hidden sm:block">
-        <Cloud size="md" variant={1} opacity={0.68} drift="slow" />
-      </div>
+      {/* ── Foreground Layer (Fastest, Large, High Opacity) ────────────── */}
+      <motion.div 
+        style={{ y: yFg }}
+        className="absolute inset-0 w-full h-full will-change-transform"
+      >
+        <div className="absolute left-[4%] top-[18%] hidden sm:block">
+          <Cloud size="lg" variant={2} opacity={0.75} drift="medium" />
+        </div>
+        <div className="absolute right-[5%] top-[35%] hidden 2xl:block">
+          <Cloud size="lg" variant={1} opacity={0.80} drift="slow" />
+        </div>
+        <div className="absolute right-[6%] top-[85%]">
+          <Cloud size="lg" variant={3} opacity={0.70} drift="fast" />
+        </div>
+        {/* Extended vertical coverage */}
+        <div className="absolute left-[4%] top-[125vh]">
+          <Cloud size="lg" variant={1} opacity={0.75} drift="reverse" />
+        </div>
+      </motion.div>
     </div>
   );
 }
