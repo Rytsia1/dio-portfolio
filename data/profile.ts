@@ -11,7 +11,7 @@ export const profile: Profile = {
   name: "Dio Stania Adinata",
   role: "Game Designer & Software Engineer",
   tagline:
-    "I design player-centric game systems and build robust software — bridging interactive media with rigorous software engineering.",
+    "I design player-centric game systems and build robust software, bridging interactive media with rigorous software engineering.",
   shortBio:
     "Detail-oriented Game Designer bridging interactive media with rigorous software engineering principles. Demonstrated success in designing scalable gameplay systems and functional prototypes, earning finalist placements in national competitions. Leverages technical expertise in Python, C++, and cross-platform development within Unity to build robust, player-centric game architectures.",
   // Based in Indonesia.

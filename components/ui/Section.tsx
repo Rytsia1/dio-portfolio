@@ -3,33 +3,19 @@ import { cn } from "@/lib/cn";
 import { Container } from "@/components/ui/Container";
 
 interface SectionProps {
-  /** DOM id used by navbar anchor links (#about, #skills, etc.). */
   id: string;
-  /** Optional eyebrow text shown above the heading. */
   eyebrow?: string;
-  /** Section heading. */
   title?: string;
-  /** Optional supporting paragraph below the heading. */
   description?: string;
   children: ReactNode;
   className?: string;
-  /** Removes the default vertical padding — used by the Hero. */
   flush?: boolean;
-  /** Use a narrower container (e.g. for prose). */
   narrow?: boolean;
-  /** Optional right-aligned slot next to the heading. */
   action?: ReactNode;
 }
 
 /**
- * Standard vertical section block with consistent spacing and an
- * optional heading group. Children are rendered inside a `Container`.
- *
- * Vertical rhythm is standardized at `py-10 md:py-16` (40 → 64 px).
- * Adjacent sections stack their top/bottom padding, so the effective
- * gap between two sections is 80 px on mobile and 128 px on desktop —
- * tight enough to avoid scroll fatigue while keeping sections visually
- * distinct. `flush` opts out entirely (the Hero manages its own height).
+ * Retro Pixel Section Container.
  */
 export function Section({
   id,
@@ -48,26 +34,26 @@ export function Section({
       id={id}
       className={cn(
         "scroll-mt-24",
-        flush ? "" : "py-10 md:py-16",
+        flush ? "" : "py-12 md:py-18",
         className,
       )}
     >
       <Container narrow={narrow}>
         {hasHeader && (
-          <div className="mb-8 flex flex-col gap-3 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
-            <div className="max-w-2xl">
+          <div className="mb-8 flex flex-col gap-3 sm:mb-12 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-2xl font-mono">
               {eyebrow && (
-                <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-accent-strong">
-                  {eyebrow}
+                <p className="mb-2 font-mono text-xs font-bold uppercase tracking-widest text-accent">
+                  [ {eyebrow} ]
                 </p>
               )}
               {title && (
-                <h2 className="text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
+                <h2 className="headline-section text-fg">
                   {title}
                 </h2>
               )}
               {description && (
-                <p className="mt-4 text-base leading-relaxed text-fg-muted sm:text-lg">
+                <p className="mt-3 text-sm leading-relaxed text-fg-muted font-mono sm:text-base">
                   {description}
                 </p>
               )}

@@ -8,14 +8,14 @@ import type { GameProject, ProjectItem, WebProject } from "@/types/portfolio";
  * case-study page.
  *
  * Projects are strictly typed as a discriminated union (`ProjectItem`):
- *   - type: "web"   — `WebProject`: full-stack / quant / software systems.
+ *   - type: "web"   : `WebProject`: full-stack / quant / software systems.
  *                     Game-only fields (engine, coreMechanics, …) are
  *                     typed `never`, so they can't be set by accident.
- *   - type: "game"  — `GameProject`: requires `engine` and
+ *   - type: "game"  : `GameProject`: requires `engine` and
  *                     `coreMechanics` (optionally `assetsTools`), which
  *                     `GameProjectCard` renders as a "Tech Stack" panel.
  *
- * The `type` literal is the discriminator — narrow with a switch or
+ * The `type` literal is the discriminator : narrow with a switch or
  * if-statement on `project.type` to render type-specific UI safely.
  *
  * The home page groups projects into two visual sections: web projects
@@ -55,7 +55,7 @@ export const projects: ProjectItem[] = [
     implementation: "Security Layer: BCrypt password hashing, HS256 JWT with RBAC claims, token rotation chaining via replaced_by, and denylist middleware.\n\nQuery Optimization: Composite index on (user_id, bill_date) ensuring fast paginated transaction queries.\n\nData Visualization: Real-time category distribution pie charts and 7-day cash-flow trends powered by Apache ECharts.",
     challenges: "Enforcing strict arithmetic precision across all API serialization, database queries, and client-side aggregations.\n\nTransitioning from Game Technology to full-stack enterprise Java/Vue architecture under an intensive 10-day deadline.",
     results: "Successfully engineered and delivered within the 10-day deadline at Shandong University of Science and Technology. Open-source on GitHub with comprehensive test endpoints and architecture documentation.",
-    lessons: "Financial software demands strict data integrity (BigDecimal over float/double) and atomic transactions.\n\nCore software engineering patterns—such as modular REST layering, stateless auth hygiene, and automated cron jobs—translate seamlessly across both game engines and web platforms.",
+    lessons: "Financial software demands strict data integrity (BigDecimal over float/double) and atomic transactions.\n\nCore software engineering patterns (such as modular REST layering, stateless auth hygiene, and automated cron jobs) translate seamlessly across both game engines and web platforms.",
     highlights: [
       "End-to-end BigDecimal & DECIMAL(15,2) precision.",
       "Stateless JWT auth with refresh token rotation and denylist.",
@@ -109,13 +109,13 @@ export const projects: ProjectItem[] = [
     title: "Wacky Whackers: The Ultimate Stick Battle",
     tagline: "Find your stick, Fight with stick",
     shortDescription:
-      "A quirky exploration and turn-based stick-battling game — Top 60 national placement at Gameseed 2025, playable on Itch.io.",
+      "A quirky exploration and turn-based stick-battling game; Top 60 national placement at Gameseed 2025, playable on Itch.io.",
     overview:
       "A quirky exploration and turn-based battle game where players roam a village to discover, appraise, and duel with unique wooden sticks in a quest to become the Ultimate Whacker. Built for Gameseed 2025 under the theme 'Real Life Experience', achieving Top 60 national placement.",
     category: "Game Technology",
     year: "2025",
     role: "Game Designer & Gameplay Programmer",
-    achievement: "Gameseed 2025 — Top 60",
+    achievement: "Gameseed 2025 / Top 60",
     engine: "Unity",
     coreMechanics: [
       "First-Person Exploration",
@@ -152,7 +152,7 @@ export const projects: ProjectItem[] = [
     ],
     featured: true,
     problem:
-      "Childhood nostalgia often involves turning everyday objects into legendary artifacts—specifically, picking up tree sticks and pretending they are mythical swords. The design challenge was capturing this universal childhood fantasy into an engaging game loop that bridges exploration with tactical combat without losing its comedic charm.",
+      "Childhood nostalgia often involves turning everyday objects into legendary artifacts (specifically, picking up tree sticks and pretending they are mythical swords). The design challenge was capturing this universal childhood fantasy into an engaging game loop that bridges exploration with tactical combat without losing its comedic charm.",
     solution:
       "• First-Person Exploration: An immersive village roaming mode where players hunt for procedurally scattered or hidden sticks across riverbanks, bushes, and trails.\n• Appraisal System: An eccentric NPC appraiser who rates stick rarity, stats, absurd naming lore, and combat potential.\n• Turn-Based Duel Arena: Side-view combat transitions with strategic options (Attack, Skill, Defense, Dodge) where victory depends on matching stick attributes against rival wielders.",
     architecture:
@@ -179,9 +179,9 @@ export const projects: ProjectItem[] = [
     title: "Makan Siang Bergizi",
     tagline: "Asymmetric Co-op Nutrition Management & School Lunch Simulation",
     shortDescription:
-      "A two-player cooperative online simulation game about cooking and nutrition management — KMIPN 2025 finalist.",
+      "A two-player cooperative online simulation game about cooking and nutrition management, KMIPN 2025 finalist.",
     overview:
-      "A two-player cooperative online simulation game where players assume distinct roles—a cafeteria chef and a nutritionist—collaborating in real-time to prepare balanced, nutritious meals for school children with varying dietary needs across Indonesia. Selected as a National Finalist at KMIPN 2025.",
+      "A two-player cooperative online simulation game where players assume distinct roles (a cafeteria chef and a nutritionist) collaborating in real-time to prepare balanced, nutritious meals for school children with varying dietary needs across Indonesia. Selected as a National Finalist at KMIPN 2025.",
     category: "Game Development",
     year: "2025",
     role: "Game Designer & Multiplayer Programmer",
@@ -296,7 +296,7 @@ export const projects: ProjectItem[] = [
     problem:
       "TODO: Describe the design motivation behind Project: Save Planet.",
     solution:
-      "TODO: Describe the high-level solution — the narrative framework, robot-protagonist interaction model, and cozy exploration loop.",
+      "Narrative framework, robot-protagonist interaction model, and cozy exploration loop.",
     architecture: "TODO: Describe the technical architecture.",
     implementation: "TODO: List notable implementation details.",
     challenges: "TODO: Document the most interesting engineering challenges.",
@@ -311,7 +311,7 @@ export const projects: ProjectItem[] = [
 ];
 
 /**
- * Featured web projects (software / quant) — shown at the top.
+ * Featured web projects (software / quant): shown at the top.
  * The type predicate narrows the union, so callers receive
  * `WebProject[]` and can pass items straight to `ProjectCard`.
  */
@@ -322,7 +322,7 @@ export function getSoftwareAndQuantProjects(): WebProject[] {
 }
 
 /**
- * Featured game projects — shown in the second section.
+ * Featured game projects: shown in the second section.
  * The type predicate narrows the union to `GameProject[]`, so items
  * can be passed straight to `GameProjectCard` with full type safety.
  */

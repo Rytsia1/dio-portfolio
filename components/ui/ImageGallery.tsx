@@ -2,34 +2,20 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import type { GalleryImage } from "@/types/portfolio";
+import { PixelIcon } from "@/components/pixel/PixelIcon";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 interface ImageGalleryProps {
-  /** Screenshot list rendered as a grid; each item opens in the lightbox. */
   items: GalleryImage[];
 }
 
 /**
- * Responsive screenshot grid with a modal lightbox preview.
- *
- * ── Why a Client Component? ─────────────────────────────────────────────
- * The case-study page is an async Server Component (great for SSG), but a
- * lightbox needs local state (open index) and global side-effects (body
- * scroll-lock, keyboard listeners). This component is the small client
- * island that owns exactly that interactivity — the rest of the page
- * stays server-rendered.
- *
- * ── Accessibility ───────────────────────────────────────────────────────
- *   • Grid items are real `<button>` elements (keyboard + screen-reader
- *     friendly) with descriptive `aria-label`s.
- *   • The lightbox is a `role="dialog"` / `aria-modal="true"` overlay.
- *   • `Escape` closes, `ArrowLeft` / `ArrowRight` navigate.
- *   • Focus moves to the close button on open and returns to the
- *     triggering thumbnail on close.
+ * Retro Pixel Screenshot Gallery with Lightbox & Skeleton Loaders.
  */
 export function ImageGallery({ items }: ImageGalleryProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [loadedMap, setLoadedMap] = useState<Record<string, boolean>>({});
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const lastTriggerRef = useRef<HTMLButtonElement | null>(null);
 
@@ -49,9 +35,6 @@ export function ImageGallery({ items }: ImageGalleryProps) {
     [items.length],
   );
 
-  // Side-effects while the lightbox is open: lock body scroll, move focus
-  // into the dialog, and bind keyboard controls. The cleanup restores
-  // everything — including focus to the thumbnail that opened the dialog.
   useEffect(() => {
     if (!isOpen) return;
 
@@ -75,58 +58,67 @@ export function ImageGallery({ items }: ImageGalleryProps) {
 
   return (
     <>
-      {/* Thumbnail grid — clean responsive cards with pixelated rendering and lightbox */}
+      {/* Thumbnail grid */}
       <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((item, index) => (
-          <li key={item.src}>
-            <button
-              type="button"
-              onClick={(event) => {
-                lastTriggerRef.current = event.currentTarget;
-                setActiveIndex(index);
-              }}
-              aria-label={`${item.alt} — open full-size preview`}
-              className="group block w-full overflow-hidden rounded-xl border border-slate-200 bg-surface text-left shadow-sm transition-all hover:border-accent hover:shadow-md"
-            >
-              <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
-                <Image
-                  src={item.src}
-                  alt={item.alt || "Project screenshot"}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  style={{ imageRendering: "pixelated" }}
-                />
-              </div>
-              <div className="border-t border-slate-200 px-3.5 py-2.5">
-                <span className="block text-sm font-medium text-fg">
-                  {item.alt}
-                </span>
-                {item.caption && (
-                  <span className="mt-0.5 block text-xs leading-relaxed text-fg-subtle">
-                    {item.caption}
+        {items.map((item, index) => {
+          const isLoaded = loadedMap[item.src];
+          return (
+            <li key={item.src}>
+              <button
+                type="button"
+                onClick={(event) => {
+                  lastTriggerRef.current = event.currentTarget;
+                  setActiveIndex(index);
+                }}
+                aria-label={`${item.alt} - open full resolution screenshot`}
+                className="group block w-full overflow-hidden rounded-lg border-2 border-border bg-surface text-left shadow-[2px_2px_0px_0px_rgba(15,27,45,0.12)] transition-all hover:border-accent hover:shadow-[3px_3px_0px_0px_rgba(194,65,12,0.3)] active:translate-x-0.5 active:translate-y-0.5"
+              >
+                <div className="relative aspect-video w-full overflow-hidden bg-surface-soft">
+                  {!isLoaded && (
+                    <Skeleton className="absolute inset-0 h-full w-full rounded-none" />
+                  )}
+                  <Image
+                    src={item.src}
+                    alt={item.alt || "Project screenshot"}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className={`object-cover ${isLoaded ? "opacity-100" : "opacity-0"}`}
+                    style={{ imageRendering: "pixelated" }}
+                    onLoad={() =>
+                      setLoadedMap((prev) => ({ ...prev, [item.src]: true }))
+                    }
+                  />
+                </div>
+                <div className="border-t border-border px-3.5 py-2.5">
+                  <span className="block font-mono text-xs font-bold text-fg">
+                    {item.alt}
                   </span>
-                )}
-              </div>
-            </button>
-          </li>
-        ))}
+                  {item.caption && (
+                    <span className="mt-0.5 block font-mono text-[11px] leading-relaxed text-fg-muted">
+                      {item.caption}
+                    </span>
+                  )}
+                </div>
+              </button>
+            </li>
+          );
+        })}
       </ul>
 
-      {/* Lightbox modal — backdrop click / Escape closes, arrows navigate */}
+      {/* Lightbox modal */}
       {active && (
         <div
           role="dialog"
           aria-modal="true"
-          aria-label={`${active.alt} — full-size preview`}
-          className="fixed inset-0 z-[90] flex items-center justify-center bg-fg/80 p-4 backdrop-blur-sm sm:p-8"
+          aria-label={`${active.alt} - full preview`}
+          className="fixed inset-0 z-[90] flex items-center justify-center bg-fg/85 p-4 sm:p-8"
           onClick={close}
         >
           <div
             className="relative flex h-[80vh] w-full max-w-5xl flex-col"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="relative min-h-0 flex-1 overflow-hidden rounded-2xl border border-white/15">
+            <div className="relative min-h-0 flex-1 overflow-hidden rounded-lg border-2 border-white/20 bg-black/40">
               <Image
                 key={active.src}
                 src={active.src}
@@ -134,23 +126,24 @@ export function ImageGallery({ items }: ImageGalleryProps) {
                 fill
                 sizes="(max-width: 1024px) 100vw, 1024px"
                 className="object-contain"
+                style={{ imageRendering: "pixelated" }}
               />
             </div>
 
             {/* Caption + counter */}
             <div className="mt-4 flex items-center justify-between gap-4">
-              <div className="min-w-0">
-                <p className="truncate text-sm font-medium text-white">
+              <div className="min-w-0 font-mono">
+                <p className="truncate text-sm font-bold text-white">
                   {active.alt}
                 </p>
                 {active.caption && (
-                  <p className="mt-0.5 truncate text-xs text-white/70">
+                  <p className="mt-0.5 truncate text-xs text-white/80">
                     {active.caption}
                   </p>
                 )}
               </div>
-              <p className="shrink-0 font-mono text-xs text-white/60">
-                {(activeIndex ?? 0) + 1} / {items.length}
+              <p className="shrink-0 font-mono text-xs font-bold text-white/80">
+                [ {(activeIndex ?? 0) + 1} / {items.length} ]
               </p>
             </div>
 
@@ -160,29 +153,29 @@ export function ImageGallery({ items }: ImageGalleryProps) {
               type="button"
               onClick={close}
               aria-label="Close image preview"
-              className="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-fg/60 text-white backdrop-blur transition-colors hover:bg-fg/80"
+              className="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded border-2 border-fg bg-accent text-white shadow-[2px_2px_0px_0px_#0f1b2d] active:translate-x-0.5 active:translate-y-0.5"
             >
-              <X className="h-4 w-4" aria-hidden />
+              <PixelIcon name="close" size={16} />
             </button>
 
-            {/* Prev / next — only meaningful with multiple screenshots */}
+            {/* Prev / next */}
             {items.length > 1 && (
               <>
                 <button
                   type="button"
                   onClick={() => step(-1)}
                   aria-label="Previous screenshot"
-                  className="absolute left-3 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-fg/60 text-white backdrop-blur transition-colors hover:bg-fg/80"
+                  className="absolute left-3 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded border-2 border-fg bg-surface text-fg shadow-[2px_2px_0px_0px_#0f1b2d] active:translate-x-0.5 active:translate-y-0.5"
                 >
-                  <ChevronLeft className="h-5 w-5" aria-hidden />
+                  <PixelIcon name="arrow-left" size={16} />
                 </button>
                 <button
                   type="button"
                   onClick={() => step(1)}
                   aria-label="Next screenshot"
-                  className="absolute right-3 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-fg/60 text-white backdrop-blur transition-colors hover:bg-fg/80"
+                  className="absolute right-3 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded border-2 border-fg bg-surface text-fg shadow-[2px_2px_0px_0px_#0f1b2d] active:translate-x-0.5 active:translate-y-0.5"
                 >
-                  <ChevronRight className="h-5 w-5" aria-hidden />
+                  <PixelIcon name="arrow-right" size={16} />
                 </button>
               </>
             )}
@@ -192,4 +185,3 @@ export function ImageGallery({ items }: ImageGalleryProps) {
     </>
   );
 }
-

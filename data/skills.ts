@@ -44,7 +44,7 @@ export const skillCategories: SkillCategory[] = [
     id: "full-stack-web",
     title: "Full-Stack Web Development",
     description:
-      "End-to-end web systems — interfaces, APIs, and data persistence.",
+      "End-to-end web systems: interfaces, APIs, and data persistence.",
     skills: [
       { name: "React" },
       { name: "Next.js" },

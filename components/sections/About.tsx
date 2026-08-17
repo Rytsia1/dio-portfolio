@@ -1,87 +1,131 @@
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { Decor } from "@/components/pixel/Decor";
+import { PixelIcon, type PixelIconName } from "@/components/pixel/PixelIcon";
 import { profile } from "@/data/profile";
 
 /**
- * About — light editorial design. Same content as before (the career
- * transition narrative), only the visual styling is updated.
+ * Developer Profile & Technical Dossier.
+ * RPG character spec sheet layout displaying technical background and systems mindset.
  */
 export function About() {
   return (
     <Section
       id="about"
-      eyebrow="About"
-      title="From game systems to software systems."
-      description={profile.shortBio}
-      className="relative border-t border-border"
+      eyebrow="Profile & Background"
+      title="Systems Thinking: Game Tech to Software Engineering"
+      description="Bridging interactive game systems with high-precision enterprise software and quantitative models."
+      className="relative border-t-2 border-border"
     >
       <Decor
         kind="star"
-        size={20}
-        className="absolute right-8 top-8 hidden lg:block"
+        size={24}
+        className="absolute right-8 top-8 hidden lg:block opacity-60"
       />
-      <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
-        <Reveal className="space-y-5 text-base leading-relaxed text-fg-muted lg:col-span-7">
-          <p>
-            I started in Game Technology at Politeknik Elektronika
-            Negeri Surabaya, where I learned to think about systems,
-            gameplay, interaction, and user experience. My previous
-            portfolio was anchored on educational games — building
-            playful, structured experiences for elementary and
-            middle-school students as part of a Game for Education
-            and Cultural Heritage programme, with two projects
-            reaching the finals of KMIPN 2025 and the Top 60 of
-            Gameseed 2025.
-          </p>
-          <p>
-            That foundation — modelling a problem, designing a system
-            that can be played with, and iterating until it feels
-            right — turned out to be exactly what software
-            engineering is also asking for. So I started building
-            real systems: a full-stack personal bookkeeping platform
-            (Spring Boot, MyBatis, Vue, Element Plus, MySQL) during a
-            Software Production Internship, and a pair of
-            quantitative-finance projects that take Modern Portfolio
-            Theory and options pricing seriously enough to implement
-            them from numerical first principles.
-          </p>
-          <p>
-            I'm not moving away from game development. It's
-            still an important part of how I think. What changed is
-            that I've expanded into broader software engineering,
-            full-stack systems, and quantitative finance — and I
-            continue to explore whatever technical problem is the
-            most interesting thing in front of me.
-          </p>
+
+      <div className="grid gap-8 lg:grid-cols-12">
+        {/* Left Dossier: Narrative Breakdown */}
+        <Reveal className="lg:col-span-7">
+          <div className="rounded-xl border-2 border-border bg-surface p-6 sm:p-8 shadow-[3px_3px_0px_0px_rgba(15,27,45,0.14)] space-y-4 font-mono text-sm leading-relaxed text-fg-muted sm:text-base">
+            <div className="flex items-center gap-2 border-b border-border pb-3 text-xs font-bold text-accent uppercase tracking-wider">
+              <PixelIcon name="terminal" size={14} />
+              [ LOG: ORIGIN & METHODOLOGY ]
+            </div>
+
+            <p>
+              I studied Game Technology at Politeknik Elektronika Negeri
+              Surabaya (PENS), where I built deep intuition for state machines,
+              game loops, spatial simulation, and user-centric systems.
+              During my early projects, I engineered serious and educational
+              games, reaching the national finals of KMIPN 2025 and the Top 60
+              of Gameseed 2025.
+            </p>
+
+            <p>
+              Designing games requires strict performance budgets, deterministic
+              logic, and immediate user feedback. These exact constraints
+              naturally translate to backend systems and financial computing.
+              During my Software Production Internship at Shandong University of
+              Science and Technology, I built a full-stack personal bookkeeping
+              platform (Spring Boot, Java 25, MyBatis, MySQL, Vue 3) with
+              high-precision monetary math to completely prevent floating-point
+              drift.
+            </p>
+
+            <p>
+              My work now spans full-stack software architecture and quantitative
+              finance, implementing Modern Portfolio Theory, Monte Carlo
+              simulations, and numerical options pricing directly from
+              mathematical first principles.
+            </p>
+          </div>
         </Reveal>
 
-        <Reveal delay={0.1} className="lg:col-span-5">
-          <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <Stat label="Current role" value="Software Engineer" />
-            <Stat
-              label="Interests"
-              value="Software · Quant · FinTech · Games · Data"
-            />
-            <Stat
-              label="Education"
-              value="D4 Game Technology · PENS"
-            />
-            <Stat label="Based in" value={profile.location ?? "—"} />
-          </dl>
+        {/* Right Dossier: RPG Dev Attributes & Spec Matrix */}
+        <Reveal delay={0.08} className="lg:col-span-5">
+          <div className="rounded-xl border-2 border-border bg-surface p-6 shadow-[3px_3px_0px_0px_rgba(15,27,45,0.14)] font-mono">
+            <div className="flex items-center gap-2 border-b border-border pb-3 text-xs font-bold text-accent uppercase tracking-wider">
+              <PixelIcon name="code" size={14} />
+              [ PLAYER SPECIFICATIONS ]
+            </div>
+
+            <div className="mt-4 space-y-3.5">
+              <SpecRow
+                icon="sword"
+                label="Primary Role"
+                value={profile.role}
+              />
+              <SpecRow
+                icon="graduation"
+                label="Education"
+                value="D4 Game Technology · PENS"
+              />
+              <SpecRow
+                icon="layers"
+                label="Core Stack"
+                value="Java · Python · C# · TypeScript · Unity"
+              />
+              <SpecRow
+                icon="shield"
+                label="Domains"
+                value="Game Tech · FinTech · Quant Finance · Full-Stack"
+              />
+              <SpecRow
+                icon="map-pin"
+                label="Location"
+                value={profile.location ?? "Indonesia (Open to Remote / Relocation)"}
+              />
+              <SpecRow
+                icon="star"
+                label="Availability"
+                value="Open for Software & Game Engineering"
+              />
+            </div>
+          </div>
         </Reveal>
       </div>
     </Section>
   );
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+function SpecRow({
+  icon,
+  label,
+  value,
+}: {
+  icon: PixelIconName;
+  label: string;
+  value: string;
+}) {
   return (
-    <div className="rounded-2xl border border-border bg-surface p-4 card-shadow-soft">
-      <dt className="text-[10px] font-semibold uppercase tracking-[0.22em] text-accent">
+    <div className="rounded border border-border bg-surface-soft p-3">
+      <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-accent">
+        <PixelIcon name={icon} size={12} />
         {label}
-      </dt>
-      <dd className="mt-2 text-sm font-medium text-fg">{value}</dd>
+      </div>
+      <div className="mt-1 text-xs font-semibold text-fg sm:text-sm">
+        {value}
+      </div>
     </div>
   );
 }
