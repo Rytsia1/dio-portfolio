@@ -31,6 +31,41 @@ export const projects: ProjectItem[] = [
 
   {
     type: "web",
+    slug: "actura",
+    title: "Actura",
+    tagline: "Actuarial Valuation & Risk Platform",
+    shortDescription: "An enterprise-grade actuarial platform bridging the gap between complex risk mathematics and modern UI/UX.",
+    overview: "Actura is an enterprise-grade actuarial platform that bridges the gap between complex risk mathematics and modern UI/UX. It provides actuaries and risk engineers with a powerful Python-based valuation engine paired with a sleek, neo-skeuomorphic Vue 3 dashboard.",
+    category: "Software & Quantitative Finance",
+    year: "2026",
+    role: "Full-Stack Engineer",
+    team: "Solo Project",
+    tags: ["Python", "Vue 3", "FastAPI", "Docker", "PostgreSQL", "Monte Carlo", "Risk Analytics"],
+    githubUrl: "https://github.com/Rytsia1/Actura",
+    coverImage: "/projects/actura/cover.png",
+    gallery: [
+      { src: "/projects/actura/cover.png", alt: "Valuation Dashboard", caption: "Real-time stochastic projection, tail risk (CVaR) analysis, and comprehensive reserve profiles." },
+      { src: "/projects/actura/screen1.png", alt: "Contract Logic Blueprint Builder", caption: "A visual, node-based DAG (Directed Acyclic Graph) editor for designing insurance cash flow blueprints without writing code." },
+      { src: "/projects/actura/screen2.png", alt: "Real-Time Stress Testing", caption: "Interactive stress testing module allowing real-time adjustment of risk factors like interest rates, mortality multipliers, and lapse shocks." }
+    ],
+    featured: true,
+    problem: "Actuarial software often lacks modern interfaces. The challenge was bridging the gap between complex risk mathematics (Monte Carlo simulations, IFRS 17 trajectories) and an intuitive, modern UI/UX for actuaries.",
+    solution: "Developed a visual, node-based DAG (Directed Acyclic Graph) editor for designing insurance cash flow blueprints without writing code. This is paired with a powerful stochastic engine for calculating BEL, VaR 95%, and CVaR / CTE 95.",
+    architecture: "Decoupled architecture utilizing a Vue 3 SPA for graph interactions and charting, backed by a FastAPI REST API for math-heavy actuarial modeling. PostgreSQL is used via SQLAlchemy for data persistence, all containerized with Docker and served via Nginx.",
+    implementation: "Actura evaluates insurance cash flows as a Directed Acyclic Graph (DAG), seamlessly mapping out premiums, benefits, and decrement models.",
+    challenges: "Building a high-performance backend capable of rapid deterministic and stochastic valuations while maintaining a responsive, complex visual node editor on the frontend.",
+    results: "A fully containerized, IFRS 17-ready architecture that provides immediate, production-like deployment capabilities.",
+    lessons: "Visual, node-based editors provide a highly intuitive and powerful interface for mapping out complex financial and insurance logic compared to traditional code-heavy setups.",
+    highlights: [
+      "Visual Logic Builder with drag-and-drop DAG editor.",
+      "Stochastic Engine with advanced Monte Carlo simulations.",
+      "Risk Analytics including VaR 95% and CVaR / CTE 95.",
+      "High-Performance FastAPI backend for rapid valuations."
+    ],
+  },
+
+  {
+    type: "web",
     slug: "book-it-quick",
     title: "Book-it-quick",
     tagline: "Enterprise-Grade Personal Bookkeeping System with High-Precision Ledger",
