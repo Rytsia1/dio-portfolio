@@ -74,14 +74,17 @@ types/portfolio.ts
 
 ## Editing content
 
-Everything visible on the site is driven from `data/*.ts`. See the
-"Editing content" table in this README for the full mapping, and grep
-for `TODO:` to see which fields still need real data.
+Everything visible on the site is driven from `data/*.ts`. You can update your content by editing the files listed below:
 
-## Caveats
+| File | Controls |
+| --- | --- |
+| `data/profile.ts` | Hero section, personal details, social links, SEO metadata |
+| `data/nav.ts` | Navigation menu links |
+| `data/skills.ts` | Skills section |
+| `data/projects.ts` | Featured projects, game projects, and individual project pages |
+| `data/experience.ts` | Work experience timeline |
+| `data/education.ts` | Education timeline |
+| `data/achievements.ts` | Achievements list |
+| `data/certificates.ts` | Certificates section |
 
-- The shell wrapper in this environment did not reliably execute
-  commands. I could not run `npm run build` / `npm run lint` to verify.
-  Please run them once locally and let me know if anything fails.
-- No new dependencies. The pixel-art decorations are inline SVG, so
-  the project works without any image assets in `public/`.
+*(Note: grep for `TODO:` in the codebase to view fields that still need real data.)*
