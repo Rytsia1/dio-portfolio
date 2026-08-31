@@ -1,7 +1,6 @@
 import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { Mascot } from "@/components/pixel/Mascot";
 import { Decor } from "@/components/pixel/Decor";
 import { profile } from "@/data/profile";
 
@@ -122,7 +121,6 @@ export function Hero() {
        *   tagline → 150 ms
        *   CTAs    → 200 ms
        *   socials → 250 ms
-       *   scroll  → 300 ms
        */}
       {/*
        * Height: `min-h-[80vh]` keeps the hero near-viewport-sized without
@@ -223,30 +221,7 @@ export function Hero() {
             </a>
           </li>
         </ul>
-
-        {/* 7 — Scroll indicator ------------------------------------------ */}
-        <div className="hero-in mt-10 hidden items-center gap-3 text-xs font-mono uppercase tracking-[0.22em] text-fg-subtle sm:flex [animation-delay:300ms]">
-          <span aria-hidden className="block h-px w-12 bg-border-strong" />
-          Scroll
-        </div>
       </Container>
-
-      {/* ── Mascot — Hero placement ────────────────────────────────────────
-       *
-       * This is the ONE fully-interactive mascot instance on the page.
-       * It tracks the cursor (head parallax) and bobs/tilts with scroll.
-       *
-       * A second, distinct "sleeping" instance appears in the Contact
-       * section at the bottom of the page — see Contact.tsx.
-       * The Footer no longer renders a mascot to avoid a third duplicate.
-       */}
-      <Mascot
-        size={120}
-        pose="default"
-        trackCursor
-        reactToScroll
-        className="absolute bottom-10 right-6 hidden md:block"
-      />
     </section>
   );
 }
