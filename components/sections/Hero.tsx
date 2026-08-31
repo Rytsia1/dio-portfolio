@@ -1,4 +1,4 @@
-import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Decor } from "@/components/pixel/Decor";
@@ -172,15 +172,6 @@ export function Hero() {
           >
             View Projects
             <ArrowRight className="h-4 w-4" aria-hidden />
-          </Button>
-          <Button
-            href={profile.resumeUrl}
-            variant="secondary"
-            size="lg"
-            aria-label={profile.resumeLabel}
-          >
-            <Download className="h-4 w-4" aria-hidden />
-            {profile.resumeLabel}
           </Button>
         </div>
 

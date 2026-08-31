@@ -2,10 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { Menu, X, FileText } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
-import { Button } from "@/components/ui/Button";
 import { navItems } from "@/data/nav";
 import { profile } from "@/data/profile";
 import { cn } from "@/lib/cn";
@@ -185,17 +184,6 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button
-            href={profile.resumeUrl}
-            variant="primary"
-            size="sm"
-            className="hidden sm:inline-flex"
-            aria-label={profile.resumeLabel}
-          >
-            <FileText className="h-4 w-4" aria-hidden />
-            {profile.resumeLabel}
-          </Button>
-
           <button
             ref={toggleBtnRef}
             type="button"
@@ -273,16 +261,6 @@ export function Navbar() {
                       </Link>
                     );
                   })}
-                  <Button
-                    href={profile.resumeUrl}
-                    variant="primary"
-                    size="md"
-                    className="mt-2 sm:hidden"
-                    aria-label={profile.resumeLabel}
-                  >
-                    <FileText className="h-4 w-4" aria-hidden />
-                    {profile.resumeLabel}
-                  </Button>
                 </nav>
               </Container>
             </motion.div>
