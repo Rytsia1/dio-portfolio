@@ -29,6 +29,7 @@ export type ProjectCategory =
   | "Full-Stack Web Development"
   | "Quantitative Finance"
   | "Software Engineering"
+  | "Software & Quantitative Finance"
   | "Game Technology"
   | "Game Development"
   | "Mobile Game Development"
