@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, FileText, Instagram } from "lucide-react";
+import { Github, Linkedin, Mail, Instagram } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { profile } from "@/data/profile";
 
@@ -73,15 +73,6 @@ export function Footer() {
                   className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/85 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white"
                 >
                   <Mail className="h-4 w-4" aria-hidden />
-                </a>
-              </li>
-              <li>
-                <a
-                  href={profile.resumeUrl}
-                  aria-label={profile.resumeLabel}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/85 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white"
-                >
-                  <FileText className="h-4 w-4" aria-hidden />
                 </a>
               </li>
               {showInstagram && (

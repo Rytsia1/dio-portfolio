@@ -1,4 +1,4 @@
-import { Download, Github, Linkedin, Mail, Instagram, ArrowUpRight } from "lucide-react";
+import { Github, Linkedin, Mail, Instagram, ArrowUpRight } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
@@ -37,15 +37,6 @@ export function Contact() {
               >
                 <Mail className="h-4 w-4" aria-hidden />
                 Email me
-              </Button>
-              <Button
-                href={profile.resumeUrl}
-                variant="secondary"
-                size="lg"
-                aria-label={profile.resumeLabel}
-              >
-                <Download className="h-4 w-4" aria-hidden />
-                {profile.resumeLabel}
               </Button>
             </div>
 
