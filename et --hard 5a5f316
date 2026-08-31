@@ -1,0 +1,26 @@
+[33m87af57a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m Retro pixel redesign and portfolio refresh
+[33m5a5f316[m Add portfolio optimizer project content
+[33m6c061fe[m Add Book-it-quick portfolio entry
+[33m1a01fd6[m Add scroll-driven cloud parallax
+[33m68df295[m Fix hash nav links on homepage
+[33m8681b23[m Remove legacy UI components and add categories
+[33m5883268[m Expand Moon Sky project entry
+[33m34b03e5[m Add 'Makan Siang Bergizi' project and assets
+[33mc64287d[m Improve project gallery and cover display
+[33mba0412b[m Refine project cover and metadata
+[33m528e4aa[m Polish project page UI and Wacky Whackers data
+[33m1aea86a[m Add Wacky Whackers project detail page
+[33mbc6cac8[m Add global CloudBackground and refine cloud animations
+[33m1a01a77[m Add ambient cloud background & mascot poses
+[33m1ea7555[m Use deep orange accent & add pixel grass tile
+[33m23d41ae[m Tighten responsive section spacing
+[33me7f9413[m Remove Windows helper batch files
+[33m205106f[m Add UI layout, sections, siteConfig, and scripts
+[33m14cb122[m Add animated mascot with cursor & scroll
+[33mab3f60c[m Improve OG image, accessibility, and site config
+[33m273f6ea[m Hero: server CSS animation; Reveal: lazy framer-motion
+[33m96f94f0[m Optimize pixel SVG components with path data
+[33md789d61[m Highlight international exchanges
+[33mf8e01cc[m Add game tech stack UI and types
+[33m685431f[m Add portfolio site, components, data, and metadata
+[33ma7d70a2[m Initial commit from Create Next App
