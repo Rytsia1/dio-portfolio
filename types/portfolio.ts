@@ -71,6 +71,8 @@ export interface BaseProject {
   year?: string;
   /** Optional one-line note about the user's role on the project. */
   role?: string;
+  /** Optional team or collaboration context */
+  team?: string;
   /** Optional achievement badge text (e.g. "KMIPN 2025 Finalist"). */
   achievement?: string;
   /** Technologies shown as tags — the "tech stack" of the project. */

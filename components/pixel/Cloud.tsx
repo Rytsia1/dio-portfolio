@@ -3,7 +3,7 @@ import { cn } from "@/lib/cn";
 
 export interface CloudProps {
   /** Visual size of the cloud. */
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "xl";
   /** Visual variant — three silhouettes for variety. */
   variant?: 1 | 2 | 3;
   /** Opacity override from 0 to 1 (e.g. 0.65). */
@@ -40,7 +40,7 @@ const CLOUD_PATHS: Record<1 | 2 | 3, { body: string; shadow: string }> = {
       " M5,1h9v1h-9z M15,1h4v1h-4z" +
       " M3,2h18v1h-18z" +
       " M4,3h16v1h-16z",
-    shadow: "M4,4h16v0.4h-16z",
+    shadow: "M4,4h16v1h-16z M5,5h14v0.5h-14z",
   },
   2: {
     // row 0 → runs: 4-5, 9-11, 15-16
@@ -52,7 +52,7 @@ const CLOUD_PATHS: Record<1 | 2 | 3, { body: string; shadow: string }> = {
       " M3,1h10v1h-10z M14,1h5v1h-5z" +
       " M2,2h18v1h-18z" +
       " M3,3h16v1h-16z",
-    shadow: "M3,4h16v0.4h-16z",
+    shadow: "M3,4h16v1h-16z M4,5h14v0.5h-14z",
   },
   3: {
     // row 0 → runs: 8-10, 14-16
@@ -64,14 +64,15 @@ const CLOUD_PATHS: Record<1 | 2 | 3, { body: string; shadow: string }> = {
       " M7,1h5v1h-5z M13,1h5v1h-5z" +
       " M5,2h15v1h-15z" +
       " M6,3h13v1h-13z",
-    shadow: "M6,4h13v0.4h-13z",
+    shadow: "M6,4h13v1h-13z M7,5h11v0.5h-11z",
   },
 };
 
 const DIMS = {
-  sm: { w: 72,  h: 36 },
-  md: { w: 108, h: 54 },
-  lg: { w: 144, h: 72 },
+  sm: { w: 84,  h: 21 },
+  md: { w: 130, h: 32 },
+  lg: { w: 180, h: 44 },
+  xl: { w: 240, h: 58 },
 } as const;
 
 const DRIFT_CLASSES: Record<string, string> = {
@@ -89,9 +90,9 @@ export function Cloud({
   className,
   style,
   ariaLabel,
-}: CloudProps) {
-  const { w, h } = DIMS[size];
-  const { body, shadow } = CLOUD_PATHS[variant];
+}: CloudProps & { size?: "sm" | "md" | "lg" | "xl" }) {
+  const { w, h } = DIMS[size] ?? DIMS.md;
+  const { body, shadow } = CLOUD_PATHS[variant] ?? CLOUD_PATHS[1];
 
   const driftClass =
     drift === true
@@ -107,17 +108,17 @@ export function Cloud({
       aria-hidden={ariaLabel ? undefined : true}
       width={w}
       height={h}
-      viewBox="0 0 24 12"
+      viewBox="0 0 24 6"
       shapeRendering="crispEdges"
-      className={cn("block pointer-events-none select-none", driftClass, className)}
+      className={cn("block pointer-events-none select-none drop-shadow-[0_2px_4px_rgba(15,27,45,0.06)]", driftClass, className)}
       style={{
         imageRendering: "pixelated",
-        opacity: opacity !== undefined ? opacity : undefined,
+        opacity: opacity !== undefined ? opacity : 0.9,
         ...style,
       }}
     >
-      {/* Shadow first (below) so body paints over it at the shared edge */}
-      <path d={shadow} fill="#cce0f0" />
+      {/* Defined shadow tone with high contrast against the sky background */}
+      <path d={shadow} fill="#9ec5e6" />
       <path d={body}   fill="#ffffff" />
     </svg>
   );

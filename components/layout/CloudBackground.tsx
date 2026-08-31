@@ -35,69 +35,78 @@ export function CloudBackground() {
       aria-hidden
       className="fixed inset-0 pointer-events-none z-0 overflow-hidden w-full h-full select-none"
     >
-      {/* ── Background Layer (Slow, Small, Low Opacity) ────────────────── */}
+      {/* ── Background Layer (Slow, Small, High Crispness) ─────────────── */}
       <motion.div 
         style={{ y: yBg }}
         className="absolute inset-0 w-full h-full will-change-transform"
       >
-        <div className="absolute left-[3%] top-[5%]">
-          <Cloud size="sm" variant={1} opacity={0.4} drift="slow" />
+        <div className="absolute left-[3%] top-[4%]">
+          <Cloud size="sm" variant={1} opacity={0.85} drift="slow" />
         </div>
-        <div className="absolute right-[4%] top-[25%] hidden sm:block">
-          <Cloud size="sm" variant={3} opacity={0.35} drift="reverse" />
+        <div className="absolute right-[4%] top-[22%] hidden sm:block">
+          <Cloud size="sm" variant={3} opacity={0.8} drift="reverse" />
         </div>
-        <div className="absolute left-[6%] top-[45%] hidden md:block">
-          <Cloud size="sm" variant={2} opacity={0.3} drift="medium" />
+        <div className="absolute left-[5%] top-[46%] hidden md:block">
+          <Cloud size="sm" variant={2} opacity={0.8} drift="medium" />
         </div>
-        <div className="absolute right-[5%] top-[75%]">
-          <Cloud size="sm" variant={1} opacity={0.4} drift="slow" />
+        <div className="absolute right-[5%] top-[72%]">
+          <Cloud size="sm" variant={1} opacity={0.85} drift="slow" />
         </div>
-        {/* Extended vertical coverage */}
-        <div className="absolute left-[5%] top-[105vh]">
-          <Cloud size="sm" variant={3} opacity={0.35} drift="reverse" />
+        {/* Extended vertical parallax coverage */}
+        <div className="absolute left-[4%] top-[95vh]">
+          <Cloud size="sm" variant={3} opacity={0.8} drift="reverse" />
+        </div>
+        <div className="absolute right-[6%] top-[115vh] hidden sm:block">
+          <Cloud size="sm" variant={2} opacity={0.85} drift="slow" />
         </div>
       </motion.div>
 
-      {/* ── Midground Layer (Medium Speed, Medium Size/Opacity) ────────── */}
+      {/* ── Midground Layer (Medium Speed, Medium Size) ────────────────── */}
       <motion.div 
         style={{ y: yMid }}
         className="absolute inset-0 w-full h-full will-change-transform"
       >
-        <div className="absolute right-[6%] top-[10%] hidden md:block">
-          <Cloud size="md" variant={3} opacity={0.55} drift="fast" />
+        <div className="absolute right-[6%] top-[8%] hidden md:block">
+          <Cloud size="md" variant={3} opacity={0.9} drift="fast" />
         </div>
-        <div className="absolute left-[5%] top-[30%]">
-          <Cloud size="md" variant={1} opacity={0.60} drift="reverse" />
+        <div className="absolute left-[4%] top-[28%]">
+          <Cloud size="md" variant={1} opacity={0.92} drift="reverse" />
         </div>
-        <div className="absolute right-[5%] top-[52%] hidden sm:block">
-          <Cloud size="md" variant={2} opacity={0.50} drift="medium" />
+        <div className="absolute right-[5%] top-[50%] hidden sm:block">
+          <Cloud size="md" variant={2} opacity={0.88} drift="medium" />
         </div>
-        <div className="absolute left-[4%] top-[70%] hidden lg:block">
-          <Cloud size="md" variant={3} opacity={0.55} drift="slow" />
+        <div className="absolute left-[3%] top-[68%] hidden lg:block">
+          <Cloud size="md" variant={3} opacity={0.9} drift="slow" />
         </div>
-        {/* Extended vertical coverage */}
-        <div className="absolute right-[7%] top-[115vh]">
-          <Cloud size="md" variant={1} opacity={0.60} drift="reverse" />
+        {/* Extended vertical parallax coverage */}
+        <div className="absolute right-[5%] top-[105vh]">
+          <Cloud size="md" variant={1} opacity={0.9} drift="reverse" />
+        </div>
+        <div className="absolute left-[6%] top-[125vh] hidden md:block">
+          <Cloud size="md" variant={3} opacity={0.92} drift="fast" />
         </div>
       </motion.div>
 
-      {/* ── Foreground Layer (Fastest, Large, High Opacity) ────────────── */}
+      {/* ── Foreground Layer (Fastest, Large, Full Contrast) ───────────── */}
       <motion.div 
         style={{ y: yFg }}
         className="absolute inset-0 w-full h-full will-change-transform"
       >
-        <div className="absolute left-[4%] top-[18%] hidden sm:block">
-          <Cloud size="lg" variant={2} opacity={0.75} drift="medium" />
+        <div className="absolute left-[4%] top-[14%] hidden sm:block">
+          <Cloud size="lg" variant={2} opacity={0.96} drift="medium" />
         </div>
-        <div className="absolute right-[5%] top-[35%] hidden 2xl:block">
-          <Cloud size="lg" variant={1} opacity={0.80} drift="slow" />
+        <div className="absolute right-[4%] top-[34%] hidden xl:block">
+          <Cloud size="xl" variant={1} opacity={0.98} drift="slow" />
         </div>
-        <div className="absolute right-[6%] top-[85%]">
-          <Cloud size="lg" variant={3} opacity={0.70} drift="fast" />
+        <div className="absolute right-[5%] top-[82%]">
+          <Cloud size="lg" variant={3} opacity={0.95} drift="fast" />
         </div>
-        {/* Extended vertical coverage */}
-        <div className="absolute left-[4%] top-[125vh]">
-          <Cloud size="lg" variant={1} opacity={0.75} drift="reverse" />
+        {/* Extended vertical parallax coverage */}
+        <div className="absolute left-[3%] top-[110vh]">
+          <Cloud size="lg" variant={1} opacity={0.95} drift="reverse" />
+        </div>
+        <div className="absolute right-[4%] top-[135vh] hidden sm:block">
+          <Cloud size="xl" variant={2} opacity={0.98} drift="medium" />
         </div>
       </motion.div>
     </div>
