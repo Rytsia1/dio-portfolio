@@ -18,7 +18,7 @@ export const achievements: Achievement[] = [
 
   {
     id: "gameseed-2025-top-60",
-    title: "Gameseed 2025 — Top 60 — Wacky Whackers",
+    title: "Gameseed 2025: Top 60 (Wacky Whackers)",
     category: "Competition",
     badge: "Top 60",
     subtitle: "Gameseed 2025",
@@ -44,7 +44,7 @@ export const achievements: Achievement[] = [
   },
   {
     id: "temasek-ite-scale-2025",
-    title: "Temasek Foundation Award — ITE SCALE Programme 2025",
+    title: "Temasek Foundation Award: ITE SCALE Programme 2025",
     category: "Exchange",
     badge: "Awardee",
     subtitle: "Temasek Foundation · ITE SCALE",

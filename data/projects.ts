@@ -144,13 +144,13 @@ export const projects: ProjectItem[] = [
     title: "Wacky Whackers: The Ultimate Stick Battle",
     tagline: "Find your stick, Fight with stick",
     shortDescription:
-      "A quirky exploration and turn-based stick-battling game — Top 60 national placement at Gameseed 2025, playable on Itch.io.",
+      "A quirky exploration and turn-based stick-battling game (Top 60 national placement at Gameseed 2025), playable on Itch.io.",
     overview:
       "A quirky exploration and turn-based battle game where players roam a village to discover, appraise, and duel with unique wooden sticks in a quest to become the Ultimate Whacker. Built for Gameseed 2025 under the theme 'Real Life Experience', achieving Top 60 national placement.",
     category: "Game Technology",
     year: "2025",
     role: "Game Designer",
-    achievement: "Gameseed 2025 — Top 60",
+    achievement: "Gameseed 2025: Top 60",
     engine: "Unity",
     coreMechanics: [
       "First-Person Exploration",
@@ -214,9 +214,9 @@ export const projects: ProjectItem[] = [
     title: "Makan Siang Bergizi",
     tagline: "Asymmetric Co-op Nutrition Management & School Lunch Simulation",
     shortDescription:
-      "A two-player cooperative online simulation game about cooking and nutrition management — KMIPN 2025 finalist.",
+      "A two-player cooperative online simulation game about cooking and nutrition management (KMIPN 2025 finalist).",
     overview:
-      "A two-player cooperative online simulation game where players assume distinct roles—a cafeteria chef and a nutritionist—collaborating in real-time to prepare balanced, nutritious meals for school children with varying dietary needs across Indonesia. Selected as a National Finalist at KMIPN 2025.",
+      "A two-player cooperative online simulation game where players assume distinct roles (a cafeteria chef and a nutritionist) collaborating in real-time to prepare balanced, nutritious meals for school children with varying dietary needs across Indonesia. Selected as a National Finalist at KMIPN 2025.",
     category: "Game Development",
     year: "2025",
     role: "Game Designer",
