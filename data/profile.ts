@@ -22,8 +22,6 @@ export const profile: Profile = {
   githubHandle: "@Rytsia1",
   linkedinUrl: "https://www.linkedin.com/in/dioadinata",
   linkedinHandle: "in/dioadinata",
-  twitterUrl: "https://x.com/distania_9",
-  twitterHandle: "@distania_9",
   // Instagram is included because the user confirmed it — but the
   // Hero/Footer only show it where it fits (it's a personal channel,
   // not a professional one). See Footer.tsx for the conditional render.

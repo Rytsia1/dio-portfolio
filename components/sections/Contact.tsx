@@ -1,4 +1,4 @@
-import { Download, Github, Linkedin, Mail, Twitter, ArrowUpRight } from "lucide-react";
+import { Download, Github, Linkedin, Mail, Instagram, ArrowUpRight } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
@@ -70,12 +70,12 @@ export function Contact() {
                 icon={<Linkedin className="h-4 w-4" aria-hidden />}
                 external
               />
-              {profile.twitterUrl && profile.twitterHandle && (
+              {profile.instagramUrl && profile.instagramHandle && (
                 <ContactLink
-                  href={profile.twitterUrl}
-                  label="Twitter / X"
-                  sublabel={profile.twitterHandle}
-                  icon={<Twitter className="h-4 w-4" aria-hidden />}
+                  href={profile.instagramUrl}
+                  label="Instagram"
+                  sublabel={profile.instagramHandle}
+                  icon={<Instagram className="h-4 w-4" aria-hidden />}
                   external
                 />
               )}

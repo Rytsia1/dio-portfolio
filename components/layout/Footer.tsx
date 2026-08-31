@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, FileText, Instagram, Twitter } from "lucide-react";
+import { Github, Linkedin, Mail, FileText, Instagram } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { profile } from "@/data/profile";
 
@@ -15,7 +15,6 @@ const PIXEL_GRASS_TILE =
 export function Footer() {
   const year = new Date().getFullYear();
   const showInstagram = Boolean(profile.instagramUrl);
-  const showTwitter = Boolean(profile.twitterUrl);
 
   return (
     <footer className="relative mt-12 w-full">
@@ -66,19 +65,7 @@ export function Footer() {
                   <Linkedin className="h-4 w-4" aria-hidden />
                 </a>
               </li>
-              {showTwitter && (
-                <li>
-                  <a
-                    href={profile.twitterUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Twitter ${profile.twitterHandle} (opens in new tab)`}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/85 transition-colors hover:border-white/40 hover:bg-white/10 hover:text-white"
-                  >
-                    <Twitter className="h-4 w-4" aria-hidden />
-                  </a>
-                </li>
-              )}
+
               <li>
                 <a
                   href={profile.email}
