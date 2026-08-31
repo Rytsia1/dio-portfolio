@@ -1,42 +1,47 @@
-import { Download, Github, Linkedin, Mail, Twitter, ArrowUpRight } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { Mascot } from "@/components/pixel/Mascot";
 import { Decor } from "@/components/pixel/Decor";
+import { PixelIcon, type PixelIconName } from "@/components/pixel/PixelIcon";
 import { profile } from "@/data/profile";
 
 /**
- * Contact — light editorial design. Friendly closing with white cards,
- * orange CTAs, and pixel-art decorations.
+ * Contact & Dispatch Terminal.
  */
 export function Contact() {
   return (
     <Section
       id="contact"
-      eyebrow="Contact"
-      title="Want to build something together?"
-      description="I'm open to software engineering roles, internships, and serious project collaborations. The fastest way to reach me is email — feel free to add context about what you're working on."
-      className="relative border-t border-border"
+      eyebrow="Comms Channel"
+      title="Direct Dispatch & Collaboration"
+      description="Open to game engineering, full-stack software roles, and quantitative finance collaborations."
+      className="relative border-t-2 border-border"
     >
       <Decor
         kind="star"
         size={20}
-        className="absolute right-10 top-10 hidden sm:block"
+        className="absolute right-10 top-10 hidden sm:block opacity-60"
       />
 
-      <Reveal className="grid gap-6 lg:grid-cols-12">
+      <Reveal className="grid grid-cols-1 gap-6 lg:grid-cols-12 font-mono">
+        {/* Main Comms Box */}
         <div className="lg:col-span-7">
-          <div className="rounded-3xl border border-border bg-surface p-6 card-shadow sm:p-8">
-            <div className="flex flex-col gap-3 sm:flex-row">
+          <div className="rounded-xl border-2 border-border bg-surface p-6 sm:p-8 shadow-[3px_3px_0px_0px_rgba(15,27,45,0.14)]">
+            <div className="flex items-center gap-2 border-b border-border pb-3 text-xs font-bold uppercase tracking-wider text-accent">
+              <PixelIcon name="mail" size={14} />
+              [ INITIATE CONTACT ]
+            </div>
+
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Button
                 href={profile.email}
                 variant="primary"
                 size="lg"
                 aria-label={`Send email to ${profile.emailDisplay}`}
               >
-                <Mail className="h-4 w-4" aria-hidden />
-                Email me
+                <PixelIcon name="mail" size={16} />
+                Send Email
               </Button>
               <Button
                 href={profile.resumeUrl}
@@ -44,30 +49,30 @@ export function Contact() {
                 size="lg"
                 aria-label={profile.resumeLabel}
               >
-                <Download className="h-4 w-4" aria-hidden />
+                <PixelIcon name="file-text" size={14} />
                 {profile.resumeLabel}
               </Button>
             </div>
 
-            <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+            <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
               <ContactLink
                 href={profile.email}
                 label="Email"
                 sublabel={profile.emailDisplay}
-                icon={<Mail className="h-4 w-4" aria-hidden />}
+                iconName="mail"
               />
               <ContactLink
                 href={profile.githubUrl}
                 label="GitHub"
                 sublabel={profile.githubHandle}
-                icon={<Github className="h-4 w-4" aria-hidden />}
+                iconName="github"
                 external
               />
               <ContactLink
                 href={profile.linkedinUrl}
                 label="LinkedIn"
                 sublabel={profile.linkedinHandle}
-                icon={<Linkedin className="h-4 w-4" aria-hidden />}
+                iconName="linkedin"
                 external
               />
               {profile.twitterUrl && profile.twitterHandle && (
@@ -75,7 +80,7 @@ export function Contact() {
                   href={profile.twitterUrl}
                   label="Twitter / X"
                   sublabel={profile.twitterHandle}
-                  icon={<Twitter className="h-4 w-4" aria-hidden />}
+                  iconName="twitter"
                   external
                 />
               )}
@@ -83,37 +88,40 @@ export function Contact() {
           </div>
         </div>
 
+        {/* Current Status Box */}
         <div className="relative lg:col-span-5">
-          <div className="rounded-3xl border border-border bg-surface p-6 card-shadow sm:p-8">
-            <p className="eyebrow">Currently</p>
-            <h3 className="mt-3 text-lg font-semibold tracking-tight text-fg">
-              Open to engineering opportunities
-            </h3>
-            <p className="mt-3 text-sm leading-relaxed text-fg-muted">
-              Particularly interested in roles that combine software
-              engineering with quantitative finance, FinTech, or systems
-              work. Happy to chat about internships, new-grad, or
-              short-term project collaborations.
-            </p>
-            <p className="mt-4 text-xs text-fg-subtle">
-              {profile.location ? `Based in ${profile.location}. ` : ""}
-              Open to remote and relocation.
-            </p>
+          <div className="h-full rounded-xl border-2 border-border bg-surface p-6 sm:p-8 shadow-[3px_3px_0px_0px_rgba(15,27,45,0.14)] flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-2 border-b border-border pb-3 text-xs font-bold uppercase tracking-wider text-accent">
+                <PixelIcon name="terminal" size={14} />
+                [ CURRENT AVAILABILITY ]
+              </div>
+
+              <h3 className="mt-4 text-base font-bold tracking-tight text-fg">
+                Open for Engineering Roles & Projects
+              </h3>
+              <p className="mt-3 text-xs leading-relaxed text-fg-muted font-mono sm:text-sm">
+                Actively seeking roles in Game Technology, Systems Engineering,
+                and Quantitative Software Development. Open to full-time,
+                internship, and project contracts.
+              </p>
+              <p className="mt-4 text-xs font-bold text-accent">
+                {profile.location ? `Based in ${profile.location}. ` : ""}
+                Remote and relocation ready.
+              </p>
+            </div>
+
+            {/* Sleeping mascot accent */}
+            <div className="mt-6 flex justify-end">
+              <Mascot
+                size={96}
+                pose="sleeping"
+                trackCursor={false}
+                reactToScroll={false}
+                className="hidden sm:block"
+              />
+            </div>
           </div>
-          {/* ── Mascot — Contact / "sleeping" placement ──────────────────
-           *
-           * Distinct from the Hero instance: this mascot dozes on its
-           * keyboard (eyes closed, folded arms, dim screen, Zzz dots).
-           * Motion is intentionally off — it’s a decorative accent, not
-           * a live companion. The Hero mascot handles all interaction.
-           */}
-          <Mascot
-            size={96}
-            pose="sleeping"
-            trackCursor={false}
-            reactToScroll={false}
-            className="absolute -bottom-4 -right-2 hidden lg:block"
-          />
         </div>
       </Reveal>
     </Section>
@@ -124,7 +132,7 @@ interface ContactLinkProps {
   href: string;
   label: string;
   sublabel: string;
-  icon: React.ReactNode;
+  iconName: PixelIconName;
   external?: boolean;
 }
 
@@ -132,7 +140,7 @@ function ContactLink({
   href,
   label,
   sublabel,
-  icon,
+  iconName,
   external = false,
 }: ContactLinkProps) {
   return (
@@ -141,27 +149,28 @@ function ContactLink({
         href={href}
         target={external ? "_blank" : undefined}
         rel={external ? "noopener noreferrer" : undefined}
-        className="group flex items-center justify-between gap-3 rounded-2xl border border-border bg-surface-soft p-4 transition-colors hover:border-accent/40 hover:bg-surface"
+        className="group flex items-center justify-between gap-3 rounded border border-border bg-surface-soft p-3.5 transition-all hover:border-accent hover:bg-surface active:translate-x-0.5 active:translate-y-0.5"
       >
         <span className="flex min-w-0 items-center gap-3">
           <span
-            aria-hidden
-            className="grid h-9 w-9 place-items-center rounded-full border border-border bg-surface text-accent"
+            aria-hidden="true"
+            className="grid h-8 w-8 place-items-center rounded border border-border bg-surface text-accent"
           >
-            {icon}
+            <PixelIcon name={iconName} size={14} />
           </span>
-          <span className="min-w-0">
-            <span className="block truncate text-sm font-medium text-fg">
+          <span className="min-w-0 font-mono">
+            <span className="block truncate text-xs font-bold text-fg">
               {label}
             </span>
-            <span className="block truncate text-xs text-fg-subtle">
+            <span className="block truncate text-[11px] text-fg-subtle">
               {sublabel}
             </span>
           </span>
         </span>
-        <ArrowUpRight
-          className="h-4 w-4 shrink-0 text-fg-subtle transition-colors group-hover:text-accent"
-          aria-hidden
+        <PixelIcon
+          name="arrow-up-right"
+          size={12}
+          className="text-fg-subtle transition-colors group-hover:text-accent"
         />
       </a>
     </li>

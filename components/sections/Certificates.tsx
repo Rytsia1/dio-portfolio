@@ -1,20 +1,15 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Award, ChevronDown, ExternalLink } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Tag } from "@/components/ui/Tag";
+import { PixelIcon } from "@/components/pixel/PixelIcon";
 import { certificates } from "@/data/certificates";
 import type { Certificate, CertificateCategory } from "@/types/portfolio";
 import { cn } from "@/lib/cn";
 
 const VISIBLE_LIMIT = 6;
 
-/**
- * Preferred display order. Any category that appears in the data but
- * isn't listed here is appended in the order it first appears, so the
- * grouping is forward-compatible with new categories.
- */
 const CATEGORY_ORDER: CertificateCategory[] = [
   "Game Design",
   "Cloud",
@@ -25,8 +20,7 @@ const CATEGORY_ORDER: CertificateCategory[] = [
 ];
 
 /**
- * Certificates — light theme. White horizontal cards, soft shadows,
- * "View all" disclosure. Marked `"use client"` only for the disclosure.
+ * Verified Professional Certificates Registry.
  */
 export function Certificates() {
   const [showAll, setShowAll] = useState(false);
@@ -42,27 +36,20 @@ export function Certificates() {
   return (
     <Section
       id="certificates"
-      eyebrow="Certificates"
-      title="Certificates."
-      description="Selected professional certificates. Grouped by category and ordered by relevance."
-      className="border-t border-border"
+      eyebrow="Credentials"
+      title="Certificates & Verification"
+      description="Professional industry certificates and verified educational coursework."
+      className="border-t-2 border-border"
     >
       {certificates.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-border-strong bg-surface p-8 text-center">
-          <Award
-            className="mx-auto h-6 w-6 text-fg-subtle"
-            aria-hidden
+        <div className="rounded-xl border-2 border-dashed border-border-strong bg-surface p-8 text-center font-mono">
+          <PixelIcon
+            name="award"
+            size={24}
+            className="mx-auto text-fg-subtle"
           />
-          <p className="mt-4 text-sm text-fg-muted">
-            No certificates added yet. Populate{" "}
-            <code className="font-mono text-fg">
-              data/certificates.ts
-            </code>{" "}
-            with your real credentials.
-          </p>
-          <p className="mt-2 text-xs text-fg-subtle">
-            Each entry can include a credential URL and an image — the
-            section gracefully handles missing fields.
+          <p className="mt-4 text-xs text-fg-muted">
+            No credentials currently registered.
           </p>
         </div>
       ) : (
@@ -73,29 +60,27 @@ export function Certificates() {
             const remaining = Math.max(0, list.length - visibleCount);
             const displayed = list.slice(0, visibleCount);
             return (
-              <div key={category} className="mb-8 last:mb-0">
-                <div className="mb-4 flex items-end justify-between">
-                  <h3 className="text-xs font-semibold uppercase tracking-[0.22em] text-fg-subtle">
-                    {category}
+              <div key={category} className="mb-8 last:mb-0 font-mono">
+                <div className="mb-3 flex items-end justify-between border-b border-border pb-2">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-accent">
+                    [ {category} ]
                   </h3>
-                  <span className="font-mono text-[10px] text-fg-subtle">
+                  <span className="font-mono text-[10px] font-bold text-fg-subtle">
                     {list.length} item{list.length === 1 ? "" : "s"}
                   </span>
                 </div>
-                <ul className="grid gap-3 sm:grid-cols-2">
+                <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {displayed.map((cert) => (
                     <li key={cert.id}>
                       <CertificateRow certificate={cert} />
                     </li>
                   ))}
                 </ul>
-                {!showAll &&
-                  remaining > 0 &&
-                  idx === 0 && (
-                    <p className="mt-3 text-xs text-fg-subtle">
-                      + {remaining} more in this category
-                    </p>
-                  )}
+                {!showAll && remaining > 0 && idx === 0 && (
+                  <p className="mt-3 text-xs text-fg-subtle font-mono">
+                    + {remaining} more credentials in this domain
+                  </p>
+                )}
               </div>
             );
           })}
@@ -106,18 +91,19 @@ export function Certificates() {
                 type="button"
                 onClick={() => setShowAll((v) => !v)}
                 className={cn(
-                  "inline-flex items-center gap-2 rounded-full border border-border-strong bg-surface px-4 py-2 text-sm text-fg-muted transition-colors",
-                  "hover:border-accent/40 hover:bg-surface-soft hover:text-fg card-shadow-soft",
+                  "inline-flex items-center gap-2 rounded border-2 border-fg bg-surface px-4 py-2 font-mono text-xs font-bold text-fg shadow-[2px_2px_0px_0px_#0f1b2d] active:translate-x-0.5 active:translate-y-0.5",
+                  "hover:bg-surface-soft transition-colors",
                 )}
                 aria-expanded={showAll}
               >
-                {showAll ? "Show fewer" : "View all certificates"}
-                <ChevronDown
+                {showAll ? "Show fewer" : "View all credentials"}
+                <PixelIcon
+                  name="chevron-down"
+                  size={12}
                   className={cn(
-                    "h-4 w-4 transition-transform",
+                    "transition-transform",
                     showAll && "rotate-180",
                   )}
-                  aria-hidden
                 />
               </button>
             </div>
@@ -134,38 +120,35 @@ function CertificateRow({
   certificate: Certificate;
 }) {
   return (
-    <div className="group flex items-start gap-3 rounded-2xl border border-border bg-surface p-4 transition-all hover:border-accent/40 card-shadow-soft hover:card-shadow">
+    <div className="group flex items-start gap-3 rounded-lg border-2 border-border bg-surface p-4 font-mono shadow-[2px_2px_0px_0px_rgba(15,27,45,0.1)] transition-all hover:border-accent">
       <span
-        aria-hidden
-        className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-full border border-accent/30 bg-accent-soft text-accent"
+        aria-hidden="true"
+        className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded border border-border bg-surface-soft text-accent"
       >
-        <Award className="h-3.5 w-3.5" />
+        <PixelIcon name="award" size={14} />
       </span>
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium text-fg">
+        <p className="truncate text-xs font-bold text-fg sm:text-sm">
           {certificate.title}
         </p>
-        <p className="mt-0.5 text-xs text-fg-muted">
+        <p className="mt-0.5 text-[11px] text-fg-muted font-medium">
           {certificate.provider}
           {certificate.date && (
-            <>
-              <span aria-hidden> · </span>
-              <span className="text-fg-subtle">{certificate.date}</span>
-            </>
+            <span className="text-fg-subtle"> · {certificate.date}</span>
           )}
         </p>
-        <div className="mt-2 flex items-center gap-2">
+        <div className="mt-2.5 flex flex-wrap items-center gap-2">
           <Tag>{certificate.category}</Tag>
           {certificate.credentialUrl && (
             <a
               href={certificate.credentialUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-xs text-fg-muted transition-colors hover:text-fg"
-              aria-label={`${certificate.title} — credential (opens in new tab)`}
+              className="inline-flex items-center gap-1 text-[11px] font-bold text-accent hover:underline"
+              aria-label={`${certificate.title} credential verification (opens in new tab)`}
             >
-              <span>Credential</span>
-              <ExternalLink className="h-3 w-3" aria-hidden />
+              <span>Verify</span>
+              <PixelIcon name="external-link" size={10} />
             </a>
           )}
         </div>
@@ -174,14 +157,6 @@ function CertificateRow({
   );
 }
 
-/**
- * Group certificates by category, building the bucket map dynamically
- * from the data so the function is robust to new categories being added
- * to the `CertificateCategory` union later. Returns the bucket map and
- * a stable display order: first the categories in `CATEGORY_ORDER` (in
- * that order), then any unknown categories in the order they first
- * appear in the data.
- */
 function groupByCategory(
   list: Certificate[],
 ): {

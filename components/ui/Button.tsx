@@ -1,7 +1,7 @@
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
-type Variant = "primary" | "secondary" | "ghost";
+type Variant = "primary" | "secondary" | "ghost" | "arcade";
 type Size = "sm" | "md" | "lg";
 
 type ButtonOwnProps = {
@@ -9,14 +9,6 @@ type ButtonOwnProps = {
   size?: Size;
   children: ReactNode;
   className?: string;
-  /**
-   * Accessible name for the button. **Required when `children` contains
-   * no visible text** (e.g. an icon-only button). Screen readers will
-   * announce this string instead of the (often silent) icon.
-   *
-   * When the button has visible text in `children`, this prop is
-   * optional — the visible text is used as the accessible name.
-   */
   "aria-label"?: string;
 };
 
@@ -24,29 +16,8 @@ type ButtonProps = ButtonOwnProps &
   Omit<ComponentPropsWithoutRef<"a">, "className" | "children">;
 
 /**
- * Polymorphic button-styled link. Everything in the portfolio that
- * looks like a button is an anchor (`<a>`) — there's no form-based
- * interactivity on the site, so a link is the correct primitive.
- *
- * Visual style: light editorial theme on a sky-blue canvas, with
- * a terminal-green keyboard focus ring that fits the gaming aesthetic.
- *   primary   — orange pill (the main CTA).
- *   secondary — white card with a soft border.
- *   ghost     — borderless, navy text.
- *
- * ── Accessibility ──────────────────────────────────────────────────────
- *
- * **Focus ring.** We *intentionally* do not use `outline-none` alone:
- * WCAG 2.4.7 (Focus Visible) requires a visible focus indicator. The
- * `focus-visible` ring below uses Tailwind's `ring-2` (2 px, meeting the
- * 2 px minimum) in `ring-green-400` (`#4ade80` — terminal green, 3:1
- * contrast against the page background) with a 2 px `ring-offset-bg`
- * gap so the ring is visible on every variant's fill.
- *
- * **Accessible name.** Icon-only buttons MUST pass an `aria-label`. A
- * dev-mode `console.warn` fires in development if the button is
- * icon-only and no `aria-label` is provided. In production the
- * warning is stripped by the `process.env.NODE_ENV` guard.
+ * Tactile Retro Pixel Button / Action Link.
+ * Styled with crisp solid borders and 8-bit stepped press interactions.
  */
 export function Button({
   variant = "primary",
@@ -55,50 +26,42 @@ export function Button({
   children,
   ...rest
 }: ButtonProps) {
-  // Dev-only a11y guard: catches the "icon-only button with no
-  // accessible name" footgun that breaks screen-reader output.
   if (
     process.env.NODE_ENV !== "production" &&
     !rest["aria-label"] &&
     !rest["aria-labelledby"] &&
     !hasVisibleText(children)
   ) {
-    // eslint-disable-next-line no-console
     console.warn(
-      "[Button] Icon-only buttons must have an `aria-label` " +
-        "so screen readers can announce their function.",
+      "[Button] Icon-only buttons must have an `aria-label` for accessibility.",
     );
   }
 
   const base =
-    // Layout
-    "inline-flex items-center justify-center gap-2 rounded-full font-medium " +
-    // Motion
-    "transition-colors transition-shadow " +
-    // WCAG 2.4.7 / 2.4.11 — visible focus indicator with high contrast against light surfaces.
-    "outline-none " +
-    "focus-visible:ring-2 focus-visible:ring-orange-700 " +
-    "focus-visible:ring-offset-2 focus-visible:ring-offset-ring-offset " +
-    // Future-proofing for the day this is swapped to a real <button>.
+    "inline-flex items-center justify-center gap-2 font-mono font-bold select-none cursor-pointer " +
+    "outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 " +
+    "transition-transform duration-75 active:translate-x-[2px] active:translate-y-[2px] " +
     "disabled:opacity-50 disabled:pointer-events-none";
 
   const variants: Record<Variant, string> = {
     primary:
-      // Solid deep orange background with pure white text (contrast ≥ 5.9:1 on orange-700 hover, passes WCAG AA & AAA for large text).
-      "bg-orange-600 text-white hover:bg-orange-700 active:bg-orange-800 " +
-      "shadow-[0_1px_0_0_rgba(255,255,255,0.18)_inset,0_10px_24px_-14px_rgba(194,65,12,0.55)]",
+      "bg-accent text-white border-2 border-fg shadow-[3px_3px_0px_0px_#0f1b2d] " +
+      "hover:bg-accent-strong active:shadow-[1px_1px_0px_0px_#0f1b2d]",
     secondary:
-      "border border-border-strong bg-surface text-fg " +
-      "hover:bg-surface-soft hover:border-orange-700/40",
+      "bg-surface text-fg border-2 border-fg shadow-[3px_3px_0px_0px_#0f1b2d] " +
+      "hover:bg-surface-soft active:shadow-[1px_1px_0px_0px_#0f1b2d]",
+    arcade:
+      "bg-[#6cc04a] text-fg border-2 border-fg shadow-[3px_3px_0px_0px_#0f1b2d] " +
+      "hover:bg-[#5bb339] active:shadow-[1px_1px_0px_0px_#0f1b2d]",
     ghost:
-      "border border-transparent text-fg-muted " +
-      "hover:text-fg hover:bg-surface",
+      "bg-transparent text-fg-muted border-2 border-transparent " +
+      "hover:text-fg hover:border-border hover:bg-surface active:translate-none",
   };
 
   const sizes: Record<Size, string> = {
-    sm: "h-9 px-3.5 text-sm",
+    sm: "h-8 px-3 text-xs",
     md: "h-10 px-4 text-sm",
-    lg: "h-12 px-5 text-sm sm:text-base",
+    lg: "h-12 px-6 text-base",
   };
 
   return (
@@ -111,13 +74,6 @@ export function Button({
   );
 }
 
-/**
- * Heuristic: does the button's children contain any visible text?
- * Used by the dev-mode a11y guard. We treat any string of non-whitespace
- * characters as visible text and any React element with non-empty
- * children as visible text. Decorative icons (`aria-hidden` SVGs from
- * lucide-react, etc.) are ignored.
- */
 function hasVisibleText(node: ReactNode): boolean {
   if (node == null || typeof node === "boolean") return false;
   if (typeof node === "string") return node.trim().length > 0;

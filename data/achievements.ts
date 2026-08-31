@@ -1,24 +1,14 @@
 import type { Achievement } from "@/types/portfolio";
 
 /**
- * Verified achievements from the CV / portfolio.
- *
- * Array order is intentional — it mirrors the intended render order:
- *   1. Featured (isFeatured: true) — national / international scale wins
- *      rendered as large hero cards with prominent typography.
- *   2. Standard — remaining verified results rendered as compact cards.
- *
- * `hero`      → controls *layout* (large card vs. compact card).
- * `isFeatured`→ controls *styling* (glow, featured pip, elevated bg).
- *               Can be applied independently of `hero` when a result
- *               deserves visual emphasis without the hero layout.
+ * Verified achievements from the CV and portfolio records.
  */
 export const achievements: Achievement[] = [
   // ── Featured: national / international scale ──────────────────────────
 
   {
     id: "gameseed-2025-top-60",
-    title: "Gameseed 2025 — Top 60 — Wacky Whackers",
+    title: "Gameseed 2025 / Top 60: Wacky Whackers",
     category: "Competition",
     badge: "Top 60",
     subtitle: "Gameseed 2025",
@@ -31,7 +21,7 @@ export const achievements: Achievement[] = [
   },
   {
     id: "kmipn-2025-finalist",
-    title: "KMIPN 2025 Finalist — Makan Siang Bergizi",
+    title: "KMIPN 2025 Finalist: Makan Siang Bergizi",
     category: "Competition",
     badge: "Finalist",
     subtitle: "KMIPN 2025",
@@ -44,7 +34,7 @@ export const achievements: Achievement[] = [
   },
   {
     id: "temasek-ite-scale-2025",
-    title: "Temasek Foundation Award — ITE SCALE Programme 2025",
+    title: "Temasek Foundation Award / ITE SCALE Programme 2025",
     category: "Exchange",
     badge: "Awardee",
     subtitle: "Temasek Foundation · ITE SCALE",
@@ -57,7 +47,4 @@ export const achievements: Achievement[] = [
   },
 
   // ── Standard: additional verified results ─────────────────────────────
-  // Add further achievements below this line. They will render as compact
-  // cards beneath the hero row. Set hero: true to promote to the hero grid
-  // and isFeatured: true to apply elevated styling.
 ];

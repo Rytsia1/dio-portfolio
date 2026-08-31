@@ -8,7 +8,7 @@ import { siteConfig } from "@/lib/site";
 // the route's <meta property="og:image:..."> tags automatically.
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = `${siteConfig.name} — ${siteConfig.role} | Game Technology Portfolio`;
+export const alt = `${siteConfig.name} | ${siteConfig.role} | Game Technology Portfolio`;
 
 // ---------------------------------------------------------------------------
 // Font: Press Start 2P (Google Fonts)
@@ -179,7 +179,7 @@ export default async function OpenGraphImage() {
                 letterSpacing: 1,
               }}
             >
-              ~/portfolio — bash — 80×24
+              ~/portfolio / bash / 80×24
             </div>
 
             {/* Right-side badge */}

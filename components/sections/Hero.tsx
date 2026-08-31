@@ -1,89 +1,25 @@
-import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Mascot } from "@/components/pixel/Mascot";
 import { Decor } from "@/components/pixel/Decor";
+import { PixelIcon } from "@/components/pixel/PixelIcon";
 import { profile } from "@/data/profile";
 
-// ---------------------------------------------------------------------------
-// CSS animation — server-rendered, zero JS dependency
-// ---------------------------------------------------------------------------
-// Defined at module scope (string evaluated once, not per-render).
-//
-// Scoped to `#top` (the section's existing id) so the `.hero-in` class
-// name cannot accidentally style elements outside the hero.
-//
-// React 19 automatically hoists `<style>` elements rendered in Server
-// Components to the document `<head>`, deduplicating identical content
-// across renders.
-//
-// `animation-fill-mode: both` applies the `from` state before the delay
-// expires and holds the `to` state after the animation completes.
-//
-// The `prefers-reduced-motion` media query disables the animation entirely
-// for users who have opted out of motion in their OS settings, restoring
-// instant visibility with no transform or opacity side-effects.
 const HERO_ANIM_CSS = `
   @keyframes hero-in {
-    from { opacity: 0; transform: translateY(14px); }
+    from { opacity: 0; transform: translateY(12px); }
     to   { opacity: 1; transform: translateY(0);    }
   }
   #top .hero-in {
-    animation: hero-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: hero-in 0.4s steps(4) both;
   }
   @media (prefers-reduced-motion: reduce) {
     #top .hero-in { animation: none; }
   }
 `;
 
-// ---------------------------------------------------------------------------
-// Component
-// ---------------------------------------------------------------------------
-
 /**
- * Hero — pure Server Component, above the fold, zero client JavaScript.
- *
- * ── Why not <Reveal> here? ────────────────────────────────────────────────
- *
- * `<Reveal>` is designed for below-fold scroll-triggered animations. Using
- * it for above-fold LCP content creates three problems:
- *
- *   1. framer-motion enters the critical JS path. Even with LazyMotion,
- *      the component shells and React hydration overhead are downloaded
- *      before the LCP element is interactive.
- *
- *   2. framer-motion writes `opacity:0` as an inline style during the
- *      client-side animated phase. If the LCP element is already in the
- *      viewport at mount time, there is a brief but measurable frame where
- *      it disappears then reappears — this shows up as a CLS/FCP regression
- *      in Web Vitals traces.
- *
- *   3. `<Reveal>`'s `isMounted` gate renders a plain div on the server,
- *      but the moment `useEffect` fires, it swaps to an `m.div` with
- *      `opacity:0`. For below-fold content this swap is invisible; for
- *      the hero heading (the page's LCP candidate) the swap can be seen.
- *
- * ── What this component does instead ─────────────────────────────────────
- *
- *   • Renders fully static HTML — every word is present in the server
- *     response before any JS downloads (FCP safe, LCP safe, SEO safe).
- *
- *   • Injects a CSS `@keyframes` rule via a server-rendered `<style>`.
- *     The animation begins as soon as the browser parses the HTML stream
- *     and applies styles — well before React hydration or any script runs.
- *
- *   • Staggers each element using Tailwind's arbitrary `[animation-delay:N]`
- *     utility. All positioning and layout remain in Tailwind classes → no
- *     CLS (the CSS `animation` property does not trigger layout reflow).
- *
- *   • The `prefers-reduced-motion` media query in the CSS turns off the
- *     animation entirely for users who have opted out.
- *
- * ── Result ────────────────────────────────────────────────────────────────
- *
- *   No `"use client"` directive  → zero bytes of JS for the Hero section.
- *   Content in static HTML       → FCP / LCP measured from first paint.
- *   CSS animation                → entrance plays before hydration begins.
+ * Hero Section. Authentic retro developer HUD & character profile.
  */
 export function Hero() {
   return (
@@ -92,58 +28,31 @@ export function Hero() {
       aria-labelledby="hero-heading"
       className="relative overflow-hidden"
     >
-      {/*
-       * Scoped keyframe definition. React 19 hoists this to <head>.
-       * The string is a module-level constant — evaluated once, not
-       * recreated on each render.
-       */}
       <style>{HERO_ANIM_CSS}</style>
 
-      {/* ── Pixel-art stars decoration ─────────────────────────────────── */}
+      {/* Decorative Pixel Stars */}
       <Decor
         kind="star"
         size={24}
-        className="absolute right-16 top-40 hidden sm:block"
+        className="absolute right-16 top-40 hidden sm:block opacity-75"
       />
       <Decor
         kind="star"
         size={20}
-        className="absolute left-12 top-64 hidden sm:block"
+        className="absolute left-12 top-64 hidden sm:block opacity-60"
       />
 
-      {/* ── Staggered CSS entrance ─────────────────────────────────────── */}
-      {/*
-       * Each element carries the `hero-in` animation class plus Tailwind's
-       * arbitrary `[animation-delay:Nms]` utility. The delays mirror the
-       * original framer-motion stagger (× 1000 → ms):
-       *   badge   → 0 ms
-       *   h1      → 50 ms
-       *   role    → 100 ms
-       *   tagline → 150 ms
-       *   CTAs    → 200 ms
-       *   socials → 250 ms
-       *   scroll  → 300 ms
-       */}
-      {/*
-       * Height: `min-h-[80vh]` keeps the hero near-viewport-sized without
-       * forcing a massive empty band below it. Padding is capped at
-       * `py-12 sm:py-16` — the flex centring already distributes free
-       * space, so larger padding only creates dead space under the hero
-       * (and on mobile, where the stacked content exceeds 80vh, it made
-       * the block far taller than necessary).
-       */}
-      <Container className="relative flex min-h-[80vh] flex-col justify-center py-12 sm:py-16">
-
-        {/* 1 — Availability badge ---------------------------------------- */}
-        <p className="hero-in mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 px-3 py-1 text-xs font-medium text-fg-muted backdrop-blur sm:mb-6 [animation-delay:0ms]">
+      <Container className="relative flex min-h-[82vh] flex-col justify-center py-12 sm:py-16">
+        {/* 1. Status Indicator */}
+        <div className="hero-in mb-4 inline-flex w-fit items-center gap-2 rounded border-2 border-fg bg-surface px-3 py-1 font-mono text-xs font-bold text-fg shadow-[2px_2px_0px_0px_#0f1b2d] [animation-delay:0ms]">
           <span
-            aria-hidden
-            className="inline-block h-1.5 w-1.5 rounded-full bg-accent"
+            aria-hidden="true"
+            className="inline-block h-2 w-2 bg-[#6cc04a] animate-pulse"
           />
-          Open to engineering opportunities
-        </p>
+          {"[ STATUS: READY // OPEN FOR ROLES ]"}
+        </div>
 
-        {/* 2 — Name (LCP candidate) -------------------------------------- */}
+        {/* 2. Developer Name */}
         <h1
           id="hero-heading"
           className="hero-in text-balance headline-display text-fg [animation-delay:50ms]"
@@ -151,52 +60,54 @@ export function Hero() {
           {profile.name}
         </h1>
 
-        {/* 3 — Role ------------------------------------------------------ */}
-        <p className="hero-in mt-4 text-lg font-semibold text-accent sm:text-xl [animation-delay:100ms]">
-          {profile.role}
-          <span className="ml-2 text-fg-muted">
-            — building systems, exploring the craft.
+        {/* 3. Role & Specialization */}
+        <p className="hero-in mt-3 font-mono text-base font-bold text-accent sm:text-xl [animation-delay:100ms]">
+          {profile.role}{" "}
+          <span className="text-fg-muted font-normal">
+            {"// Game Design · Systems Engineering · Quant"}
           </span>
         </p>
 
-        {/* 4 — Tagline --------------------------------------------------- */}
-        <p className="hero-in mt-4 max-w-2xl text-base leading-relaxed text-fg-muted sm:text-lg [animation-delay:150ms]">
+        {/* 4. Tagline */}
+        <p className="hero-in mt-4 max-w-2xl font-mono text-sm leading-relaxed text-fg-muted sm:text-base [animation-delay:150ms]">
           {profile.tagline}
         </p>
 
-        {/* 5 — Primary CTAs ---------------------------------------------- */}
-        <div className="hero-in mt-8 flex flex-col gap-3 sm:flex-row [animation-delay:200ms]">
+        {/* 5. Primary CTAs */}
+        <div className="hero-in mt-8 flex flex-wrap items-center gap-3 [animation-delay:200ms]">
           <Button
             href="#projects"
             variant="primary"
             size="lg"
-            aria-label="View featured projects"
+            aria-label="View technical projects and games"
           >
-            View Projects
-            <ArrowRight className="h-4 w-4" aria-hidden />
+            <PixelIcon name="gamepad" size={16} />
+            Explore Projects
+            <PixelIcon name="arrow-right" size={14} />
           </Button>
+
           <Button
             href={profile.resumeUrl}
             variant="secondary"
             size="lg"
             aria-label={profile.resumeLabel}
           >
-            <Download className="h-4 w-4" aria-hidden />
+            <PixelIcon name="file-text" size={14} />
             {profile.resumeLabel}
           </Button>
         </div>
 
-        {/* 6 — Social links ---------------------------------------------- */}
-        <ul className="hero-in mt-8 flex flex-wrap items-center gap-2 [animation-delay:250ms]">
+        {/* 6. Direct Contact & Social Links */}
+        <ul className="hero-in mt-8 flex flex-wrap items-center gap-2.5 [animation-delay:250ms]">
           <li>
             <a
               href={profile.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-10 items-center gap-2 rounded-full border border-border bg-surface px-3.5 text-sm text-fg-muted transition-colors hover:border-accent/40 hover:text-fg card-shadow-soft"
+              className="inline-flex h-9 items-center gap-2 rounded border border-border bg-surface px-3 font-mono text-xs font-bold text-fg-muted shadow-[2px_2px_0px_0px_rgba(15,27,45,0.1)] hover:border-fg hover:text-fg active:translate-x-0.5 active:translate-y-0.5 transition-colors"
               aria-label={`GitHub ${profile.githubHandle} (opens in new tab)`}
             >
-              <Github className="h-4 w-4" aria-hidden />
+              <PixelIcon name="github" size={14} />
               GitHub
             </a>
           </li>
@@ -205,41 +116,33 @@ export function Hero() {
               href={profile.linkedinUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-10 items-center gap-2 rounded-full border border-border bg-surface px-3.5 text-sm text-fg-muted transition-colors hover:border-accent/40 hover:text-fg card-shadow-soft"
+              className="inline-flex h-9 items-center gap-2 rounded border border-border bg-surface px-3 font-mono text-xs font-bold text-fg-muted shadow-[2px_2px_0px_0px_rgba(15,27,45,0.1)] hover:border-fg hover:text-fg active:translate-x-0.5 active:translate-y-0.5 transition-colors"
               aria-label={`LinkedIn ${profile.linkedinHandle} (opens in new tab)`}
             >
-              <Linkedin className="h-4 w-4" aria-hidden />
+              <PixelIcon name="linkedin" size={14} />
               LinkedIn
             </a>
           </li>
           <li>
             <a
               href={profile.email}
-              className="inline-flex h-10 items-center gap-2 rounded-full border border-border bg-surface px-3.5 text-sm text-fg-muted transition-colors hover:border-accent/40 hover:text-fg card-shadow-soft"
+              className="inline-flex h-9 items-center gap-2 rounded border border-border bg-surface px-3 font-mono text-xs font-bold text-fg-muted shadow-[2px_2px_0px_0px_rgba(15,27,45,0.1)] hover:border-fg hover:text-fg active:translate-x-0.5 active:translate-y-0.5 transition-colors"
               aria-label="Send email"
             >
-              <Mail className="h-4 w-4" aria-hidden />
+              <PixelIcon name="mail" size={14} />
               Email
             </a>
           </li>
         </ul>
 
-        {/* 7 — Scroll indicator ------------------------------------------ */}
-        <div className="hero-in mt-10 hidden items-center gap-3 text-xs font-mono uppercase tracking-[0.22em] text-fg-subtle sm:flex [animation-delay:300ms]">
-          <span aria-hidden className="block h-px w-12 bg-border-strong" />
-          Scroll
+        {/* 7. Scroll indicator */}
+        <div className="hero-in mt-10 hidden items-center gap-3 font-mono text-xs font-bold uppercase tracking-widest text-fg-subtle sm:flex [animation-delay:300ms]">
+          <span aria-hidden="true" className="block h-0.5 w-10 bg-border-strong" />
+          [ SCROLL DOWN ]
         </div>
       </Container>
 
-      {/* ── Mascot — Hero placement ────────────────────────────────────────
-       *
-       * This is the ONE fully-interactive mascot instance on the page.
-       * It tracks the cursor (head parallax) and bobs/tilts with scroll.
-       *
-       * A second, distinct "sleeping" instance appears in the Contact
-       * section at the bottom of the page — see Contact.tsx.
-       * The Footer no longer renders a mascot to avoid a third duplicate.
-       */}
+      {/* Mascot Parallax Instance */}
       <Mascot
         size={120}
         pose="default"

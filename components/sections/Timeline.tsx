@@ -1,24 +1,11 @@
-import { GraduationCap, Briefcase, Trophy, Globe } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
+import { PixelIcon, type PixelIconName } from "@/components/pixel/PixelIcon";
 import { education } from "@/data/education";
 import { experiences } from "@/data/experience";
 import { achievements } from "@/data/achievements";
 import { cn } from "@/lib/cn";
 
-/**
- * Career & education timeline — light theme. White cards, soft shadows,
- * blue/orange accent dots, mono labels.
- *
- * Entries sourced from `Experience` or `Education` with
- * `isInternational: true` receive a distinct visual treatment:
- *   - Globe icon on the timeline node instead of the default Briefcase
- *   - Sky-blue node border and fill
- *   - Sky-tinted card border, gradient background, and "International
- *     Exchange" pill badge
- *
- * All other entries render with the standard kind-based colour scheme.
- */
 type TimelineKind = "education" | "experience" | "achievement";
 
 interface TimelineEntry {
@@ -29,33 +16,25 @@ interface TimelineEntry {
   subtitle: string;
   description?: string;
   url?: string;
-  /**
-   * Mirrors `Experience.isInternational` / `Education.isInternational`.
-   * When true the entry receives a globe-icon node and sky-blue card
-   * styling to immediately signal global academic exposure to the reader.
-   */
   isInternational?: boolean;
 }
 
-const ICONS: Record<TimelineKind, typeof GraduationCap> = {
-  education: GraduationCap,
-  experience: Briefcase,
-  achievement: Trophy,
+const KIND_ICONS: Record<TimelineKind, PixelIconName> = {
+  education: "graduation",
+  experience: "briefcase",
+  achievement: "trophy",
 };
 
 const KIND_LABEL: Record<TimelineKind, string> = {
   education: "Education",
   experience: "Experience",
-  achievement: "Achievement",
+  achievement: "Milestone",
 };
 
-/** Node icon + colour for standard (non-international) entries. */
-const KIND_ACCENT: Record<TimelineKind, string> = {
-  education: "bg-accent-soft text-accent border-accent/30",
-  experience: "bg-surface-soft text-fg border-border",
-  achievement: "bg-accent-soft text-accent border-accent/30",
-};
-
+/**
+ * Career & Academic Timeline.
+ * Quest log / progression rail with pixel badges and verified milestones.
+ */
 export function Timeline() {
   const entries: TimelineEntry[] = [
     ...education.map<TimelineEntry>((e) => ({
@@ -96,22 +75,21 @@ export function Timeline() {
   return (
     <Section
       id="timeline"
-      eyebrow="Career & Education"
-      title="How I've evolved."
-      description="A single timeline spanning education, professional experience, and key milestones — most recent first."
-      className="border-t border-border"
+      eyebrow="Progression Log"
+      title="Evolution & Milestones"
+      description="Chronological record of education, engineering roles, and competitive milestones."
+      className="border-t-2 border-border"
     >
       {entries.length === 0 ? (
-        <p className="text-fg-muted">
-          No timeline entries yet. Populate{" "}
-          <code className="font-mono text-fg">data/experience.ts</code>{" "}
-          and{" "}
-          <code className="font-mono text-fg">data/education.ts</code>.
+        <p className="text-fg-muted font-mono text-sm">
+          No timeline entries registered.
         </p>
       ) : (
         <ol className="relative space-y-8 border-l-2 border-dashed border-border-strong pl-6 sm:pl-10">
           {entries.map((entry, idx) => {
-            const Icon = ICONS[entry.kind];
+            const iconName = entry.isInternational
+              ? "globe"
+              : KIND_ICONS[entry.kind];
 
             return (
               <Reveal
@@ -120,62 +98,55 @@ export function Timeline() {
                 delay={idx * 0.04}
                 className="relative"
               >
-                {/* ── Timeline node ───────────────────────────────────── */}
+                {/* Timeline node */}
                 <span
-                  aria-hidden
+                  aria-hidden="true"
                   className={cn(
-                    "absolute -left-9.25 grid h-9 w-9 place-items-center rounded-full border sm:-left-12.25",
-                    entry.isInternational
-                      ? "border-sky-300 bg-sky-50 text-sky-600"
-                      : KIND_ACCENT[entry.kind],
+                    "absolute -left-[37px] grid h-8 w-8 place-items-center rounded border-2 border-fg bg-surface text-fg shadow-[2px_2px_0px_0px_#0f1b2d] sm:-left-[49px]",
+                    entry.isInternational && "border-sky-700 bg-sky-100 text-sky-800",
                   )}
                 >
-                  {entry.isInternational ? (
-                    <Globe className="h-3.5 w-3.5" />
-                  ) : (
-                    <Icon className="h-3.5 w-3.5" />
-                  )}
+                  <PixelIcon name={iconName} size={14} />
                 </span>
 
-                {/* ── Entry card ──────────────────────────────────────── */}
+                {/* Entry card */}
                 <article
                   className={cn(
-                    "rounded-2xl border p-5 card-shadow-soft",
+                    "rounded-xl border-2 p-5 shadow-[3px_3px_0px_0px_rgba(15,27,45,0.12)] font-mono",
                     entry.isInternational
-                      ? "border-sky-200 bg-linear-to-br from-sky-50/60 to-surface"
+                      ? "border-sky-300 bg-sky-50/70"
                       : "border-border bg-surface",
                   )}
                 >
-                  <header className="flex flex-wrap items-start justify-between gap-3">
+                  <header className="flex flex-wrap items-start justify-between gap-3 border-b border-border/70 pb-3">
                     <div>
-                      {/* Kind label + optional international badge */}
                       <div className="flex flex-wrap items-center gap-2">
-                        <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-accent">
-                          {KIND_LABEL[entry.kind]}
+                        <p className="font-mono text-[11px] font-bold uppercase tracking-wider text-accent">
+                          [ {KIND_LABEL[entry.kind]} ]
                         </p>
 
                         {entry.isInternational && (
                           <span
-                            className="inline-flex items-center gap-1 rounded-full border border-sky-200 bg-sky-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-sky-700"
+                            className="inline-flex items-center gap-1 rounded border border-sky-300 bg-sky-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-sky-800"
                             aria-label="International exchange programme"
                           >
-                            <Globe className="h-2.5 w-2.5" aria-hidden />
-                            International Exchange
+                            <PixelIcon name="globe" size={10} />
+                            International
                           </span>
                         )}
                       </div>
 
-                      <h3 className="mt-1 text-base font-semibold tracking-tight text-fg">
+                      <h3 className="mt-1 text-base font-bold tracking-tight text-fg">
                         {entry.title}
                       </h3>
 
-                      <p className="mt-1 text-sm text-fg-muted">
+                      <p className="mt-0.5 text-xs text-fg-muted font-semibold">
                         {entry.url ? (
                           <a
                             href={entry.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="transition-colors hover:text-fg"
+                            className="hover:underline"
                           >
                             {entry.subtitle}
                           </a>
@@ -185,13 +156,13 @@ export function Timeline() {
                       </p>
                     </div>
 
-                    <span className="font-mono text-xs uppercase tracking-[0.18em] text-fg-subtle">
-                      {formatYear(entry.date)}
+                    <span className="font-mono text-xs font-bold uppercase tracking-wider text-fg-subtle">
+                      [ {formatYear(entry.date)} ]
                     </span>
                   </header>
 
                   {entry.description && (
-                    <p className="mt-4 text-sm leading-relaxed text-fg-muted">
+                    <p className="mt-3.5 text-xs leading-relaxed text-fg-muted font-mono sm:text-sm">
                       {entry.description}
                     </p>
                   )}

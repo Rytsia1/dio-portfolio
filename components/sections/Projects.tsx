@@ -2,6 +2,7 @@ import { Section } from "@/components/ui/Section";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { GameProjectCard } from "@/components/ui/GameProjectCard";
 import { Decor } from "@/components/pixel/Decor";
+import { PixelIcon } from "@/components/pixel/PixelIcon";
 import {
   getGameProjects,
   getSoftwareAndQuantProjects,
@@ -9,8 +10,8 @@ import {
 import { profile } from "@/data/profile";
 
 /**
- * Featured projects — light theme. Two visual sections, with a small
- * pixel-art decoration between them. Same content, same structure.
+ * Projects Section.
+ * Structured into Software & Quant engineering and Playable Game Design.
  */
 export function Projects() {
   const software = getSoftwareAndQuantProjects();
@@ -19,39 +20,40 @@ export function Projects() {
   return (
     <Section
       id="projects"
-      eyebrow="Featured Work"
-      title="Projects."
-      description="The strongest evidence of what I build. Divided into my current direction (software engineering and quantitative finance) and my heritage (game development)."
-      className="relative border-t border-border"
+      eyebrow="Featured Systems & Builds"
+      title="Verified Projects"
+      description="Live demonstrations, open-source repositories, and playable game design case studies."
+      className="relative border-t-2 border-border"
     >
       <Decor
-        kind="arrow"
+        kind="controller"
         size={28}
-        className="absolute right-10 top-10 hidden lg:block"
+        className="absolute right-10 top-10 hidden lg:block opacity-60"
       />
 
-      {/* Software & Quant — primary */}
-      <div className="mb-12 md:mb-14">
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-3">
+      {/* 1. Software & Quantitative Finance Systems */}
+      <div className="mb-14 md:mb-16">
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-3 border-b border-border pb-4 font-mono">
           <div>
-            <p className="eyebrow">Current direction</p>
-            <h3 className="mt-2 text-2xl font-semibold tracking-tight text-fg sm:text-3xl">
-              Software & Quantitative Finance
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent">
+              <PixelIcon name="code" size={14} />
+              [ PRIMARY: FULL-STACK & QUANTITATIVE SYSTEMS ]
+            </div>
+            <h3 className="mt-1 font-mono text-xl font-bold tracking-tight text-fg sm:text-2xl">
+              Software & Quant Engineering
             </h3>
-            <p className="mt-2 max-w-2xl text-sm text-fg-muted sm:text-base">
-              Where I'm heading — full-stack systems, numerical
-              methods, and the engineering behind real financial software.
-            </p>
           </div>
+          <p className="max-w-xl text-xs text-fg-muted font-mono sm:text-sm">
+            High-precision financial ledgers, REST APIs, and SciPy optimization pipelines.
+          </p>
         </div>
 
         {software.length === 0 ? (
-          <p className="text-fg-muted">
-            No software / quant projects yet. Add some to{" "}
-            <code className="font-mono text-fg">data/projects.ts</code>.
+          <p className="text-fg-muted font-mono text-sm">
+            No software projects registered.
           </p>
         ) : (
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             {software.map((project) => (
               <ProjectCard key={project.slug} project={project} />
             ))}
@@ -59,29 +61,29 @@ export function Projects() {
         )}
       </div>
 
-      {/* Game Development — secondary */}
+      {/* 2. Game Development & Design */}
       <div>
-        <div className="mb-8 flex flex-wrap items-end justify-between gap-3">
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-3 border-b border-border pb-4 font-mono">
           <div>
-            <p className="eyebrow">Heritage</p>
-            <h3 className="mt-2 text-2xl font-semibold tracking-tight text-fg sm:text-3xl">
-              Game Development
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#2e681c]">
+              <PixelIcon name="gamepad" size={14} />
+              [ HERITAGE: GAME TECHNOLOGY & INTERACTION ]
+            </div>
+            <h3 className="mt-1 font-mono text-xl font-bold tracking-tight text-fg sm:text-2xl">
+              Game Design & Architecture
             </h3>
-            <p className="mt-2 max-w-2xl text-sm text-fg-muted sm:text-base">
-              Where I started — game technology and game design, the
-              foundation for my systems-thinking and the way I
-              approach complex software today.
-            </p>
           </div>
+          <p className="max-w-xl text-xs text-fg-muted font-mono sm:text-sm">
+            Unity state machines, gameplay mechanics, and national game jam finalists.
+          </p>
         </div>
 
         {games.length === 0 ? (
-          <p className="text-fg-muted">
-            No game projects yet. Add some to{" "}
-            <code className="font-mono text-fg">data/projects.ts</code>.
+          <p className="text-fg-muted font-mono text-sm">
+            No game projects registered.
           </p>
         ) : (
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             {games.map((project) => (
               <GameProjectCard
                 key={project.slug}

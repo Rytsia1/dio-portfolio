@@ -1,12 +1,7 @@
 import type { Education } from "@/types/portfolio";
 
 /**
- * Education history. Source: provided CV. Only verified facts are
- * populated — no fabricated GPA, awards, or activities.
- *
- * International exchanges carry `isInternational: true`, which the
- * Timeline component uses to render a globe-icon node, a sky-blue
- * card treatment, and an "International Exchange" badge.
+ * Education history. Source: verified CV data.
  */
 export const education: Education[] = [
   {
@@ -17,7 +12,7 @@ export const education: Education[] = [
     endDate: "Present",
     location: "Surabaya, Indonesia",
     notes:
-      "Four-year diploma program focused on the technical and design foundations of game development — programming, game systems, level design, and the production pipeline that turns a concept into a playable build.",
+      "Four-year diploma program focused on the technical and design foundations of game development: programming, game systems, level design, and the production pipeline that turns a concept into a playable build.",
     url: "https://www.pens.ac.id/",
   },
   {
@@ -28,7 +23,7 @@ export const education: Education[] = [
     endDate: "2026-07",
     location: "Qingdao, China",
     notes:
-      "International student exchange in Computer Software Engineering — studying software engineering in a cross-cultural academic environment at an internationally recognised Chinese university.",
+      "International student exchange in Computer Software Engineering, studying software engineering in a cross-cultural academic environment at an internationally recognised Chinese university.",
     url: "https://www.sdust.edu.cn/",
     isInternational: true,
   },
@@ -40,7 +35,7 @@ export const education: Education[] = [
     endDate: "2025-10",
     location: "Singapore",
     notes:
-      "International exchange at the Institute of Technical Education (ITE), Singapore — recipient of the Temasek Foundation Award for ITE SCALE Programme 2025.",
+      "International exchange at the Institute of Technical Education (ITE), Singapore; recipient of the Temasek Foundation Award for ITE SCALE Programme 2025.",
     url: "https://www.ite.edu.sg/",
     isInternational: true,
   },

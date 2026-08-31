@@ -1,27 +1,26 @@
-import { Briefcase, MapPin } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Tag } from "@/components/ui/Tag";
 import { Reveal } from "@/components/ui/Reveal";
+import { PixelIcon } from "@/components/pixel/PixelIcon";
 import { experiences } from "@/data/experience";
 import { cn } from "@/lib/cn";
 
 /**
- * Experience — light theme. White cards on a dashed left rail, orange
- * accent dot, mono date labels.
+ * Work Experience Section.
+ * Practical development roles and engineering internships.
  */
 export function Experience() {
   return (
     <Section
       id="experience"
-      eyebrow="Experience"
-      title="Where I've worked."
-      description="Internships, programs, and other professional work — listed most recent first."
-      className="border-t border-border"
+      eyebrow="Work Experience"
+      title="Engineering History"
+      description="Professional engineering internships, studio programmes, and software development history."
+      className="border-t-2 border-border"
     >
       {experiences.length === 0 ? (
-        <p className="text-fg-muted">
-          No experience entries yet. Add some to{" "}
-          <code className="font-mono text-fg">data/experience.ts</code>.
+        <p className="text-fg-muted font-mono text-sm">
+          No experience entries registered.
         </p>
       ) : (
         <ol className="relative space-y-8 border-l-2 border-dashed border-border-strong pl-6 sm:pl-10">
@@ -33,31 +32,28 @@ export function Experience() {
               className="relative"
             >
               <span
-                aria-hidden
+                aria-hidden="true"
                 className={cn(
-                  "absolute -left-[37px] grid h-9 w-9 place-items-center rounded-full border border-accent/30 bg-accent-soft text-accent sm:-left-[49px]",
+                  "absolute -left-[37px] grid h-8 w-8 place-items-center rounded border-2 border-fg bg-accent text-white shadow-[2px_2px_0px_0px_#0f1b2d] sm:-left-[49px]",
                 )}
               >
-                <Briefcase className="h-3.5 w-3.5" aria-hidden />
+                <PixelIcon name="briefcase" size={14} />
               </span>
 
-              <article className="rounded-2xl border border-border bg-surface p-6 card-shadow-soft">
-                <header className="flex flex-wrap items-start justify-between gap-3">
+              <article className="rounded-xl border-2 border-border bg-surface p-6 shadow-[3px_3px_0px_0px_rgba(15,27,45,0.12)] font-mono">
+                <header className="flex flex-wrap items-start justify-between gap-3 border-b border-border pb-3">
                   <div>
-                    <h3 className="text-base font-semibold tracking-tight text-fg">
+                    <h3 className="text-base font-bold tracking-tight text-fg sm:text-lg">
                       {exp.role}
                     </h3>
-                    <p className="mt-1 flex items-center gap-2 text-sm text-fg-muted">
-                      <Briefcase
-                        className="h-3.5 w-3.5 text-fg-subtle"
-                        aria-hidden
-                      />
+                    <p className="mt-1 flex items-center gap-2 text-xs font-semibold text-accent">
+                      <PixelIcon name="briefcase" size={12} />
                       {exp.url ? (
                         <a
                           href={exp.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="transition-colors hover:text-fg"
+                          className="hover:underline"
                         >
                           {exp.organization}
                         </a>
@@ -66,13 +62,13 @@ export function Experience() {
                       )}
                     </p>
                   </div>
-                  <div className="text-right text-xs text-fg-subtle">
-                    <p className="font-mono uppercase tracking-[0.18em]">
-                      {formatRange(exp.startDate, exp.endDate)}
+                  <div className="text-right text-xs text-fg-subtle font-mono">
+                    <p className="font-bold uppercase tracking-wider text-fg">
+                      [ {formatRange(exp.startDate, exp.endDate)} ]
                     </p>
                     {exp.location && (
-                      <p className="mt-1 inline-flex items-center gap-1">
-                        <MapPin className="h-3 w-3" aria-hidden />
+                      <p className="mt-1 inline-flex items-center gap-1 text-[11px] text-fg-muted">
+                        <PixelIcon name="map-pin" size={10} />
                         {exp.location}
                       </p>
                     )}
@@ -80,30 +76,24 @@ export function Experience() {
                 </header>
 
                 {exp.description && (
-                  <p className="mt-4 text-sm leading-relaxed text-fg-muted">
+                  <p className="mt-4 text-xs leading-relaxed text-fg-muted sm:text-sm">
                     {exp.description}
                   </p>
                 )}
 
-                {exp.responsibilities &&
-                  exp.responsibilities.length > 0 && (
-                    <ul className="mt-4 space-y-2 text-sm text-fg-muted">
-                      {exp.responsibilities.map(
-                        (resp: string, ri: number) => (
-                          <li key={ri} className="flex gap-2.5">
-                            <span
-                              aria-hidden
-                              className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
-                            />
-                            <span>{resp}</span>
-                          </li>
-                        ),
-                      )}
-                    </ul>
-                  )}
+                {exp.responsibilities && exp.responsibilities.length > 0 && (
+                  <ul className="mt-4 space-y-2 text-xs text-fg-muted sm:text-sm">
+                    {exp.responsibilities.map((resp: string, ri: number) => (
+                      <li key={ri} className="flex items-start gap-2.5">
+                        <span aria-hidden="true" className="pixel-bullet" />
+                        <span>{resp}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
 
                 {exp.technologies && exp.technologies.length > 0 && (
-                  <ul className="mt-5 flex flex-wrap gap-1.5">
+                  <ul className="mt-5 flex flex-wrap gap-1.5 pt-2 border-t border-border/60">
                     {exp.technologies.map((tech: string) => (
                       <li key={tech}>
                         <Tag>{tech}</Tag>
@@ -140,7 +130,7 @@ function formatRange(start: string, end: string): string {
   if (!e) return s;
   if (!s) return e;
   if (s === e) return s;
-  return `${s} — ${e}`;
+  return `${s} to ${e}`;
 }
 
 const MONTH_NAMES = [
