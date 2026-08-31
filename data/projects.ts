@@ -149,7 +149,7 @@ export const projects: ProjectItem[] = [
       "A quirky exploration and turn-based battle game where players roam a village to discover, appraise, and duel with unique wooden sticks in a quest to become the Ultimate Whacker. Built for Gameseed 2025 under the theme 'Real Life Experience', achieving Top 60 national placement.",
     category: "Game Technology",
     year: "2025",
-    role: "Game Designer & Gameplay Programmer",
+    role: "Game Designer",
     achievement: "Gameseed 2025 — Top 60",
     engine: "Unity",
     coreMechanics: [
@@ -219,7 +219,7 @@ export const projects: ProjectItem[] = [
       "A two-player cooperative online simulation game where players assume distinct roles—a cafeteria chef and a nutritionist—collaborating in real-time to prepare balanced, nutritious meals for school children with varying dietary needs across Indonesia. Selected as a National Finalist at KMIPN 2025.",
     category: "Game Development",
     year: "2025",
-    role: "Game Designer & Multiplayer Programmer",
+    role: "Game Designer",
     achievement: "KMIPN 2025 Finalist",
     engine: "Unity",
     coreMechanics: [
@@ -280,7 +280,7 @@ export const projects: ProjectItem[] = [
       "A high-octane 2.5D vertical mobile arcade shooter where players pilot an advanced space fighter to defend the Moon from an alien armada. Designed natively for mobile touch screens, featuring fluid 1:1 gesture navigation, weapon switching, and an adrenaline-pumping risk-reward near-miss barrel roll mechanic that triggers dynamic slow motion.",
     category: "Mobile Game Development",
     year: "2025",
-    role: "Game Designer & Gameplay Programmer",
+    role: "Game Designer",
     engine: "Unity",
     coreMechanics: [
       "Gesture-Based Navigation",
@@ -322,7 +322,7 @@ export const projects: ProjectItem[] = [
       "Project: Save Planet is a cozy exploration game with a robot protagonist, built in Unity on a narrative framework focused on story and world-building. Ongoing project.",
     category: "Game Technology",
     year: "TODO: Year",
-    role: "TODO: Replace with your actual role",
+    role: "Narrative Designer",
     engine: "Unity",
     coreMechanics: ["Narrative Framework", "Cozy Exploration"],
     tags: ["Unity", "C#", "Adventure", "Narrative", "Exploration"],
