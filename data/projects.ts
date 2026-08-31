@@ -8,14 +8,14 @@ import type { GameProject, ProjectItem, WebProject } from "@/types/portfolio";
  * case-study page.
  *
  * Projects are strictly typed as a discriminated union (`ProjectItem`):
- *   - type: "web"   : `WebProject`: full-stack / quant / software systems.
+ *   - type: "web"   — `WebProject`: full-stack / quant / software systems.
  *                     Game-only fields (engine, coreMechanics, …) are
  *                     typed `never`, so they can't be set by accident.
- *   - type: "game"  : `GameProject`: requires `engine` and
+ *   - type: "game"  — `GameProject`: requires `engine` and
  *                     `coreMechanics` (optionally `assetsTools`), which
  *                     `GameProjectCard` renders as a "Tech Stack" panel.
  *
- * The `type` literal is the discriminator : narrow with a switch or
+ * The `type` literal is the discriminator — narrow with a switch or
  * if-statement on `project.type` to render type-specific UI safely.
  *
  * The home page groups projects into two visual sections: web projects
@@ -55,7 +55,7 @@ export const projects: ProjectItem[] = [
     implementation: "Security Layer: BCrypt password hashing, HS256 JWT with RBAC claims, token rotation chaining via replaced_by, and denylist middleware.\n\nQuery Optimization: Composite index on (user_id, bill_date) ensuring fast paginated transaction queries.\n\nData Visualization: Real-time category distribution pie charts and 7-day cash-flow trends powered by Apache ECharts.",
     challenges: "Enforcing strict arithmetic precision across all API serialization, database queries, and client-side aggregations.\n\nTransitioning from Game Technology to full-stack enterprise Java/Vue architecture under an intensive 10-day deadline.",
     results: "Successfully engineered and delivered within the 10-day deadline at Shandong University of Science and Technology. Open-source on GitHub with comprehensive test endpoints and architecture documentation.",
-    lessons: "Financial software demands strict data integrity (BigDecimal over float/double) and atomic transactions.\n\nCore software engineering patterns (such as modular REST layering, stateless auth hygiene, and automated cron jobs) translate seamlessly across both game engines and web platforms.",
+    lessons: "Financial software demands strict data integrity (BigDecimal over float/double) and atomic transactions.\n\nCore software engineering patterns—such as modular REST layering, stateless auth hygiene, and automated cron jobs—translate seamlessly across both game engines and web platforms.",
     highlights: [
       "End-to-end BigDecimal & DECIMAL(15,2) precision.",
       "Stateless JWT auth with refresh token rotation and denylist.",
@@ -67,41 +67,37 @@ export const projects: ProjectItem[] = [
   {
     type: "web",
     slug: "portfolio-optimizer",
-    title: "Stock Portofolio Optimizer",
-    shortDescription:
-      "A stock portfolio optimisation app built with Python and Streamlit, implementing Modern Portfolio Theory.",
-    overview:
-      "An end-to-end stock portfolio construction tool with an interactive Streamlit interface. It takes a universe of assets, computes expected returns and the covariance matrix, then runs mean-variance optimisation to produce efficient allocations — visualised as the efficient frontier with the maximum-Sharpe portfolio highlighted.",
-    category: "Quantitative Finance",
+    title: "Stock Portfolio Optimizer",
+    tagline: "Quantitative Asset Allocation & Risk Analytics Platform using Modern Portfolio Theory",
+    shortDescription: "An interactive quantitative finance web application engineered to compute optimal asset allocations using Modern Portfolio Theory.",
+    overview: "An interactive quantitative finance web application engineered to compute optimal asset allocations using Modern Portfolio Theory (MPT). The platform maximizes risk-adjusted returns (Sharpe Ratio) through non-linear constrained optimization (SciPy SLSQP), simulates a 10,000-iteration Monte Carlo Efficient Frontier, computes parametric risk metrics (VaR/CVaR), and stress-tests portfolio resilience against historical market crashes.",
+    category: "Data Science & Fintech",
     year: "2026",
-    role: "Solo project",
-    tags: [
-      "Python",
-      "Streamlit",
-      "Modern Portfolio Theory",
-      "Efficient Frontier",
-      "Pandas",
+    role: "Quantitative Software Engineer",
+    team: "Solo Project",
+    tags: ["Python", "Streamlit", "SciPy (SLSQP)", "Modern Portfolio Theory", "Plotly", "Pandas", "NumPy", "yfinance", "Monte Carlo", "Risk Analytics (VaR/CVaR)"],
+    githubUrl: "https://github.com/Rytsia1/Portofolio-Optimizer",
+    liveUrl: "https://stockportofolio-optimizer.streamlit.app/",
+    coverImage: "/projects/portfolio-optimizer/cover.png",
+    gallery: [
+      { src: "/projects/portfolio-optimizer/screen1.png", alt: "Optimization Results & Efficient Frontier", caption: "Interactive Plotly Efficient Frontier chart with 10,000 Monte Carlo iterations and optimal Sharpe Ratio weights." },
+      { src: "/projects/portfolio-optimizer/screen2.png", alt: "Historical Backtest & Growth Comparison", caption: "Cumulative portfolio growth backtesting compared against market benchmarks (SPY) and equal-weight allocations." },
+      { src: "/projects/portfolio-optimizer/screen3.png", alt: "Historical Stress Testing & Drawdowns", caption: "Stress-testing module calculating Maximum Drawdowns (MDD) across the 2008 GFC, COVID-19, and 2022 Tech Bear Market." }
     ],
-    githubUrl: "https://github.com/Rytsia1",
     featured: true,
-    problem:
-      "TODO: Describe the problem this project solves (e.g. helping users build diversified stock portfolios without a quant background).",
-    solution:
-      "TODO: Describe the high-level solution — a Streamlit interface that ingests historical prices, computes risk/return statistics, and outputs an efficient frontier with the optimal weights highlighted.",
-    architecture:
-      "TODO: Describe the architecture — e.g. data ingestion → statistical estimation → optimisation solver → Streamlit visualisation layer.",
-    implementation:
-      "TODO: List the notable implementation details — e.g. convex optimisation, Monte Carlo simulation for the efficient frontier, caching of historical data in Streamlit.",
-    challenges:
-      "TODO: Document the most interesting engineering challenges you ran into.",
-    results:
-      "TODO: Summarise the result (qualitative — no fabricated metrics).",
-    lessons:
-      "TODO: Note the most valuable lessons from building this project.",
+    problem: "Retail investors and analysts often rely on intuitive or equal-weight allocation strategies that ignore asset covariance and downside tail risk. The challenge was building an interactive, responsive analytical tool that translates complex financial mathematics into real-time interactive charts with defensive data caching and stress-testing capabilities.",
+    solution: "Constrained Numerical Optimization: Uses SciPy's Sequential Least Squares Programming (SLSQP) to find the maximum Sharpe Ratio allocation under realistic constraints (no short-selling, custom asset weight caps).\n\nMonte Carlo Efficient Frontier: Generates 10,000 randomized portfolios plotted as an interactive Plotly scatter chart to visualize risk vs. expected return.\n\nParametric Tail-Risk Modeling: Calculates Value at Risk (VaR) and Conditional VaR (CVaR / Expected Shortfall) at configurable confidence intervals.\n\nBacktesting & Stress Testing: Simulates cumulative portfolio growth against benchmarks (SPY) and models drawdown resilience during historical crises (2008 GFC, COVID-19 Crash, 2022 Tech Bear Market).",
+    architecture: "Modular Quant Pipeline: Clean separation of concerns between data ingestion (yfinance + caching), metrics calculation, SciPy optimization, and visualization.\n\nStateful Streamlit UI: Full reactive interface with sidebar configuration controls, multi-tab result views, and auto-themed Plotly charts.\n\nDual Execution Engine: Supports both an interactive Streamlit Cloud web deployment and a standalone CLI runner (main.py).",
+    implementation: "Performance Caching: Integrated Streamlit @st.cache_data to memoize time-series downloads, avoiding redundant API calls and rate-limiting.\n\nDefensive Data Alignment: Automated forward/backward fill algorithms handling timezone discrepancies and non-trading days across multiple tickers.\n\nVectorized Math: Fast vectorized matrix operations via NumPy and Pandas for sub-second 10k-point Monte Carlo simulations.",
+    challenges: "Ensuring sub-second real-time responsiveness while computing large covariance matrices and non-linear multi-asset constraints.\n\nAccurately modeling tail-risk metrics (CVaR) to represent realistic downside risk during catastrophic market conditions.",
+    results: "Successfully deployed and live on Streamlit Cloud. Open-source on GitHub with complete modular architecture and CLI support.",
+    lessons: "Translating financial theory into functional software requires robust data sanitization and defensive exception handling.\n\nExpected Shortfall (CVaR) provides significantly more actionable downside protection insights than standard volatility alone.",
     highlights: [
-      "Interactive Streamlit dashboard for portfolio construction.",
-      "End-to-end pipeline from raw price data to optimal weights.",
-      "Efficient frontier visualisation with the maximum-Sharpe portfolio highlighted.",
+      "SciPy SLSQP for non-linear constrained optimization.",
+      "10k-iteration Monte Carlo Efficient Frontier via Plotly.",
+      "Parametric VaR & CVaR risk modeling.",
+      "Automated backtesting and historical stress testing.",
+      "Performance-optimized with vectorized NumPy math and data caching.",
     ],
   },
 
@@ -113,13 +109,13 @@ export const projects: ProjectItem[] = [
     title: "Wacky Whackers: The Ultimate Stick Battle",
     tagline: "Find your stick, Fight with stick",
     shortDescription:
-      "A quirky exploration and turn-based stick-battling game; Top 60 national placement at Gameseed 2025, playable on Itch.io.",
+      "A quirky exploration and turn-based stick-battling game — Top 60 national placement at Gameseed 2025, playable on Itch.io.",
     overview:
       "A quirky exploration and turn-based battle game where players roam a village to discover, appraise, and duel with unique wooden sticks in a quest to become the Ultimate Whacker. Built for Gameseed 2025 under the theme 'Real Life Experience', achieving Top 60 national placement.",
     category: "Game Technology",
     year: "2025",
     role: "Game Designer & Gameplay Programmer",
-    achievement: "Gameseed 2025 / Top 60",
+    achievement: "Gameseed 2025 — Top 60",
     engine: "Unity",
     coreMechanics: [
       "First-Person Exploration",
@@ -156,7 +152,7 @@ export const projects: ProjectItem[] = [
     ],
     featured: true,
     problem:
-      "Childhood nostalgia often involves turning everyday objects into legendary artifacts (specifically, picking up tree sticks and pretending they are mythical swords). The design challenge was capturing this universal childhood fantasy into an engaging game loop that bridges exploration with tactical combat without losing its comedic charm.",
+      "Childhood nostalgia often involves turning everyday objects into legendary artifacts—specifically, picking up tree sticks and pretending they are mythical swords. The design challenge was capturing this universal childhood fantasy into an engaging game loop that bridges exploration with tactical combat without losing its comedic charm.",
     solution:
       "• First-Person Exploration: An immersive village roaming mode where players hunt for procedurally scattered or hidden sticks across riverbanks, bushes, and trails.\n• Appraisal System: An eccentric NPC appraiser who rates stick rarity, stats, absurd naming lore, and combat potential.\n• Turn-Based Duel Arena: Side-view combat transitions with strategic options (Attack, Skill, Defense, Dodge) where victory depends on matching stick attributes against rival wielders.",
     architecture:
@@ -183,9 +179,9 @@ export const projects: ProjectItem[] = [
     title: "Makan Siang Bergizi",
     tagline: "Asymmetric Co-op Nutrition Management & School Lunch Simulation",
     shortDescription:
-      "A two-player cooperative online simulation game about cooking and nutrition management, KMIPN 2025 finalist.",
+      "A two-player cooperative online simulation game about cooking and nutrition management — KMIPN 2025 finalist.",
     overview:
-      "A two-player cooperative online simulation game where players assume distinct roles (a cafeteria chef and a nutritionist) collaborating in real-time to prepare balanced, nutritious meals for school children with varying dietary needs across Indonesia. Selected as a National Finalist at KMIPN 2025.",
+      "A two-player cooperative online simulation game where players assume distinct roles—a cafeteria chef and a nutritionist—collaborating in real-time to prepare balanced, nutritious meals for school children with varying dietary needs across Indonesia. Selected as a National Finalist at KMIPN 2025.",
     category: "Game Development",
     year: "2025",
     role: "Game Designer & Multiplayer Programmer",
@@ -300,7 +296,7 @@ export const projects: ProjectItem[] = [
     problem:
       "TODO: Describe the design motivation behind Project: Save Planet.",
     solution:
-      "Narrative framework, robot-protagonist interaction model, and cozy exploration loop.",
+      "TODO: Describe the high-level solution — the narrative framework, robot-protagonist interaction model, and cozy exploration loop.",
     architecture: "TODO: Describe the technical architecture.",
     implementation: "TODO: List notable implementation details.",
     challenges: "TODO: Document the most interesting engineering challenges.",
@@ -315,7 +311,7 @@ export const projects: ProjectItem[] = [
 ];
 
 /**
- * Featured web projects (software / quant): shown at the top.
+ * Featured web projects (software / quant) — shown at the top.
  * The type predicate narrows the union, so callers receive
  * `WebProject[]` and can pass items straight to `ProjectCard`.
  */
@@ -326,7 +322,7 @@ export function getSoftwareAndQuantProjects(): WebProject[] {
 }
 
 /**
- * Featured game projects: shown in the second section.
+ * Featured game projects — shown in the second section.
  * The type predicate narrows the union to `GameProject[]`, so items
  * can be passed straight to `GameProjectCard` with full type safety.
  */

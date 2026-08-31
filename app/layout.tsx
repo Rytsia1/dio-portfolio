@@ -1,34 +1,30 @@
 import type { Metadata, Viewport } from "next";
-import { Press_Start_2P, Pixelify_Sans, JetBrains_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { CloudBackground } from "@/components/layout/CloudBackground";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
 
-const pressStart2P = Press_Start_2P({
-  weight: "400",
-  variable: "--font-arcade",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-  display: "swap",
 });
 
-const pixelifySans = Pixelify_Sans({
-  variable: "--font-pixel",
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
-  display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
-
+/**
+ * Global metadata. Every name / role / description / URL is read from
+ * the `siteConfig` SSOT in `lib/site.ts` — do not hard-code identity
+ * strings here.
+ */
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} | ${siteConfig.role}`,
-    template: `%s | ${siteConfig.name}`,
+    default: `${siteConfig.name} — ${siteConfig.role}`,
+    template: `%s — ${siteConfig.name}`,
   },
   description: siteConfig.description,
   keywords: [
@@ -38,8 +34,6 @@ export const metadata: Metadata = {
     "Game Design",
     "Software Engineering",
     "Portfolio",
-    "Quant Finance",
-    "Unity",
   ],
   authors: [{ name: siteConfig.name }],
   creator: siteConfig.name,
@@ -47,13 +41,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
-    title: `${siteConfig.name} | ${siteConfig.role}`,
+    title: `${siteConfig.name} — ${siteConfig.role}`,
     description: siteConfig.description,
     siteName: siteConfig.name,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} | ${siteConfig.role}`,
+    title: `${siteConfig.name} — ${siteConfig.role}`,
     description: siteConfig.description,
   },
   robots: {
@@ -67,19 +61,19 @@ export const viewport: Viewport = {
   colorScheme: "light",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${pressStart2P.variable} ${pixelifySans.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-bg text-fg font-mono">
+      <body className="min-h-full bg-bg text-fg">
         {/* Fixed persistent ambient pixel cloud atmosphere */}
         <CloudBackground />
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:border-2 focus:border-fg focus:bg-accent focus:px-3 focus:py-2 focus:text-sm focus:font-bold focus:text-white"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-accent focus:px-3 focus:py-2 focus:text-sm focus:font-medium focus:text-white"
         >
           Skip to content
         </a>
