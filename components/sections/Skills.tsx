@@ -16,12 +16,12 @@ export function Skills() {
       description="A working set of languages, frameworks, and tools — grouped by where they show up in my projects."
       className="border-t border-border"
     >
-      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <div className="flex flex-wrap justify-center gap-6">
         {skillCategories.map((category, idx) => (
           <Reveal
             key={category.id}
             delay={idx * 0.04}
-            className="rounded-2xl border border-border bg-surface p-6 card-shadow-soft transition-shadow hover:card-shadow"
+            className="w-full md:w-[calc(50%-12px)] xl:w-[calc(33.333333%-16px)] rounded-2xl border border-border bg-surface p-6 card-shadow-soft transition-shadow hover:card-shadow"
           >
             <div className="mb-1 flex items-center justify-between">
               <h3 className="text-sm font-semibold tracking-tight text-fg">
