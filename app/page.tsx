@@ -8,6 +8,25 @@ import { Achievements } from "@/components/sections/Achievements";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/layout/Footer";
 
+import { siteConfig } from "@/lib/site";
+
+export const metadata = {
+  title: `${siteConfig.name} | ${siteConfig.role}`,
+  description: siteConfig.description,
+  openGraph: {
+    title: `${siteConfig.name} | ${siteConfig.role}`,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteConfig.name} | ${siteConfig.role}`,
+    description: siteConfig.description,
+  },
+};
+
 /**
  * Single-page home. The order is intentional — it walks the visitor
  * through the career narrative from identity → background → evolution
