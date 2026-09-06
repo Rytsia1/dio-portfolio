@@ -33,10 +33,10 @@ export const projects: ProjectItem[] = [
     type: "web",
     slug: "actura",
     title: "Actura",
-    tagline: "Actuarial Valuation & Risk Platform",
-    shortDescription: "An enterprise-grade actuarial platform bridging the gap between complex risk mathematics and modern UI/UX.",
-    overview: "Actura is an enterprise-grade actuarial platform that bridges the gap between complex risk mathematics and modern UI/UX. It provides actuaries and risk engineers with a powerful Python-based valuation engine paired with a sleek, neo-skeuomorphic Vue 3 dashboard.",
-    category: "Software & Quantitative Finance",
+    tagline: "Quantitative Risk & Valuation Platform",
+    shortDescription: "Quantitative risk and valuation platform for deterministic and stochastic financial projections — combining a DAG-based cash flow engine with Monte Carlo simulation and risk analytics.",
+    overview: "Actura is a quantitative risk and valuation platform that combines financial modeling, stochastic simulation, and risk analytics in a production-oriented architecture. It evaluates insurance and financial cash flows as a Directed Acyclic Graph (DAG), supports both deterministic and Monte Carlo stochastic projections, and computes risk metrics including BEL, VaR 95%, and CVaR / CTE 95. The frontend is a Vue 3 SPA paired with a FastAPI backend, containerized with Docker.",
+    category: "Quantitative Finance / Risk Analytics",
     year: "2026",
     role: "Full-Stack Engineer",
     team: "Solo Project",
@@ -49,18 +49,19 @@ export const projects: ProjectItem[] = [
       { src: "/projects/actura/screen2.png", alt: "Real-Time Stress Testing", caption: "Interactive stress testing module allowing real-time adjustment of risk factors like interest rates, mortality multipliers, and lapse shocks." }
     ],
     featured: true,
-    problem: "Actuarial software often lacks modern interfaces. The challenge was bridging the gap between complex risk mathematics (Monte Carlo simulations, IFRS 17 trajectories) and an intuitive, modern UI/UX for actuaries.",
-    solution: "Developed a visual, node-based DAG (Directed Acyclic Graph) editor for designing insurance cash flow blueprints without writing code. This is paired with a powerful stochastic engine for calculating BEL, VaR 95%, and CVaR / CTE 95.",
-    architecture: "Decoupled architecture utilizing a Vue 3 SPA for graph interactions and charting, backed by a FastAPI REST API for math-heavy actuarial modeling. PostgreSQL is used via SQLAlchemy for data persistence, all containerized with Docker and served via Nginx.",
-    implementation: "Actura evaluates insurance cash flows as a Directed Acyclic Graph (DAG), seamlessly mapping out premiums, benefits, and decrement models.",
-    challenges: "Building a high-performance backend capable of rapid deterministic and stochastic valuations while maintaining a responsive, complex visual node editor on the frontend.",
-    results: "A fully containerized, IFRS 17-ready architecture that provides immediate, production-like deployment capabilities.",
-    lessons: "Visual, node-based editors provide a highly intuitive and powerful interface for mapping out complex financial and insurance logic compared to traditional code-heavy setups.",
+    problem: "Actuarial and financial risk software often lacks modern interfaces and interactive explorability. The challenge was building a platform that could evaluate complex cash flow structures — including mortality decrements, premium schedules, and benefit payments — through an intuitive visual editor while maintaining the mathematical correctness required for risk analytics.",
+    solution: "Visual Logic Builder with drag-and-drop DAG editor for designing cash flow blueprints without hand-coding formulas. Each node represents a cash flow component; edges represent dependencies and sequencing. The engine evaluates the DAG deterministically for best-estimate projections, and stochastically via Monte Carlo for risk distribution analysis.",
+    architecture: "Decoupled architecture: Vue 3 SPA for graph interactions and charting, backed by a FastAPI REST API for the valuation engine. PostgreSQL via SQLAlchemy for data persistence. Nginx as a reverse proxy. All services containerized with Docker Compose for consistent local and production deployment.",
+    implementation: "Cash flow evaluation as a topologically sorted DAG — nodes are typed (premium, benefit, decrement) and evaluated in dependency order. Monte Carlo paths are generated with configurable scenario parameters (interest rate paths, mortality shocks). Risk metrics are computed across the full distribution of projected outcomes.",
+    quantMethodology: "Valuation Engine: Cash flows modelled as a DAG, evaluated deterministically for Best Estimate Liability (BEL) and stochastically via Monte Carlo simulation.\n\nStochastic Simulation: N-path Monte Carlo projection using configurable interest rate and decrement scenarios. Each path produces a full cash flow projection; risk metrics are computed across the distribution.\n\nRisk Metrics: VaR 95% (the 95th percentile of projected losses) and CVaR / CTE 95 (Conditional Tail Expectation — the expected loss given that losses exceed the VaR threshold). These metrics provide both point-in-time and tail-risk characterization of projected liabilities.",
+    challenges: "Building a high-performance valuation backend capable of evaluating complex DAG structures rapidly while maintaining a responsive visual node editor on the frontend. Ensuring consistent numerical results between the deterministic and stochastic evaluation paths.",
+    results: "Fully containerized architecture with reproducible Docker Compose deployment. DAG editor supports complex multi-product cash flow structures. Monte Carlo engine generates stochastic projections and computes BEL, VaR 95%, and CVaR in real time.",
+    lessons: "Visual, node-based editors provide a highly intuitive interface for mapping complex financial and insurance logic. Separating the DAG data model from its evaluation engine makes the system far easier to test and extend.",
     highlights: [
-      "Visual Logic Builder with drag-and-drop DAG editor.",
-      "Stochastic Engine with advanced Monte Carlo simulations.",
-      "Risk Analytics including VaR 95% and CVaR / CTE 95.",
-      "High-Performance FastAPI backend for rapid valuations."
+      "DAG-based cash flow engine supporting complex multi-product financial structures.",
+      "Monte Carlo stochastic projection for full distributional risk analysis.",
+      "Risk analytics: BEL, VaR 95%, and CVaR / CTE 95 across simulated paths.",
+      "FastAPI backend with Nginx reverse proxy — containerized with Docker Compose.",
     ],
   },
 
@@ -68,8 +69,8 @@ export const projects: ProjectItem[] = [
     type: "web",
     slug: "book-it-quick",
     title: "Book-it-quick",
-    tagline: "Enterprise-Grade Personal Bookkeeping System with High-Precision Ledger",
-    shortDescription: "A full-stack, enterprise-grade personal bookkeeping and financial analytics platform developed during an intensive 2-week Software Production Internship.",
+    tagline: "Full-Stack Financial Management System with High-Precision Ledger",
+    shortDescription: "Full-stack personal bookkeeping and financial analytics platform, built from scratch during a 10-day software production internship at Shandong University of Science and Technology.",
     overview: "A full-stack, enterprise-grade personal bookkeeping and financial analytics platform developed during an intensive 2-week Software Production Internship at Shandong University of Science and Technology. Engineered from the ground up to eliminate floating-point arithmetic drift, the system integrates high-precision monetary ledgers, automated recurring billing, real-time analytics dashboards, and robust stateless authentication.",
     category: "Full-Stack Web Development",
     year: "2026",
@@ -88,7 +89,8 @@ export const projects: ProjectItem[] = [
     solution: "High-Precision Financial Core: End-to-end BigDecimal in Java and DECIMAL(15,2) in MySQL, completely preventing floating-point calculation drift across all monetary operations.\n\nEnterprise Security Architecture: Stateless JWT authentication with rotating SHA-256 refresh tokens, auto-pruning token denylist, login rate limiting, and RBAC (USER/ADMIN).\n\nAutomated Cron Operations: Spring @Scheduled background workers for daily currency exchange sync, recurring monthly bill generation, recycle bin pruning, and token cleanup.\n\nInteractive Dashboard & 5-Locale i18n: Vue 3 + Element Plus UI with Apache ECharts visualization, persistent dark mode, and runtime switching across 5 languages (English, Indonesian, Japanese, Simplified Chinese, Traditional Chinese).",
     architecture: "Layered Backend Architecture: Strict separation across Security Filters -> Controllers -> Services -> MyBatis Mappers -> MySQL with idempotent migration scripts.\n\nMulti-Currency Pipeline: Automated daily cron syncing live exchange rates via external API, dynamically recalculating dashboard totals across currencies.\n\nSoft-Delete & Audit Pattern: Non-destructive deletion flags with user-facing Recycle Bin recovery and automated retention cleanup.",
     implementation: "Security Layer: BCrypt password hashing, HS256 JWT with RBAC claims, token rotation chaining via replaced_by, and denylist middleware.\n\nQuery Optimization: Composite index on (user_id, bill_date) ensuring fast paginated transaction queries.\n\nData Visualization: Real-time category distribution pie charts and 7-day cash-flow trends powered by Apache ECharts.",
-    challenges: "Enforcing strict arithmetic precision across all API serialization, database queries, and client-side aggregations.\n\nTransitioning from Game Technology to full-stack enterprise Java/Vue architecture under an intensive 10-day deadline.",
+    quantMethodology: undefined,
+    challenges: "Enforcing strict arithmetic precision across all API serialization, database queries, and client-side aggregations.\n\nBuilding a complete full-stack financial system — API design, authentication, database schema, background jobs, and frontend — within a 10-day production deadline.",
     results: "Successfully engineered and delivered within the 10-day deadline at Shandong University of Science and Technology. Open-source on GitHub with comprehensive test endpoints and architecture documentation.",
     lessons: "Financial software demands strict data integrity (BigDecimal over float/double) and atomic transactions.\n\nCore software engineering patterns—such as modular REST layering, stateless auth hygiene, and automated cron jobs—translate seamlessly across both game engines and web platforms.",
     highlights: [
@@ -124,6 +126,7 @@ export const projects: ProjectItem[] = [
     solution: "Constrained Numerical Optimization: Uses SciPy's Sequential Least Squares Programming (SLSQP) to find the maximum Sharpe Ratio allocation under realistic constraints (no short-selling, custom asset weight caps).\n\nMonte Carlo Efficient Frontier: Generates 10,000 randomized portfolios plotted as an interactive Plotly scatter chart to visualize risk vs. expected return.\n\nParametric Tail-Risk Modeling: Calculates Value at Risk (VaR) and Conditional VaR (CVaR / Expected Shortfall) at configurable confidence intervals.\n\nBacktesting & Stress Testing: Simulates cumulative portfolio growth against benchmarks (SPY) and models drawdown resilience during historical crises (2008 GFC, COVID-19 Crash, 2022 Tech Bear Market).",
     architecture: "Modular Quant Pipeline: Clean separation of concerns between data ingestion (yfinance + caching), metrics calculation, SciPy optimization, and visualization.\n\nStateful Streamlit UI: Full reactive interface with sidebar configuration controls, multi-tab result views, and auto-themed Plotly charts.\n\nDual Execution Engine: Supports both an interactive Streamlit Cloud web deployment and a standalone CLI runner (main.py).",
     implementation: "Performance Caching: Integrated Streamlit @st.cache_data to memoize time-series downloads, avoiding redundant API calls and rate-limiting.\n\nDefensive Data Alignment: Automated forward/backward fill algorithms handling timezone discrepancies and non-trading days across multiple tickers.\n\nVectorized Math: Fast vectorized matrix operations via NumPy and Pandas for sub-second 10k-point Monte Carlo simulations.",
+    quantMethodology: "Optimization Model: Markowitz Mean-Variance framework. Expected returns and covariance matrix estimated from historical daily log-returns. Portfolio risk defined as portfolio variance under the covariance matrix.\n\nNumerical Optimization: SciPy SLSQP maximizes Sharpe Ratio (expected excess return / portfolio volatility) subject to: (1) weights sum to 1, (2) all weights >= 0 (long-only, no short-selling), (3) configurable per-asset weight caps.\n\nMonte Carlo Efficient Frontier: 10,000 portfolios with weights drawn uniformly from the weight simplex. Each portfolio's annualised return and volatility are computed from the historical covariance matrix and plotted interactively.\n\nParametric Risk Metrics: VaR at confidence level alpha = the alpha-quantile of the daily return distribution (assumes normality). CVaR / Expected Shortfall = expected loss conditional on loss exceeding VaR — computed as E[R | R < VaR]. Both expressed at configurable confidence intervals (default 95%).\n\nBacktest & Stress Testing: Optimal weights applied to historical daily returns to simulate cumulative portfolio growth. Maximum Drawdown (MDD) measured during three crises: 2008 GFC, COVID-19 Crash (Feb–Apr 2020), 2022 Tech Bear Market.",
     challenges: "Ensuring sub-second real-time responsiveness while computing large covariance matrices and non-linear multi-asset constraints.\n\nAccurately modeling tail-risk metrics (CVaR) to represent realistic downside risk during catastrophic market conditions.",
     results: "Successfully deployed and live on Streamlit Cloud. Open-source on GitHub with complete modular architecture and CLI support.",
     lessons: "Translating financial theory into functional software requires robust data sanitization and defensive exception handling.\n\nExpected Shortfall (CVaR) provides significantly more actionable downside protection insights than standard volatility alone.",
@@ -321,22 +324,22 @@ export const projects: ProjectItem[] = [
     overview:
       "Project: Save Planet is a cozy exploration game with a robot protagonist, built in Unity on a narrative framework focused on story and world-building. Ongoing project.",
     category: "Game Technology",
-    year: "TODO: Year",
+    year: "In Progress",
     role: "Narrative Designer",
     engine: "Unity",
     coreMechanics: ["Narrative Framework", "Cozy Exploration"],
     tags: ["Unity", "C#", "Adventure", "Narrative", "Exploration"],
     githubUrl: "https://github.com/Rytsia1",
-    featured: true,
+    featured: false,
     problem:
-      "TODO: Describe the design motivation behind Project: Save Planet.",
+      "A cozy exploration prototype investigating non-violent interaction models, atmospheric pacing, and environmental puzzle-solving in Unity.",
     solution:
-      "TODO: Describe the high-level solution — the narrative framework, robot-protagonist interaction model, and cozy exploration loop.",
-    architecture: "TODO: Describe the technical architecture.",
-    implementation: "TODO: List notable implementation details.",
-    challenges: "TODO: Document the most interesting engineering challenges.",
-    results: "TODO: Summarise the result (ongoing).",
-    lessons: "TODO: Note the most valuable lessons learned so far.",
+      "A custom narrative dialogue framework paired with a robot avatar controller, focusing on atmosphere, pacing, and systemic interactions.",
+    architecture: "Modular event-driven architecture decoupling player movement, dialog state trees, and scene triggers.",
+    implementation: "Developed in Unity with custom C# character controller, camera framing, and state-machine-driven narrative sequences.",
+    challenges: "Balancing slow-paced contemplative exploration with engaging environmental feedback.",
+    results: "Exploration prototype under active development.",
+    lessons: "Prototyping narrative hooks early helps clarify core gameplay loop boundaries.",
     highlights: [
       "Cozy exploration tone with a robot protagonist.",
       "Narrative framework driving story and world-building.",
@@ -346,9 +349,7 @@ export const projects: ProjectItem[] = [
 ];
 
 /**
- * Featured web projects (software / quant) — shown at the top.
- * The type predicate narrows the union, so callers receive
- * `WebProject[]` and can pass items straight to `ProjectCard`.
+ * Featured web projects (software / quant) — shown on the home page.
  */
 export function getSoftwareAndQuantProjects(): WebProject[] {
   return projects.filter(
@@ -357,14 +358,26 @@ export function getSoftwareAndQuantProjects(): WebProject[] {
 }
 
 /**
- * Featured game projects — shown in the second section.
- * The type predicate narrows the union to `GameProject[]`, so items
- * can be passed straight to `GameProjectCard` with full type safety.
+ * All web projects (software / quant) — shown on the full archive page.
+ */
+export function getAllSoftwareAndQuantProjects(): WebProject[] {
+  return projects.filter((p): p is WebProject => p.type === "web");
+}
+
+/**
+ * Featured game projects — shown on the home page.
  */
 export function getGameProjects(): GameProject[] {
   return projects.filter(
     (p): p is GameProject => p.type === "game" && p.featured,
   );
+}
+
+/**
+ * All game projects — shown on the full archive page.
+ */
+export function getAllGameProjects(): GameProject[] {
+  return projects.filter((p): p is GameProject => p.type === "game");
 }
 
 /** Look up a project by its slug. */

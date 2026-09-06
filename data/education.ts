@@ -28,7 +28,7 @@ export const education: Education[] = [
     endDate: "2026-07",
     location: "Qingdao, China",
     notes:
-      "International student exchange in Computer Software Engineering — studying software engineering in a cross-cultural academic environment at an internationally recognised Chinese university.",
+      "Selected as a Student Exchange Awardee in Computer Software Engineering, studying systems and software engineering in a cross-cultural academic environment at an internationally recognised Chinese university.",
     url: "https://www.sdust.edu.cn/",
     isInternational: true,
   },
@@ -40,7 +40,7 @@ export const education: Education[] = [
     endDate: "2025-10",
     location: "Singapore",
     notes:
-      "International exchange at the Institute of Technical Education (ITE), Singapore — recipient of the Temasek Foundation Award for ITE SCALE Programme 2025.",
+      "International exchange at the Institute of Technical Education (ITE), Singapore, as a recipient of the Temasek Foundation Award for the ITE SCALE Programme 2025.",
     url: "https://www.ite.edu.sg/",
     isInternational: true,
   },

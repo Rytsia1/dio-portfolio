@@ -20,9 +20,9 @@
  */
 export const siteConfig = {
   name: "Dio Stania Adinata",
-  role: "Full-Stack & Game Developer",
+  role: "Software Engineer · Quantitative Finance & Computational Systems",
   description:
-    "Portfolio of Dio Stania Adinata, a Full-Stack & Game Developer bridging interactive media with rigorous software engineering principles. Explore my projects, skills, and experience.",
+    "Portfolio of Dio Stania Adinata — Software Engineer specialising in quantitative finance, computational systems, and full-stack engineering. Explore projects in financial modeling, Monte Carlo simulation, risk analytics, and production software.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://yourwebsite.com",
   links: {
     github: "https://github.com/Rytsia1",

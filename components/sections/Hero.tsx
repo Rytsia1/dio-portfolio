@@ -91,11 +91,6 @@ export function Hero() {
       aria-labelledby="hero-heading"
       className="relative overflow-hidden"
     >
-      {/*
-       * Scoped keyframe definition. React 19 hoists this to <head>.
-       * The string is a module-level constant — evaluated once, not
-       * recreated on each render.
-       */}
       <style>{HERO_ANIM_CSS}</style>
 
       {/* ── Pixel-art stars decoration ─────────────────────────────────── */}
@@ -110,26 +105,6 @@ export function Hero() {
         className="absolute left-12 top-64 hidden sm:block"
       />
 
-      {/* ── Staggered CSS entrance ─────────────────────────────────────── */}
-      {/*
-       * Each element carries the `hero-in` animation class plus Tailwind's
-       * arbitrary `[animation-delay:Nms]` utility. The delays mirror the
-       * original framer-motion stagger (× 1000 → ms):
-       *   badge   → 0 ms
-       *   h1      → 50 ms
-       *   role    → 100 ms
-       *   tagline → 150 ms
-       *   CTAs    → 200 ms
-       *   socials → 250 ms
-       */}
-      {/*
-       * Height: `min-h-[80vh]` keeps the hero near-viewport-sized without
-       * forcing a massive empty band below it. Padding is capped at
-       * `py-12 sm:py-16` — the flex centring already distributes free
-       * space, so larger padding only creates dead space under the hero
-       * (and on mobile, where the stacked content exceeds 80vh, it made
-       * the block far taller than necessary).
-       */}
       <Container className="relative flex min-h-[80vh] flex-col justify-center py-12 sm:py-16">
 
         {/* 1 — Availability badge ---------------------------------------- */}
@@ -141,7 +116,12 @@ export function Hero() {
           Open to engineering opportunities
         </p>
 
-        {/* 2 — Name (LCP candidate) -------------------------------------- */}
+        {/* 2 — Eyebrow: discipline label --------------------------------- */}
+        <p className="hero-in mb-3 font-mono text-[11px] font-semibold uppercase tracking-[0.28em] text-accent [animation-delay:20ms]">
+          Software Engineer
+        </p>
+
+        {/* 3 — Name (LCP candidate) -------------------------------------- */}
         <h1
           id="hero-heading"
           className="hero-in text-balance headline-display text-fg [animation-delay:50ms]"
@@ -149,33 +129,44 @@ export function Hero() {
           {profile.name}
         </h1>
 
-        {/* 3 — Role ------------------------------------------------------ */}
-        <p className="hero-in mt-4 text-lg font-semibold text-accent sm:text-xl [animation-delay:100ms]">
-          {profile.role}
-          <span className="ml-2 text-fg-muted">
-            — building systems, exploring the craft.
-          </span>
+        {/* 4 — Domain subheading ----------------------------------------- */}
+        <p className="hero-in mt-3 font-mono text-sm font-semibold uppercase tracking-[0.16em] text-accent-strong sm:text-base [animation-delay:80ms]">
+          Quantitative Finance &amp; Computational Systems
         </p>
 
-        {/* 4 — Tagline --------------------------------------------------- */}
-        <p className="hero-in mt-4 max-w-2xl text-base leading-relaxed text-fg-muted sm:text-lg [animation-delay:150ms]">
+        {/* 5 — Tagline --------------------------------------------------- */}
+        <p className="hero-in mt-5 max-w-2xl text-base leading-relaxed text-fg-muted sm:text-lg [animation-delay:130ms]">
           {profile.tagline}
         </p>
 
-        {/* 5 — Primary CTAs ---------------------------------------------- */}
+        {/* 6 — Tech stack line ------------------------------------------- */}
+        <p className="hero-in mt-4 font-mono text-[11px] text-fg-subtle [animation-delay:160ms]">
+          Python · Java · TypeScript · SQL · FastAPI · Spring Boot · Vue · Docker
+        </p>
+
+        {/* 7 — CTAs ------------------------------------------------------ */}
         <div className="hero-in mt-8 flex flex-col gap-3 sm:flex-row [animation-delay:200ms]">
           <Button
             href="#projects"
             variant="primary"
             size="lg"
-            aria-label="View featured projects"
+            aria-label="View selected projects"
           >
             View Projects
             <ArrowRight className="h-4 w-4" aria-hidden />
           </Button>
+          <Button
+            href="#contact"
+            variant="secondary"
+            size="lg"
+            aria-label="Get in touch"
+          >
+            Get in Touch
+            <Mail className="h-4 w-4" aria-hidden />
+          </Button>
         </div>
 
-        {/* 6 — Social links ---------------------------------------------- */}
+        {/* 8 — Social links ---------------------------------------------- */}
         <ul className="hero-in mt-8 flex flex-wrap items-center gap-2 [animation-delay:250ms]">
           <li>
             <a

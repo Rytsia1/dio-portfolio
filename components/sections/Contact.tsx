@@ -1,6 +1,7 @@
 import { Github, Linkedin, Mail, Instagram, ArrowUpRight } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
+import { CopyEmailButton } from "@/components/ui/CopyEmailButton";
 import { Reveal } from "@/components/ui/Reveal";
 import { Mascot } from "@/components/pixel/Mascot";
 import { Decor } from "@/components/pixel/Decor";
@@ -16,7 +17,7 @@ export function Contact() {
       id="contact"
       eyebrow="Contact"
       title="Want to build something together?"
-      description="I'm open to software engineering roles, internships, and serious project collaborations. The fastest way to reach me is email — feel free to add context about what you're working on."
+      description="I'm open to software engineering roles, internships, and serious project collaborations. The fastest way to reach me is email; feel free to add context about what you're working on."
       className="relative border-t border-border"
     >
       <Decor
@@ -28,7 +29,7 @@ export function Contact() {
       <Reveal className="grid gap-6 lg:grid-cols-12">
         <div className="lg:col-span-7">
           <div className="rounded-3xl border border-border bg-surface p-6 card-shadow sm:p-8">
-            <div className="flex flex-col gap-3 sm:flex-row">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <Button
                 href={profile.email}
                 variant="primary"
@@ -38,6 +39,7 @@ export function Contact() {
                 <Mail className="h-4 w-4" aria-hidden />
                 Email me
               </Button>
+              <CopyEmailButton email={profile.emailDisplay} />
             </div>
 
             <ul className="mt-8 grid gap-3 sm:grid-cols-2">

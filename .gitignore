@@ -48,3 +48,9 @@ next-env.d.ts
 # Local-only install helper + log, not part of the buildable project.
 /install-deps.bat
 /install-deps.log
+
+# JetBrains IDE settings
+.idea/
+
+# Accidental Windows shell redirect artefact from `git reset --hard …`
+/et --hard 5a5f316

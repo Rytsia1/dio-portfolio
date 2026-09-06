@@ -9,11 +9,11 @@ import type { Profile } from "@/types/portfolio";
  */
 export const profile: Profile = {
   name: "Dio Stania Adinata",
-  role: "Game Designer & Software Engineer",
+  role: "Software Engineer",
   tagline:
-    "I design player-centric game systems and build robust software, bridging interactive media with rigorous software engineering.",
+    "I build software at the intersection of engineering, quantitative finance, and data-intensive systems.",
   shortBio:
-    "Detail-oriented Game Designer bridging interactive media with rigorous software engineering principles. Demonstrated success in designing scalable gameplay systems and functional prototypes, earning finalist placements in national competitions. Leverages technical expertise in Python, C++, and cross-platform development within Unity to build robust, player-centric game architectures.",
+    "Software Engineer with a foundation in game technology and a growing focus on quantitative computing, financial systems, and full-stack engineering. Built quantitative finance tools implementing Modern Portfolio Theory and Monte Carlo risk analytics. Delivered production full-stack systems in Java and Python during an international software internship. National finalist placements in competitive programming events.",
   // Based in Indonesia.
   location: "Indonesia",
   email: "mailto:dioadinata520@gmail.com",

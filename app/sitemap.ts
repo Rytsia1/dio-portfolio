@@ -29,13 +29,12 @@ type Route = {
 
 const ROUTES: readonly Route[] = [
   { path: "/",            priority: 1.0, changeFrequency: "monthly" },
-  { path: "/#about",      priority: 0.9, changeFrequency: "monthly" },
-  { path: "/#timeline",   priority: 0.7, changeFrequency: "monthly" },
-  { path: "/#skills",     priority: 0.8, changeFrequency: "monthly" },
+  { path: "/projects",    priority: 0.9, changeFrequency: "weekly"  },
+  { path: "/#focus",      priority: 0.9, changeFrequency: "monthly" },
+  { path: "/#beyond",     priority: 0.8, changeFrequency: "monthly" },
   { path: "/#projects",   priority: 0.9, changeFrequency: "weekly"  },
-  { path: "/#experience", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/#achievements", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/#certificates", priority: 0.6, changeFrequency: "monthly" },
+  { path: "/#stack",      priority: 0.8, changeFrequency: "monthly" },
+  { path: "/#timeline",   priority: 0.7, changeFrequency: "monthly" },
   { path: "/#contact",    priority: 0.9, changeFrequency: "yearly"  },
 ];
 

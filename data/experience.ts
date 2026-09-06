@@ -17,6 +17,8 @@ export const experiences: Experience[] = [
     organization: "Asah led by Dicoding",
     startDate: "2026-08",
     endDate: "Present",
+    description:
+      "Selected for Asah, an intensive AI full-stack developer apprenticeship program led by Dicoding, engineering production software with integrated machine learning capabilities across the stack.",
     responsibilities: [
       "Selected for Asah, an AI full-stack developer apprenticeship program led by Dicoding.",
       "Building production-oriented full-stack applications with integrated AI capabilities across the stack.",

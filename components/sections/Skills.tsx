@@ -10,10 +10,10 @@ import { skillCategories } from "@/data/skills";
 export function Skills() {
   return (
     <Section
-      id="skills"
-      eyebrow="Skills"
-      title="What I work with."
-      description="A working set of languages, frameworks, and tools — grouped by where they show up in my projects."
+      id="stack"
+      eyebrow="Engineering Stack"
+      title="What I build with."
+      description="Technologies grouped by domain — the tools I reach for when building backend systems, quantitative models, and full-stack applications."
       className="border-t border-border"
     >
       <div className="flex flex-wrap justify-center gap-6">

@@ -1,84 +1,83 @@
 import type { SkillCategory } from "@/types/portfolio";
 
 /**
- * Skills, grouped by domain.
+ * Engineering stack, grouped by domain.
  *
- * Only technologies actually represented in the project, experience,
- * or education data are listed. The order mirrors the career
- * narrative: game design & development first (the specialisation),
- * then programming languages, full-stack web development, data and
- * day-to-day tooling, and finally soft skills.
+ * Order: Core languages → Backend/Systems → Quantitative Computing
+ *        → Frontend → Game Technology
+ *
+ * Soft skills are intentionally omitted — they are demonstrated
+ * through the Experience and Achievements sections, not listed here.
  */
 export const skillCategories: SkillCategory[] = [
   {
-    id: "game-design-development",
-    title: "Game Design & Development",
+    id: "core",
+    title: "Core",
     description:
-      "Engines, design craft, and the systems-thinking side of building games.",
-    skills: [
-      { name: "Game Design", emphasis: "accent" },
-      { name: "Narrative Design" },
-      { name: "Unity", emphasis: "accent" },
-      { name: "C#" },
-      { name: "Gameplay Systems" },
-      { name: "Level Design" },
-      { name: "Procedural Generation" },
-      { name: "Multiplayer Synchronization" },
-    ],
-  },
-  {
-    id: "programming-languages",
-    title: "Programming Languages",
-    description:
-      "Primary languages used across projects, coursework, and professional work.",
+      "Primary programming languages used across projects, internships, and coursework.",
     skills: [
       { name: "Python", emphasis: "accent" },
       { name: "Java", emphasis: "accent" },
+      { name: "TypeScript", emphasis: "accent" },
+      { name: "SQL", emphasis: "accent" },
       { name: "C#" },
-      { name: "TypeScript" },
-      { name: "SQL" },
     ],
   },
   {
-    id: "full-stack-web",
-    title: "Full-Stack Web Development",
+    id: "backend-systems",
+    title: "Backend & Systems",
     description:
-      "End-to-end web systems — interfaces, APIs, and data persistence.",
+      "Server-side frameworks, APIs, databases, and containerization.",
     skills: [
-      { name: "Vue 3", emphasis: "accent" },
+      { name: "FastAPI", emphasis: "accent" },
       { name: "Spring Boot", emphasis: "accent" },
-      { name: "FastAPI" },
-      { name: "React / Next.js" },
+      { name: "REST APIs" },
       { name: "PostgreSQL" },
       { name: "MySQL" },
       { name: "MyBatis" },
-      { name: "Tailwind CSS" },
+      { name: "Docker" },
+      { name: "JWT & Auth" },
     ],
   },
   {
-    id: "data-ai-tools",
-    title: "Data, AI & Tools",
+    id: "quantitative-computing",
+    title: "Quantitative Computing",
     description:
-      "Data analysis, quantitative modeling, AI integration, and development tooling.",
+      "Numerical methods, financial modeling, simulation, and risk analytics.",
     skills: [
-      { name: "AI / Machine Learning", emphasis: "accent" },
+      { name: "NumPy", emphasis: "accent" },
+      { name: "Pandas", emphasis: "accent" },
+      { name: "SciPy", emphasis: "accent" },
+      { name: "Monte Carlo Simulation" },
+      { name: "Optimization (SLSQP)" },
+      { name: "Risk Analytics (VaR/CVaR)" },
       { name: "Streamlit" },
-      { name: "Pandas & NumPy" },
-      { name: "SciPy" },
-      { name: "Apache ECharts & Plotly" },
-      { name: "Git & Docker" },
+      { name: "Plotly" },
     ],
   },
   {
-    id: "soft-skills",
-    title: "Soft Skills",
-    description: "How I work with teams and communicate ideas.",
+    id: "frontend",
+    title: "Frontend",
+    description:
+      "UI frameworks and tooling used in full-stack and web projects.",
     skills: [
-      { name: "Communication" },
-      { name: "Teamwork" },
-      { name: "Problem Solving" },
-      { name: "Team Leadership" },
-      { name: "Public Speaking" },
+      { name: "Vue 3", emphasis: "accent" },
+      { name: "React / Next.js" },
+      { name: "Tailwind CSS" },
+      { name: "ECharts / Plotly" },
     ],
   },
-];
+  {
+    id: "game-technology",
+    title: "Game Technology",
+    description:
+      "Engine, language, and design patterns from my game development background.",
+    skills: [
+      { name: "Unity", emphasis: "accent" },
+      { name: "C#" },
+      { name: "Gameplay Systems" },
+      { name: "Procedural Generation" },
+      { name: "Multiplayer Sync" },
+    ],
+  },
+];

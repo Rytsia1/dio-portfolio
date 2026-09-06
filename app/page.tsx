@@ -1,10 +1,9 @@
 import { Hero } from "@/components/sections/Hero";
-import { About } from "@/components/sections/About";
-import { Timeline } from "@/components/sections/Timeline";
-import { Skills } from "@/components/sections/Skills";
+import { Focus } from "@/components/sections/Focus";
+import { BeyondTheCode } from "@/components/sections/BeyondTheCode";
 import { Projects } from "@/components/sections/Projects";
-import { Experience } from "@/components/sections/Experience";
-import { Achievements } from "@/components/sections/Achievements";
+import { Skills } from "@/components/sections/Skills";
+import { Timeline } from "@/components/sections/Timeline";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/layout/Footer";
 
@@ -28,21 +27,27 @@ export const metadata = {
 };
 
 /**
- * Single-page home. The order is intentional — it walks the visitor
- * through the career narrative from identity → background → evolution
- * → skills → projects (current direction first, heritage second) →
- * evidence → contact.
+ * Single-page home. Section order walks the visitor through the
+ * career narrative:
+ *
+ *   Hero           → identity: who, what, why
+ *   Focus          → what engineering problems I like solving
+ *   BeyondTheCode  → origin story: game tech → quant finance
+ *   Projects       → selected work (software/quant first, game second)
+ *   Skills         → engineering stack grouped by domain
+ *   Timeline       → education + experience + key milestones
+ *   Achievements   → verified recognition
+ *   Contact        → open to opportunities
  */
 export default function Home() {
   return (
     <>
       <Hero />
-      <About />
-      <Timeline />
-      <Skills />
+      <Focus />
+      <BeyondTheCode />
       <Projects />
-      <Experience />
-      <Achievements />
+      <Skills />
+      <Timeline />
       <Contact />
       <Footer />
     </>

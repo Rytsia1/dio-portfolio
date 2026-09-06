@@ -28,6 +28,7 @@ export type ProjectCategory =
   | "Full-Stack Engineering"
   | "Full-Stack Web Development"
   | "Quantitative Finance"
+  | "Quantitative Finance / Risk Analytics"
   | "Software Engineering"
   | "Software & Quantitative Finance"
   | "Game Technology"
@@ -101,6 +102,13 @@ export interface BaseProject {
   solution?: string;
   architecture?: string;
   implementation?: string;
+  /**
+   * Quantitative methodology section — for quant finance projects.
+   * Describe the mathematical model, numerical methods, simulation
+   * approach, risk metrics, and validation strategy.
+   * Only populate when factually accurate.
+   */
+  quantMethodology?: string;
   challenges?: string;
   results?: string;
   lessons?: string;

@@ -78,8 +78,9 @@ export function Timeline() {
       url: e.url,
       isInternational: e.isInternational,
     })),
+    // Competitions & verified milestone wins (excluding exchange awards already captured under education)
     ...achievements
-      .filter((a) => a.hero)
+      .filter((a) => a.hero && a.category !== "Exchange")
       .map<TimelineEntry>((a) => ({
         id: `ach-${a.id}`,
         kind: "achievement",
@@ -98,7 +99,7 @@ export function Timeline() {
       id="timeline"
       eyebrow="Career & Education"
       title="How I've evolved."
-      description="A single timeline spanning education, professional experience, and key milestones — most recent first."
+      description="A single timeline spanning education, professional experience, and key milestones, ordered chronologically."
       className="border-t border-border"
     >
       {entries.length === 0 ? (

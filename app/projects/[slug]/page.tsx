@@ -67,7 +67,6 @@ function liveCtaLabel(url: string): string {
 
 export default async function ProjectPage({ params }: PageProps) {
   const { slug } = await params;
-  console.log(`[ProjectPage] Re-rendering slug: ${slug}`);
   const project = getProjectBySlug(slug);
   if (!project) notFound();
 
@@ -179,7 +178,7 @@ export default async function ProjectPage({ params }: PageProps) {
                 priority
                 sizes="(max-width: 1152px) 100vw, 1152px"
                 className="object-contain w-full h-full p-4"
-                style={{ imageRendering: "pixelated" }}
+                style={project.type === "game" ? { imageRendering: "pixelated" } : undefined}
               />
             </div>
           </Reveal>
@@ -210,6 +209,12 @@ export default async function ProjectPage({ params }: PageProps) {
               <CaseStudySection
                 title="Technical Implementation"
                 content={project.implementation}
+              />
+            )}
+            {project.quantMethodology && (
+              <CaseStudySection
+                title="Quantitative Methodology"
+                content={project.quantMethodology}
               />
             )}
             {project.challenges && (
@@ -280,10 +285,10 @@ export default async function ProjectPage({ params }: PageProps) {
               <Images className="h-5 w-5 text-accent-strong" aria-hidden />
               <div>
                 <h2 className="text-2xl font-semibold tracking-tight text-fg">
-                  Screenshots & Gameplay
+                  {project.type === "game" ? "Screenshots & Gameplay" : "Screenshots & Preview"}
                 </h2>
                 <p className="mt-1 text-sm text-fg-muted">
-                  Visual assets and in-game captures from {project.title}. Click any image to open the full-resolution preview.
+                  Visual assets and captures from {project.title}. Click any image to open the full-resolution preview.
                 </p>
               </div>
             </div>
