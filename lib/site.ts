@@ -9,20 +9,30 @@
  *   - `app/robots.ts`            → `sitemap:` reference
  *   - `app/opengraph-image.tsx`  → rendered name / role / description
  *
- * `NEXT_PUBLIC_SITE_URL` must be set in the deployment environment
- * (Vercel project settings → Environment Variables) to the canonical
- * https URL with no trailing slash, e.g. `https://dioadinata.dev`.
- * In local/dev builds it falls back to the placeholder below.
+ * Set `NEXT_PUBLIC_SITE_URL` in the hosting provider's environment
+ * variables (e.g. `https://diostania.my.id`). On Netlify the build's `URL`
+ * variable is used as a fallback; local/dev builds use a placeholder.
  *
  * Keeping this in one file means changing the canonical domain, name,
  * role, or description is a one-line edit instead of a multi-file
  * find-and-replace.
  */
-// Fail the production build instead of shipping sitemap/OG URLs that point
-// at a placeholder domain.
-if (process.env.VERCEL_ENV === "production" && !process.env.NEXT_PUBLIC_SITE_URL) {
+// Canonical origin: explicit env var first, then the primary site URL that
+// Netlify injects into every build (`URL`), then a local-dev placeholder.
+const PLACEHOLDER_URL = "https://example.com";
+const siteUrl = (
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  process.env.URL ||
+  PLACEHOLDER_URL
+).replace(/\/+$/, "");
+
+// Fail a production build (Netlify or Vercel) instead of shipping sitemap /
+// OG / canonical URLs that point at the placeholder domain.
+const isProductionBuild =
+  process.env.CONTEXT === "production" || process.env.VERCEL_ENV === "production";
+if (isProductionBuild && siteUrl === PLACEHOLDER_URL) {
   throw new Error(
-    "NEXT_PUBLIC_SITE_URL is not set. Add it in Vercel → Settings → Environment Variables.",
+    "Site URL is not configured. Set NEXT_PUBLIC_SITE_URL in the hosting provider's environment variables.",
   );
 }
 
@@ -31,7 +41,7 @@ export const siteConfig = {
   role: "Software Engineer · Quantitative Finance & Computational Systems",
   description:
     "Portfolio of Dio Stania Adinata — Software Engineer specialising in quantitative finance, computational systems, and full-stack engineering. Explore projects in financial modeling, Monte Carlo simulation, risk analytics, and production software.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com",
+  url: siteUrl,
 } as const;
 
 /** Convenience type for consumers that need to type against the config. */

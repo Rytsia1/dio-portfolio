@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   title: "All Projects",
   description:
     "Complete portfolio archive across software engineering, quantitative finance, and game technology by Dio Stania Adinata.",
+  alternates: { canonical: "/projects" },
   openGraph: {
     title: `All Projects | ${siteConfig.name}`,
     description:

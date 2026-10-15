@@ -9,6 +9,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata = {
   title: `${siteConfig.name} | ${siteConfig.role}`,
   description: siteConfig.description,
+  alternates: { canonical: "/" },
   openGraph: {
     title: `${siteConfig.name} | ${siteConfig.role}`,
     description: siteConfig.description,

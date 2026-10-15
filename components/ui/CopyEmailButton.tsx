@@ -69,12 +69,13 @@ export function CopyEmailButton({
     <button
       type="button"
       onClick={handleCopy}
+      // Each label starts with the visible text (WCAG 2.5.3 label in name).
       aria-label={
         copied
-          ? "Email address copied to clipboard"
+          ? "Copied! Email address copied to clipboard"
           : status === "failed"
             ? `Copy failed. Email is ${email}`
-            : `Copy ${email} to clipboard`
+            : `Copy email (${email})`
       }
       className={cn(
         "group inline-flex items-center justify-center whitespace-nowrap font-medium rounded-full border card-shadow-soft",

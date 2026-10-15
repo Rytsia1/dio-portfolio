@@ -22,7 +22,7 @@
   --border-strong: #bbd2e5;
   --fg: #0f1b2d;
   --fg-muted: #4a5a6e;
-  --fg-subtle: #7a8aa0;
+  --fg-subtle: #5b6b80; /* ≥4.5:1 on white, surface-soft, and the sky bg */
   --accent: #c2410c;
   --accent-strong: #9a3412;
   --accent-soft: #ffede3;

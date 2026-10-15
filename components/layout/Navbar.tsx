@@ -138,7 +138,6 @@ export function Navbar() {
       >
         <Link
           href="/#top"
-          aria-label={`${profile.name} — home (top of page)`}
           className={cn(
             "flex items-center gap-2 rounded-full px-1 py-1 text-sm font-semibold tracking-tight text-fg",
             navLinkRing,
@@ -152,6 +151,10 @@ export function Navbar() {
           </span>
           <span className="font-mono text-[12px] uppercase tracking-[0.18em]">
             {profile.name.split(" ")[0]}
+          </span>
+          {/* Accessible name starts with the visible "Dio" (WCAG 2.5.3). */}
+          <span className="sr-only">
+            {` ${profile.name.split(" ").slice(1).join(" ")}, home`}
           </span>
         </Link>
 

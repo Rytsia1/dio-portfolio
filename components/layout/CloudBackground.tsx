@@ -1,7 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Cloud } from "@/components/pixel/Cloud";
 
 const emptySubscribe = () => () => {};
@@ -19,6 +19,9 @@ export function CloudBackground() {
     () => false,
   );
   const { scrollYProgress } = useScroll();
+  // Scroll-linked parallax is a vestibular trigger: keep clouds static when
+  // the visitor prefers reduced motion (the CSS drift is disabled in globals.css).
+  const reduce = useReducedMotion();
 
   // Parallax translation ranges mapped dynamically to total page scroll percentage.
   // Using vh ensures they smoothly drift exactly this far by the absolute bottom of the page,
@@ -38,7 +41,7 @@ export function CloudBackground() {
     >
       {/* ── Background Layer (Slow, Small, High Crispness) ─────────────── */}
       <motion.div 
-        style={{ y: yBg }}
+        style={reduce ? undefined : { y: yBg }}
         className="absolute inset-0 w-full h-full will-change-transform"
       >
         <div className="absolute left-[3%] top-[4%]">
@@ -64,7 +67,7 @@ export function CloudBackground() {
 
       {/* ── Midground Layer (Medium Speed, Medium Size) ────────────────── */}
       <motion.div 
-        style={{ y: yMid }}
+        style={reduce ? undefined : { y: yMid }}
         className="absolute inset-0 w-full h-full will-change-transform"
       >
         <div className="absolute right-[6%] top-[8%] hidden md:block">
@@ -90,7 +93,7 @@ export function CloudBackground() {
 
       {/* ── Foreground Layer (Fastest, Large, Full Contrast) ───────────── */}
       <motion.div 
-        style={{ y: yFg }}
+        style={reduce ? undefined : { y: yFg }}
         className="absolute inset-0 w-full h-full will-change-transform"
       >
         <div className="absolute left-[4%] top-[14%] hidden sm:block">

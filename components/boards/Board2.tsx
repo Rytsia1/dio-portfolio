@@ -17,7 +17,7 @@ export function Board2() {
       className="scroll-mt-20"
       header={
         <div className="border-b border-border pb-3">
-          <span className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-accent">
+          <span className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-accent-strong">
             {"// SELECTED WORK"}
           </span>
         </div>
