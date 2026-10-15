@@ -1,7 +1,6 @@
 import { Container } from "@/components/ui/Container";
 import { profile } from "@/data/profile";
-import Link from "next/link";
-import { ArrowUp } from "lucide-react";
+import { BackToTopButton } from "@/components/ui/BackToTopButton";
 
 // Base64-encoded 32x16 retro pixel-art grass & stepped dirt tile.
 // Designed with crisp pixel edges: transparent sky at top -> lime highlights ->
@@ -49,13 +48,7 @@ export function Footer() {
             <div className="flex items-center gap-3 font-mono text-xs text-white/80">
               <span className="text-[#ffd2bd]">INDONESIA</span>
               <span className="text-white/30">/</span>
-              <Link
-                href="/#top"
-                className="group inline-flex items-center gap-1 rounded-full px-2 py-1 text-white hover:text-[#ffd2bd] transition-colors duration-200 font-semibold focus-visible:outline-[#ffd2bd]"
-              >
-                <span>TOP</span>
-                <ArrowUp className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-y-0.5" aria-hidden />
-              </Link>
+              <BackToTopButton className="group inline-flex items-center gap-1 rounded-full px-2 py-1 text-white hover:text-[#ffd2bd] transition-colors duration-200 font-semibold focus-visible:outline-[#ffd2bd]" />
             </div>
           </div>
 

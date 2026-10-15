@@ -38,7 +38,7 @@ export function Board3() {
     },
     {
       org: "Google",
-      when: "2026",
+      when: "NOW",
       role: "Google Student Ambassador",
       href: "https://googlestudentambassador.id/",
       note: "Student technology community role supporting tech learning, engagement, and knowledge sharing among students.",
