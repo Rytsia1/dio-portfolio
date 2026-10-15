@@ -1,10 +1,7 @@
-import { Hero } from "@/components/sections/Hero";
-import { Focus } from "@/components/sections/Focus";
-import { BeyondTheCode } from "@/components/sections/BeyondTheCode";
-import { Projects } from "@/components/sections/Projects";
-import { Skills } from "@/components/sections/Skills";
-import { Timeline } from "@/components/sections/Timeline";
-import { Contact } from "@/components/sections/Contact";
+import { Board1 } from "@/components/boards/Board1";
+import { Board2 } from "@/components/boards/Board2";
+import { Board3 } from "@/components/boards/Board3";
+import { ContactFloor } from "@/components/boards/ContactFloor";
 import { Footer } from "@/components/layout/Footer";
 
 import { siteConfig } from "@/lib/site";
@@ -28,27 +25,23 @@ export const metadata = {
 
 /**
  * Single-page home. Section order walks the visitor through the
- * career narrative:
+ * career narrative using the "Columns, not bands" architectural pattern:
  *
- *   Hero           → identity: who, what, why
- *   Focus          → what engineering problems I like solving
- *   BeyondTheCode  → origin story: game tech → quant finance
- *   Projects       → selected work (software/quant first, game second)
- *   Skills         → engineering stack grouped by domain
- *   Timeline       → education + experience + key milestones
- *   Achievements   → verified recognition
- *   Contact        → open to opportunities
+ *   Board 1 -> Identity & Quick Links
+ *   Board 2 -> Current Work (Dense 2-column)
+ *   Board 3 -> How I got here (Origin story & Stack)
+ *   Contact floor -> pinned onto the footer's grass edge
+ *
+ * Game projects live in the /projects archive (linked from Board 2).
  */
 export default function Home() {
   return (
     <>
-      <Hero />
-      <Focus />
-      <BeyondTheCode />
-      <Projects />
-      <Skills />
-      <Timeline />
-      <Contact />
+      <Board1 />
+      <Board2 />
+      <Board3 />
+      <ContactFloor />
+      {/* Footer merges with the ground under the contact floor */}
       <Footer />
     </>
   );

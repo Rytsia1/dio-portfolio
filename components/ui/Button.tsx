@@ -1,7 +1,7 @@
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
-type Variant = "primary" | "secondary" | "ghost";
+type Variant = "primary" | "secondary" | "ghost" | "dark";
 type Size = "sm" | "md" | "lg";
 
 type ButtonOwnProps = {
@@ -63,7 +63,6 @@ export function Button({
     !rest["aria-labelledby"] &&
     !hasVisibleText(children)
   ) {
-    // eslint-disable-next-line no-console
     console.warn(
       "[Button] Icon-only buttons must have an `aria-label` " +
         "so screen readers can announce their function.",
@@ -72,27 +71,31 @@ export function Button({
 
   const base =
     // Layout
-    "inline-flex items-center justify-center gap-2 rounded-full font-medium " +
-    // Motion
-    "transition-colors transition-shadow " +
+    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium " +
+    // Motion: colour + press feedback
+    "transition-[color,background-color,border-color,box-shadow,transform] duration-200 ease-out " +
+    "active:scale-[0.98] " +
     // WCAG 2.4.7 / 2.4.11 — visible focus indicator with high contrast against light surfaces.
     "outline-none " +
-    "focus-visible:ring-2 focus-visible:ring-orange-700 " +
+    "focus-visible:ring-2 focus-visible:ring-accent " +
     "focus-visible:ring-offset-2 focus-visible:ring-offset-ring-offset " +
-    // Future-proofing for the day this is swapped to a real <button>.
-    "disabled:opacity-50 disabled:pointer-events-none";
+    // Disabled: `disabled:` never matches an <a>, so honour aria-disabled too.
+    "disabled:opacity-50 disabled:pointer-events-none " +
+    "aria-disabled:opacity-50 aria-disabled:pointer-events-none";
 
   const variants: Record<Variant, string> = {
     primary:
-      // Solid deep orange background with pure white text (contrast ≥ 5.9:1 on orange-700 hover, passes WCAG AA & AAA for large text).
-      "bg-orange-600 text-white hover:bg-orange-700 active:bg-orange-800 " +
+      // Accent (#c2410c) + white = 5.2:1, accent-strong hover = 7:1 (WCAG AA).
+      "bg-accent text-white hover:bg-accent-strong " +
       "shadow-[0_1px_0_0_rgba(255,255,255,0.18)_inset,0_10px_24px_-14px_rgba(194,65,12,0.55)]",
     secondary:
       "border border-border-strong bg-surface text-fg " +
-      "hover:bg-surface-soft hover:border-orange-700/40",
+      "hover:bg-surface-soft hover:border-accent/50 hover:text-accent-strong",
     ghost:
       "border border-transparent text-fg-muted " +
       "hover:text-fg hover:bg-surface",
+    dark:
+      "bg-fg text-white hover:bg-accent shadow-[0_10px_24px_-14px_rgba(15,27,45,0.6)]",
   };
 
   const sizes: Record<Size, string> = {

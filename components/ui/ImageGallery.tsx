@@ -8,6 +8,8 @@ import type { GalleryImage } from "@/types/portfolio";
 interface ImageGalleryProps {
   /** Screenshot list rendered as a grid; each item opens in the lightbox. */
   items: GalleryImage[];
+  /** Crisp nearest-neighbour scaling for pixel art; leave off for UI screenshots. */
+  pixelated?: boolean;
 }
 
 /**
@@ -28,9 +30,10 @@ interface ImageGalleryProps {
  *   • Focus moves to the close button on open and returns to the
  *     triggering thumbnail on close.
  */
-export function ImageGallery({ items }: ImageGalleryProps) {
+export function ImageGallery({ items, pixelated = false }: ImageGalleryProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const lastTriggerRef = useRef<HTMLButtonElement | null>(null);
 
   const isOpen = activeIndex !== null;
@@ -63,6 +66,25 @@ export function ImageGallery({ items }: ImageGalleryProps) {
       if (event.key === "Escape") close();
       else if (event.key === "ArrowRight") step(1);
       else if (event.key === "ArrowLeft") step(-1);
+      else if (event.key === "Tab") {
+        // Focus trap: cycle Tab / Shift+Tab within the dialog's buttons.
+        const dialog = dialogRef.current;
+        const buttons = dialog?.querySelectorAll<HTMLElement>("button");
+        if (!dialog || !buttons || buttons.length === 0) return;
+        const first = buttons[0];
+        const last = buttons[buttons.length - 1];
+        const current = document.activeElement;
+        if (!dialog.contains(current)) {
+          event.preventDefault();
+          first.focus();
+        } else if (event.shiftKey && current === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && current === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     };
     window.addEventListener("keydown", onKeyDown);
 
@@ -95,7 +117,7 @@ export function ImageGallery({ items }: ImageGalleryProps) {
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  style={{ imageRendering: "pixelated" }}
+                  style={pixelated ? { imageRendering: "pixelated" } : undefined}
                 />
               </div>
               <div className="border-t border-slate-200 px-3.5 py-2.5">
@@ -123,6 +145,7 @@ export function ImageGallery({ items }: ImageGalleryProps) {
           onClick={close}
         >
           <div
+            ref={dialogRef}
             className="relative flex h-[80vh] w-full max-w-5xl flex-col"
             onClick={(event) => event.stopPropagation()}
           >

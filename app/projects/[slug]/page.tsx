@@ -85,7 +85,7 @@ export default async function ProjectPage({ params }: PageProps) {
         <Container className="relative py-12 sm:py-16">
           <Reveal>
             <Link
-              href="/#projects"
+              href="/projects"
               className="inline-flex items-center gap-1.5 text-sm text-fg-muted transition-colors hover:text-fg"
             >
               <ArrowLeft className="h-4 w-4" aria-hidden />
@@ -236,9 +236,9 @@ export default async function ProjectPage({ params }: PageProps) {
 
           <aside className="lg:col-span-4">
             <div className="sticky top-24 space-y-6">
-              <div className="rounded-xl border border-border bg-surface p-5 card-shadow-soft">
-                <h2 className="text-sm font-semibold text-fg">Highlights</h2>
-                {project.highlights && project.highlights.length > 0 ? (
+              {project.highlights && project.highlights.length > 0 && (
+                <div className="rounded-xl border border-border bg-surface p-5 card-shadow-soft">
+                  <h2 className="text-sm font-semibold text-fg">Highlights</h2>
                   <ul className="mt-4 space-y-3 text-sm text-fg-muted">
                     {project.highlights.map((h, i) => (
                       <li key={i} className="flex gap-2.5">
@@ -250,16 +250,8 @@ export default async function ProjectPage({ params }: PageProps) {
                       </li>
                     ))}
                   </ul>
-                ) : (
-                  <p className="mt-3 text-sm text-fg-subtle">
-                    Add highlights in{" "}
-                    <code className="font-mono text-fg-muted">
-                      data/projects.ts
-                    </code>
-                    .
-                  </p>
-                )}
-              </div>
+                </div>
+              )}
 
               <div className="rounded-xl border border-border bg-surface p-5 card-shadow-soft">
                 <h2 className="flex items-center gap-2 text-sm font-semibold text-fg">
@@ -292,7 +284,10 @@ export default async function ProjectPage({ params }: PageProps) {
                 </p>
               </div>
             </div>
-            <ImageGallery items={project.gallery} />
+            <ImageGallery
+              items={project.gallery}
+              pixelated={project.type === "game"}
+            />
           </Reveal>
         )}
       </Container>

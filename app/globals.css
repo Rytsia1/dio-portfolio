@@ -29,8 +29,9 @@
   --earth: #5a3a22;
   --earth-deep: #3d2616;
   --grass: #6cc04a;
-  --ring: rgba(194, 65, 12, 0.45);
+  --ring: #c2410c;
   --shadow-card: 0 8px 24px -12px rgba(15, 27, 45, 0.12);
+  --shadow-card-hover: 0 18px 40px -18px rgba(15, 27, 45, 0.24);
   --shadow-soft: 0 2px 8px -2px rgba(15, 27, 45, 0.06);
   --cloud: #ffffff;
   --sky-1: #dceeff;
@@ -57,11 +58,16 @@
    * keyboard focus ring stays visible against any surface. Used by
    * `ring-offset-ring-offset` in component Tailwind classes. */
   --color-ring-offset: var(--bg);
+  /* Shape lock: cards = rounded-card, buttons/pills/badges = rounded-full. */
+  --radius-card: 20px;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-/* Base reset / setup */
+/* Base reset / setup. Must live in the base layer: unlayered rules beat
+ * every Tailwind utility, which silently cancelled border-* and text-*
+ * classes on links. */
+@layer base {
 * {
   border-color: var(--border);
 }
@@ -92,13 +98,13 @@ a {
 
 :where(a, button, [role="button"], input, textarea, select):focus-visible {
   outline: 2px solid var(--ring);
-  outline-offset: 2px;
-  border-radius: 0.5rem;
+  outline-offset: 3px;
 }
 
 ::selection {
   background: var(--accent-soft);
   color: var(--fg);
+}
 }
 
 /* Honor reduced-motion users globally. */
@@ -194,6 +200,24 @@ a {
 
 .card-shadow-soft {
   box-shadow: var(--shadow-soft);
+}
+
+/* Interactive card (whole card is a link): lift on hover, press on active. */
+.card-link {
+  transition:
+    transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+}
+
+.card-link:active {
+  transform: translateY(0) scale(0.995);
 }
 
 /* Ambient pixel cloud floating / drifting keyframes */

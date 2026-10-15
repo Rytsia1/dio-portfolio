@@ -58,15 +58,15 @@ app/                Next.js App Router
   not-found.tsx
   projects/[slug]/
 
-components/         UI components
-  About, Achievements, Button, Certificates, Contact, Container,
-  Experience, Footer, GameProjectCard, Hero, Navbar, ProjectCard,
-  Projects, Reveal, Section, Skills, Tag, Timeline
-  pixel/            (Cloud, Mascot, Decor)
+components/
+  boards/           Home page sections (Board1-3, ContactFloor)
+  layout/           Board, Column, Navbar, Footer, CloudBackground
+  ui/               Button, Container, CopyEmailButton, GameProjectCard,
+                    ImageGallery, ProjectCard, Reveal, Tag
+  pixel/            (Cloud, Decor)
 
 data/               Typed content
-  profile, nav, skills, projects, experience, education, achievements,
-  certificates
+  profile, nav, projects
 
 lib/cn.ts
 types/portfolio.ts
@@ -74,17 +74,15 @@ types/portfolio.ts
 
 ## Editing content
 
-Everything visible on the site is driven from `data/*.ts`. You can update your content by editing the files listed below:
+Update your content by editing the files listed below:
 
 | File | Controls |
 | --- | --- |
-| `data/profile.ts` | Hero section, personal details, social links, SEO metadata |
+| `data/profile.ts` | Personal details, social links, contact email |
 | `data/nav.ts` | Navigation menu links |
-| `data/skills.ts` | Skills section |
-| `data/projects.ts` | Featured projects, game projects, and individual project pages |
-| `data/experience.ts` | Work experience timeline |
-| `data/education.ts` | Education timeline |
-| `data/achievements.ts` | Achievements list |
-| `data/certificates.ts` | Certificates section |
+| `data/projects.ts` | Home page project tiles, the `/projects` archive, and individual project pages |
+| `components/boards/Board1.tsx` | Hero copy and areas of practice |
+| `components/boards/Board3.tsx` | Story, experience, tech stack, and recognition |
+| `lib/site.ts` | Site name, role, description, canonical URL (SEO) |
 
 *(Note: grep for `TODO:` in the codebase to view fields that still need real data.)*

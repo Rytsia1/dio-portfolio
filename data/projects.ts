@@ -71,7 +71,7 @@ export const projects: ProjectItem[] = [
     title: "Book-it-quick",
     tagline: "Full-Stack Financial Management System with High-Precision Ledger",
     shortDescription: "Full-stack personal bookkeeping and financial analytics platform, built from scratch during a 10-day software production internship at Shandong University of Science and Technology.",
-    overview: "A full-stack, enterprise-grade personal bookkeeping and financial analytics platform developed during an intensive 2-week Software Production Internship at Shandong University of Science and Technology. Engineered from the ground up to eliminate floating-point arithmetic drift, the system integrates high-precision monetary ledgers, automated recurring billing, real-time analytics dashboards, and robust stateless authentication.",
+    overview: "A full-stack, enterprise-grade personal bookkeeping and financial analytics platform developed during an intensive 10-day Software Production Internship at Shandong University of Science and Technology. Engineered from the ground up to eliminate floating-point arithmetic drift, the system integrates high-precision monetary ledgers, automated recurring billing, real-time analytics dashboards, and robust stateless authentication.",
     category: "Full-Stack Web Development",
     year: "2026",
     role: "Full-Stack Software Engineer Intern",
@@ -115,11 +115,14 @@ export const projects: ProjectItem[] = [
     tags: ["Python", "Streamlit", "SciPy (SLSQP)", "Modern Portfolio Theory", "Plotly", "Pandas", "NumPy", "yfinance", "Monte Carlo", "Risk Analytics (VaR/CVaR)"],
     githubUrl: "https://github.com/Rytsia1/Portofolio-Optimizer",
     liveUrl: "https://stockportofolio-optimizer.streamlit.app/",
+    // Screenshots captured from the live Streamlit app (liveUrl) with its
+    // default inputs; the stress-test view uses the built-in 2022 scenario.
     coverImage: "/projects/portfolio-optimizer/cover.png",
     gallery: [
-      { src: "/projects/portfolio-optimizer/screen1.png", alt: "Optimization Results & Efficient Frontier", caption: "Interactive Plotly Efficient Frontier chart with 10,000 Monte Carlo iterations and optimal Sharpe Ratio weights." },
-      { src: "/projects/portfolio-optimizer/screen2.png", alt: "Historical Backtest & Growth Comparison", caption: "Cumulative portfolio growth backtesting compared against market benchmarks (SPY) and equal-weight allocations." },
-      { src: "/projects/portfolio-optimizer/screen3.png", alt: "Historical Stress Testing & Drawdowns", caption: "Stress-testing module calculating Maximum Drawdowns (MDD) across the 2008 GFC, COVID-19, and 2022 Tech Bear Market." }
+      { src: "/projects/portfolio-optimizer/cover.png", alt: "Key Performance Indicators", caption: "Expected return, volatility, max Sharpe ratio, and VaR / CVaR (95%) for the optimized portfolio." },
+      { src: "/projects/portfolio-optimizer/screen1.png", alt: "Optimization Results & Efficient Frontier", caption: "Optimal asset weights alongside the Monte Carlo Efficient Frontier, with the max-Sharpe portfolio marked." },
+      { src: "/projects/portfolio-optimizer/screen2.png", alt: "Historical Backtest & Growth Comparison", caption: "Growth of a $10,000 investment: optimized portfolio vs. equal-weight allocation vs. the SPY benchmark." },
+      { src: "/projects/portfolio-optimizer/screen3.png", alt: "Historical Stress Testing & Drawdowns", caption: "Stress test against the SPY benchmark, showing maximum drawdowns during the 2022 Tech Bear Market scenario." }
     ],
     featured: true,
     problem: "Retail investors and analysts often rely on intuitive or equal-weight allocation strategies that ignore asset covariance and downside tail risk. The challenge was building an interactive, responsive analytical tool that translates complex financial mathematics into real-time interactive charts with defensive data caching and stress-testing capabilities.",
@@ -267,7 +270,7 @@ export const projects: ProjectItem[] = [
       "• Asymmetric information distribution naturally drives organic verbal communication and player engagement.\n• Decoupling server-authoritative logic from immediate client-side UI feedback is essential for smooth multiplayer responsiveness.",
     highlights: [
       "Asymmetric Co-op Gameplay between Chef and Nutritionist.",
-      "Real-time Multiplayer Synchronization via Proton.",
+      "Real-time Multiplayer Synchronization via Photon.",
       "Dynamic procedural student generation based on Indonesian demographics.",
       "National Finalist at KMIPN 2025.",
     ],
@@ -383,6 +386,13 @@ export function getAllGameProjects(): GameProject[] {
 /** Look up a project by its slug. */
 export function getProjectBySlug(slug: string): ProjectItem | undefined {
   return projects.find((p) => p.slug === slug);
+}
+
+/** Like `getProjectBySlug`, but fails the build with the slug name when it's missing. */
+export function requireProject(slug: string): ProjectItem {
+  const project = getProjectBySlug(slug);
+  if (!project) throw new Error(`data/projects.ts: no project with slug "${slug}"`);
+  return project;
 }
 
 /** All slugs, used by `generateStaticParams`. */

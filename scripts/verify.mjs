@@ -14,7 +14,7 @@
  * macOS, and Linux.
  */
 
-import { readFileSync, statSync } from 'node:fs';
+import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -100,6 +100,31 @@ expectContent(detailPage, 'hover:bg-surface-hover', {
   shouldExist: false,
   description: 'still uses bg-surface-hover: NO',
 });
+
+// 4. Project data integrity. Regex over the TS source (no TS loader needed);
+// matches `slug: "…"`, `coverImage: "/…"` and gallery `src: "/…"` literals.
+console.log('\n=== project data check ===');
+const projectsSrc = readProjectFile(join('data', 'projects.ts'));
+if (projectsSrc === null) {
+  fail('could not read data/projects.ts');
+} else {
+  const slugs = [...projectsSrc.matchAll(/\bslug:\s*"([^"]+)"/g)].map((m) => m[1]);
+  const dupes = slugs.filter((s, i) => slugs.indexOf(s) !== i);
+  if (dupes.length) fail(`duplicate project slugs: ${[...new Set(dupes)].join(', ')}`);
+  else pass(`${slugs.length} project slugs, all unique`);
+
+  const assets = [...projectsSrc.matchAll(/\b(?:coverImage|src):\s*"(\/[^"]+)"/g)].map((m) => m[1]);
+  const missing = assets.filter((p) => !isRealFile(join('public', p)));
+  if (missing.length) fail(`missing image files in public/: ${missing.join(', ')}`);
+  else pass(`${assets.length} project image paths exist in public/`);
+}
+
+// Rendered "TODO:" placeholders (string values, not comments) in data files.
+const todoFiles = readdirSync(join(root, 'data')).filter((name) =>
+  /["']TODO:/.test(readProjectFile(join('data', name)) ?? ''),
+);
+if (todoFiles.length) fail(`"TODO:" string values left in: ${todoFiles.map((n) => `data/${n}`).join(', ')}`);
+else pass('no "TODO:" string values in data/');
 
 // Summary + exit code so CI/CD pipelines fail on regressions
 console.log('');

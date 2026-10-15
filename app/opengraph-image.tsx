@@ -8,7 +8,7 @@ import { siteConfig } from "@/lib/site";
 // the route's <meta property="og:image:..."> tags automatically.
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = `${siteConfig.name} — ${siteConfig.role} | Quantitative Finance & Computational Systems`;
+export const alt = `${siteConfig.name} | ${siteConfig.role}`;
 
 // ---------------------------------------------------------------------------
 // Font: Press Start 2P (Google Fonts)
@@ -55,7 +55,7 @@ const COLORS = {
   borderStrong: "#334155",
   fg: "#f8fafc",
   fgMuted: "#94a3b8",
-  accent: "#ff6b35", // warm orange (matches --accent)
+  accent: "#c2410c", // warm orange (matches --accent)
   green: "#a3e635", // terminal green for subhead
   red: "#ef4444", // traffic light
   yellow: "#facc15",

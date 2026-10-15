@@ -36,8 +36,7 @@ export function GameProjectCard({
   return (
     <article
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface transition-all",
-        "hover:border-accent/40 hover:card-shadow",
+        "card-link group relative flex h-full flex-col overflow-hidden rounded-card border border-border bg-surface",
         className,
       )}
     >

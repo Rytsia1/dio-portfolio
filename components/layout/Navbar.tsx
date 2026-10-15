@@ -45,7 +45,7 @@ import { cn } from "@/lib/cn";
 const navLinkRing =
   // High-contrast focus-ring (contrast ≥4.5:1) meeting WCAG 2.4.7 / 2.4.11 on light surfaces.
   "outline-none " +
-  "focus-visible:ring-2 focus-visible:ring-orange-700 " +
+  "focus-visible:ring-2 focus-visible:ring-accent " +
   "focus-visible:ring-offset-2 focus-visible:ring-offset-ring-offset";
 
 export function Navbar() {
@@ -129,10 +129,10 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 sm:pt-6">
+    <header className="fixed inset-x-0 top-0 z-50 pt-4 sm:pt-6 pointer-events-none">
       <Container
         className={cn(
-          "flex h-14 items-center justify-between gap-6 rounded-full border border-border bg-surface/85 px-4 backdrop-blur-md transition-shadow sm:px-6",
+          "pointer-events-auto flex h-14 items-center justify-between gap-6 rounded-full border border-border bg-surface/85 px-4 backdrop-blur-md transition-shadow sm:px-6",
           scrolled ? "card-shadow" : "shadow-none",
         )}
       >
@@ -146,7 +146,7 @@ export function Navbar() {
         >
           <span
             aria-hidden
-            className="grid h-7 w-7 place-items-center rounded-md bg-orange-600 text-[11px] font-mono font-bold text-white"
+            className="grid h-7 w-7 place-items-center rounded-md bg-accent text-[11px] font-mono font-bold text-white"
           >
             D
           </span>
@@ -170,11 +170,11 @@ export function Navbar() {
                 prefetch={false}
                 aria-current={isActive ? "location" : undefined}
                 className={cn(
-                  "rounded-full px-3 py-1.5 text-sm transition-colors",
+                  "rounded-full px-3 py-1.5 text-sm font-medium transition-colors duration-200",
                   navLinkRing,
                   isActive
-                    ? "text-fg"
-                    : "text-fg-muted hover:text-fg",
+                    ? "bg-surface-soft text-fg"
+                    : "text-fg-muted hover:bg-surface-soft hover:text-fg",
                 )}
               >
                 {item.label}
@@ -183,13 +183,13 @@ export function Navbar() {
           })}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 lg:hidden">
           <button
             ref={toggleBtnRef}
             type="button"
             onClick={() => setOpen((v) => !v)}
             className={cn(
-              "inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface text-fg-muted hover:text-fg lg:hidden",
+              "inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface text-fg-muted transition-[color,background-color,transform] duration-200 hover:bg-surface-soft hover:text-fg active:scale-95 lg:hidden",
               navLinkRing,
             )}
             aria-label={open ? "Close menu" : "Open menu"}
@@ -244,7 +244,7 @@ export function Navbar() {
                         onClick={() => setOpen(false)}
                         aria-current={isActive ? "location" : undefined}
                         className={cn(
-                          "flex items-center justify-between rounded-xl border border-transparent px-3 py-2.5 text-sm transition-colors",
+                          "flex items-center justify-between rounded-xl border border-transparent px-4 py-3 text-base font-medium transition-colors duration-200 active:bg-surface-soft",
                           navLinkRing,
                           isActive
                             ? "border-border bg-surface-soft text-fg"

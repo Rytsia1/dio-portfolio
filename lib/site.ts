@@ -18,17 +18,20 @@
  * role, or description is a one-line edit instead of a multi-file
  * find-and-replace.
  */
+// Fail the production build instead of shipping sitemap/OG URLs that point
+// at a placeholder domain.
+if (process.env.VERCEL_ENV === "production" && !process.env.NEXT_PUBLIC_SITE_URL) {
+  throw new Error(
+    "NEXT_PUBLIC_SITE_URL is not set. Add it in Vercel → Settings → Environment Variables.",
+  );
+}
+
 export const siteConfig = {
   name: "Dio Stania Adinata",
   role: "Software Engineer · Quantitative Finance & Computational Systems",
   description:
     "Portfolio of Dio Stania Adinata — Software Engineer specialising in quantitative finance, computational systems, and full-stack engineering. Explore projects in financial modeling, Monte Carlo simulation, risk analytics, and production software.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://yourwebsite.com",
-  links: {
-    github: "https://github.com/Rytsia1",
-    linkedin: "https://linkedin.com/in/dioadinata",
-    twitter: "https://twitter.com/distania_9",
-  },
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com",
 } as const;
 
 /** Convenience type for consumers that need to type against the config. */

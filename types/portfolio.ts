@@ -316,8 +316,4 @@ export interface Profile {
   /** Optional — only included if it fits the professional design. */
   instagramUrl?: string;
   instagramHandle?: string;
-  /** Path to resume PDF in /public. */
-  resumeUrl: string;
-  /** Display label for the resume link */
-  resumeLabel: string;
 }

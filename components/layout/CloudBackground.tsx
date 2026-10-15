@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Cloud } from "@/components/pixel/Cloud";
+
+const emptySubscribe = () => () => {};
 
 /**
  * Dynamic Multi-Layer Parallax Background
@@ -11,7 +13,11 @@ import { Cloud } from "@/components/pixel/Cloud";
  * of clouds at different speeds to create a 2.5D parallax effect.
  */
 export function CloudBackground() {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
   const { scrollYProgress } = useScroll();
 
   // Parallax translation ranges mapped dynamically to total page scroll percentage.
@@ -20,11 +26,6 @@ export function CloudBackground() {
   const yBg = useTransform(scrollYProgress, [0, 1], ["0vh", "-20vh"]);
   const yMid = useTransform(scrollYProgress, [0, 1], ["0vh", "-45vh"]);
   const yFg = useTransform(scrollYProgress, [0, 1], ["0vh", "-75vh"]);
-
-  // Prevent hydration mismatch by only rendering after mount
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   if (!mounted) {
     return null; // Return null on server and initial render
