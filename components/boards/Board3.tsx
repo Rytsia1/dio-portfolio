@@ -32,6 +32,7 @@ export function Board3() {
       org: "Asah / Dicoding",
       when: "NOW",
       role: "AI Full-Stack Developer Apprenticeship",
+      href: "https://www.dicoding.com/asah",
       note: "Architecting AI-powered production full-stack systems.",
       rail: "border-accent",
     },
