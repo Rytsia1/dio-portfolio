@@ -4,13 +4,8 @@ import { ArrowLeft } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { ProjectCard } from "@/components/ui/ProjectCard";
-import { GameProjectCard } from "@/components/ui/GameProjectCard";
 import { Footer } from "@/components/layout/Footer";
-import { Decor } from "@/components/pixel/Decor";
-import {
-  getAllSoftwareAndQuantProjects,
-  getAllGameProjects,
-} from "@/data/projects";
+import { getProjectsByCategory } from "@/data/projects";
 import { profile } from "@/data/profile";
 import { siteConfig } from "@/lib/site";
 
@@ -28,8 +23,7 @@ export const metadata: Metadata = {
 };
 
 export default function ProjectsPage() {
-  const software = getAllSoftwareAndQuantProjects();
-  const games = getAllGameProjects();
+  const groups = getProjectsByCategory();
 
   return (
     <div className="pt-24 sm:pt-28">
@@ -73,63 +67,34 @@ export default function ProjectsPage() {
       {/* Main content */}
       <div className="py-14 sm:py-18">
         <Container>
-          {/* Section 1: Software & Quant */}
-          <section id="software" className="mb-16">
-            <Reveal className="mb-8">
-              <p className="font-mono text-xs font-medium uppercase tracking-[0.18em] text-accent-strong">
-                Current Direction
-              </p>
-              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-fg sm:text-3xl">
-                Software & Quantitative Finance
-              </h2>
-              <p className="mt-2 max-w-2xl text-sm text-fg-muted sm:text-base">
-                Production full-stack applications, numerical methods, stochastic simulations, and risk analytics.
-              </p>
-            </Reveal>
-
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {software.map((project, idx) => (
-                <Reveal key={project.slug} delay={idx * 0.05}>
-                  <ProjectCard project={project} />
-                </Reveal>
-              ))}
-            </div>
-          </section>
-
-          {/* Section 2: Game Technology */}
-          <section id="games" className="border-t border-border pt-14">
-            <Reveal className="mb-8">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-mono text-xs font-medium uppercase tracking-[0.18em] text-fg-subtle">
-                    Foundations & Systems
-                  </p>
-                  <h2 className="mt-2 text-2xl font-semibold tracking-tight text-fg sm:text-3xl">
-                    Game Technology
+          {/* One section per category, in PROJECT_CATEGORY_ORDER */}
+          {groups.map(({ category, projects }, groupIdx) => {
+            return (
+              <section
+                key={category}
+                id={category.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}
+                className={groupIdx > 0 ? "mt-16 border-t border-border pt-14" : undefined}
+              >
+                <Reveal className="mb-8">
+                  <h2 className="text-2xl font-semibold tracking-tight text-fg sm:text-3xl">
+                    {category}
                   </h2>
-                  <p className="mt-2 max-w-2xl text-sm text-fg-muted sm:text-base">
-                    Interactive systems, gameplay architecture, and mechanics prototyping that built my systems-oriented engineering mindset.
-                  </p>
-                </div>
-                <Decor
-                  kind="star"
-                  size={24}
-                  className="hidden sm:block text-accent/50"
-                />
-              </div>
-            </Reveal>
-
-            <div className="grid gap-6 md:grid-cols-2">
-              {games.map((project, idx) => (
-                <Reveal key={project.slug} delay={idx * 0.05}>
-                  <GameProjectCard
-                    project={project}
-                    githubHandle={profile.githubHandle}
-                  />
                 </Reveal>
-              ))}
-            </div>
-          </section>
+
+                <div className="grid gap-6 md:grid-cols-2">
+                  {projects.map((project, idx) => (
+                    <Reveal key={project.slug} delay={idx * 0.05}>
+                      <ProjectCard
+                        project={project}
+                        githubHandle={profile.githubHandle}
+                        eager={groupIdx === 0}
+                      />
+                    </Reveal>
+                  ))}
+                </div>
+              </section>
+            );
+          })}
         </Container>
       </div>
 

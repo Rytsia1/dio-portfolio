@@ -20,7 +20,7 @@
  *
  * The `type` literal is the discriminator: narrowing on `project.type`
  * (switch / if) gives full type safety in renderers — e.g. only a
- * `GameProject` can be passed to `GameProjectCard`.
+ * `GameProject` gets the game-only Tech Stack panel in `ProjectCard`.
  */
 
 /** A category used to group projects in detail and for filter labels. */
@@ -37,7 +37,8 @@ export type ProjectCategory =
   | "Machine Learning"
   | "Data Science & Fintech"
   | "Simulation & Analytics"
-  | "AI & Knowledge Graphs";
+  | "AI & Knowledge Graphs"
+  | "Full-Stack & AI Systems";
 
 /** A single screenshot in a project's detail-page gallery. */
 export interface GalleryImage {
@@ -81,6 +82,11 @@ export interface BaseProject {
   achievement?: string;
   /** Technologies shown as tags — the "tech stack" of the project. */
   tags: string[];
+  /**
+   * Optional verified tech stack shown as badges on the project card
+   * (max 6). When unset, the card falls back to the first `tags`.
+   */
+  techStack?: string[];
   /** Optional GitHub URL */
   githubUrl?: string;
   /** Optional live demo URL */
@@ -129,7 +135,7 @@ export interface BaseProject {
  *
  * `engine` and `coreMechanics` are required — a game project without
  * them is a modelling error, so the type system rejects it. These
- * fields power the "Tech Stack" panel in `GameProjectCard`.
+ * fields power the "Tech Stack" panel in `ProjectCard`.
  */
 export interface GameProject extends BaseProject {
   /** Discriminator for the ProjectItem union. */

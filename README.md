@@ -61,7 +61,7 @@ app/                Next.js App Router
 components/
   boards/           Home page sections (Board1-3, ContactFloor)
   layout/           Board, Column, Navbar, Footer, CloudBackground
-  ui/               Button, Container, CopyEmailButton, GameProjectCard,
+  ui/               Button, Container, CopyEmailButton,
                     ImageGallery, ProjectCard, Reveal, Tag
   pixel/            (Cloud, Decor)
 

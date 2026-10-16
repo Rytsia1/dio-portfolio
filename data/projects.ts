@@ -1,10 +1,10 @@
-import type { GameProject, ProjectItem, WebProject } from "@/types/portfolio";
+import type { GameProject, ProjectCategory, ProjectItem, WebProject } from "@/types/portfolio";
 
 /**
  * Project catalogue.
  *
  * Each project is the single source of truth for both the home-page
- * `ProjectCard` / `GameProjectCard` and the `/projects/[slug]`
+ * `ProjectCard` and the `/projects/[slug]`
  * case-study page.
  *
  * Projects are strictly typed as a discriminated union (`ProjectItem`):
@@ -13,7 +13,7 @@ import type { GameProject, ProjectItem, WebProject } from "@/types/portfolio";
  *                     typed `never`, so they can't be set by accident.
  *   - type: "game"  — `GameProject`: requires `engine` and
  *                     `coreMechanics` (optionally `assetsTools`), which
- *                     `GameProjectCard` renders as a "Tech Stack" panel.
+ *                     `ProjectCard` renders as a "Tech Stack" panel.
  *
  * The `type` literal is the discriminator — narrow with a switch or
  * if-statement on `project.type` to render type-specific UI safely.
@@ -36,11 +36,12 @@ export const projects: ProjectItem[] = [
     tagline: "Quantitative Risk & Valuation Platform",
     shortDescription: "Quantitative risk and valuation platform for deterministic and stochastic financial projections — combining a DAG-based cash flow engine with Monte Carlo simulation and risk analytics.",
     overview: "Actura is a quantitative risk and valuation platform that combines financial modeling, stochastic simulation, and risk analytics in a production-oriented architecture. It evaluates insurance and financial cash flows as a Directed Acyclic Graph (DAG), supports both deterministic and Monte Carlo stochastic projections, and computes risk metrics including BEL, VaR 95%, and CVaR / CTE 95. The frontend is a Vue 3 SPA paired with a FastAPI backend, containerized with Docker.",
-    category: "Quantitative Finance / Risk Analytics",
+    category: "Quantitative Finance",
     year: "2026",
     role: "Full-Stack Engineer",
     team: "Solo Project",
     tags: ["Python", "Vue 3", "FastAPI", "Docker", "PostgreSQL", "Monte Carlo", "Risk Analytics"],
+    techStack: ["Python", "FastAPI", "Vue 3", "PostgreSQL", "NumPy", "SciPy"],
     githubUrl: "https://github.com/Rytsia1/Actura",
     coverImage: "/projects/actura/cover.png",
     gallery: [
@@ -72,11 +73,12 @@ export const projects: ProjectItem[] = [
     tagline: "Full-Stack Financial Management System with High-Precision Ledger",
     shortDescription: "Full-stack personal bookkeeping and financial analytics platform, built from scratch during a 10-day software production internship at Shandong University of Science and Technology.",
     overview: "A full-stack, enterprise-grade personal bookkeeping and financial analytics platform developed during an intensive 10-day Software Production Internship at Shandong University of Science and Technology. Engineered from the ground up to eliminate floating-point arithmetic drift, the system integrates high-precision monetary ledgers, automated recurring billing, real-time analytics dashboards, and robust stateless authentication.",
-    category: "Full-Stack Web Development",
+    category: "Full-Stack & AI Systems",
     year: "2026",
     role: "Full-Stack Software Engineer Intern",
     team: "Internship Project (Shandong University of Science and Technology)",
     tags: ["Spring Boot", "Java 25", "Vue 3", "MyBatis", "MySQL", "Vite", "Element Plus", "ECharts", "JWT & Spring Security", "Pinia", "i18n"],
+    techStack: ["Java", "Spring Boot", "Vue 3", "MySQL", "MyBatis", "JWT"],
     githubUrl: "https://github.com/Rytsia1/Book-it-quick",
     coverImage: "/projects/book-it-quick/cover.png",
     gallery: [
@@ -108,11 +110,12 @@ export const projects: ProjectItem[] = [
     tagline: "Quantitative Asset Allocation & Risk Analytics Platform using Modern Portfolio Theory",
     shortDescription: "An interactive quantitative finance web application engineered to compute optimal asset allocations using Modern Portfolio Theory.",
     overview: "An interactive quantitative finance web application engineered to compute optimal asset allocations using Modern Portfolio Theory (MPT). The platform maximizes risk-adjusted returns (Sharpe Ratio) through non-linear constrained optimization (SciPy SLSQP), simulates a 10,000-iteration Monte Carlo Efficient Frontier, computes parametric risk metrics (VaR/CVaR), and stress-tests portfolio resilience against historical market crashes.",
-    category: "Data Science & Fintech",
+    category: "Quantitative Finance",
     year: "2026",
     role: "Quantitative Software Engineer",
     team: "Solo Project",
     tags: ["Python", "Streamlit", "SciPy (SLSQP)", "Modern Portfolio Theory", "Plotly", "Pandas", "NumPy", "yfinance", "Monte Carlo", "Risk Analytics (VaR/CVaR)"],
+    techStack: ["Python", "Streamlit", "NumPy", "SciPy", "Plotly", "yfinance"],
     githubUrl: "https://github.com/Rytsia1/Portofolio-Optimizer",
     liveUrl: "https://stockportofolio-optimizer.streamlit.app/",
     // Screenshots captured from the live Streamlit app (liveUrl) with its
@@ -154,6 +157,7 @@ export const projects: ProjectItem[] = [
     role: "Software Engineer",
     team: "Solo Project",
     tags: ["Python", "Streamlit", "NumPy", "Pandas", "Plotly", "Pytest", "Monte Carlo", "Stochastic Simulation"],
+    techStack: ["Python", "Streamlit", "NumPy", "Pandas", "Plotly", "Pytest"],
     githubUrl: "https://github.com/Rytsia1/Game-Economy-Simulator",
     liveUrl: "https://game-economy-simulator.streamlit.app/",
     // Screenshots captured from the live Streamlit app with its default inputs (seed 42).
@@ -188,11 +192,12 @@ export const projects: ProjectItem[] = [
     tagline: "Churn Early-Warning Context Graph with Evidence-Cited AI Answers",
     shortDescription: "A Next.js and Neo4j hackathon app that unifies six customer-data sources into one context graph to rank accounts by churn risk, with clickable evidence paths and AI answers that cite graph records.",
     overview: "Churn Graph was built by a three-person team at the Road to PENS Hackathon 2026 for a case-study SaaS company whose customer-success team could not tell which accounts would really churn before renewal: the dashboard health score misjudged accounts, and the evidence was scattered and contradictory across six systems (CRM, email and meetings, product usage, support tickets, contracts and billing, and a decision log). The app loads those sources into a single Neo4j context graph, detects risk signals and places where the sources disagree, ranks accounts by risk with clickable evidence, suggests retention actions with precedents from the decision log, and answers ad-hoc questions with citations back to graph records.",
-    category: "AI & Knowledge Graphs",
+    category: "Full-Stack & AI Systems",
     year: "2026",
     role: "Backend Developer",
     team: "Hackathon team of 3 (Road to PENS Hackathon 2026)",
     tags: ["TypeScript", "Next.js", "Neo4j", "Cypher", "Vercel AI SDK", "Google Gemini", "Zod", "Bun"],
+    techStack: ["Next.js", "TypeScript", "React", "Neo4j", "AI SDK", "Tailwind CSS"],
     githubUrl: "https://github.com/Aku-Ge-Es-A-Team/churn-graph",
     liveUrl: "https://churn-graph.vercel.app/",
     // Screenshots captured from the live deployment (fictional case-study data, snapshot 1 Oct 2026).
@@ -228,7 +233,7 @@ export const projects: ProjectItem[] = [
       "A quirky exploration and turn-based stick-battling game (Top 60 national placement at Gameseed 2025), playable on Itch.io.",
     overview:
       "A quirky exploration and turn-based battle game where players roam a village to discover, appraise, and duel with unique wooden sticks in a quest to become the Ultimate Whacker. Built for Gameseed 2025 under the theme 'Real Life Experience', achieving Top 60 national placement.",
-    category: "Game Technology",
+    category: "Game Development",
     year: "2025",
     role: "Game Designer",
     achievement: "Gameseed 2025: Top 60",
@@ -359,7 +364,7 @@ export const projects: ProjectItem[] = [
       "A high-octane 2.5D vertical mobile arcade shooter featuring gesture-based navigation and bullet-time mechanics.",
     overview:
       "A high-octane 2.5D vertical mobile arcade shooter where players pilot an advanced space fighter to defend the Moon from an alien armada. Designed natively for mobile touch screens, featuring fluid 1:1 gesture navigation, weapon switching, and an adrenaline-pumping risk-reward near-miss barrel roll mechanic that triggers dynamic slow motion.",
-    category: "Mobile Game Development",
+    category: "Game Development",
     year: "2025",
     role: "Game Designer",
     engine: "Unity",
@@ -401,7 +406,7 @@ export const projects: ProjectItem[] = [
       "A cozy exploration game with a robot protagonist, built on a narrative framework in Unity.",
     overview:
       "Project: Save Planet is a cozy exploration game with a robot protagonist, built in Unity on a narrative framework focused on story and world-building. Ongoing project.",
-    category: "Game Technology",
+    category: "Game Development",
     year: "In Progress",
     role: "Narrative Designer",
     engine: "Unity",
@@ -436,13 +441,6 @@ export function getSoftwareAndQuantProjects(): WebProject[] {
 }
 
 /**
- * All web projects (software / quant) — shown on the full archive page.
- */
-export function getAllSoftwareAndQuantProjects(): WebProject[] {
-  return projects.filter((p): p is WebProject => p.type === "web");
-}
-
-/**
  * Featured game projects — shown on the home page.
  */
 export function getGameProjects(): GameProject[] {
@@ -451,11 +449,24 @@ export function getGameProjects(): GameProject[] {
   );
 }
 
+/** Section order on the /projects archive. */
+export const PROJECT_CATEGORY_ORDER: readonly ProjectCategory[] = [
+  "Quantitative Finance",
+  "Full-Stack & AI Systems",
+  "Simulation & Analytics",
+  "Game Development",
+];
+
 /**
- * All game projects — shown on the full archive page.
+ * Projects grouped by category for the /projects archive, in
+ * `PROJECT_CATEGORY_ORDER`, keeping each project's order in `projects`.
+ * Categories with no projects are skipped.
  */
-export function getAllGameProjects(): GameProject[] {
-  return projects.filter((p): p is GameProject => p.type === "game");
+export function getProjectsByCategory(): { category: ProjectCategory; projects: ProjectItem[] }[] {
+  return PROJECT_CATEGORY_ORDER.map((category) => ({
+    category,
+    projects: projects.filter((p) => p.category === category),
+  })).filter((group) => group.projects.length > 0);
 }
 
 /** Look up a project by its slug. */
