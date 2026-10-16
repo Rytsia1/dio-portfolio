@@ -115,6 +115,25 @@ export default async function ProjectPage({ params }: PageProps) {
             </Reveal>
           )}
 
+          {(project.role || project.team) && (
+            <Reveal delay={0.13}>
+              <dl className="mt-4 flex flex-wrap gap-x-6 gap-y-1 font-mono text-xs text-fg-muted sm:text-sm">
+                {project.role && (
+                  <div className="flex gap-1.5">
+                    <dt className="text-fg-subtle">Role:</dt>
+                    <dd className="font-semibold text-fg">{project.role}</dd>
+                  </div>
+                )}
+                {project.team && (
+                  <div className="flex gap-1.5">
+                    <dt className="text-fg-subtle">Team:</dt>
+                    <dd>{project.team}</dd>
+                  </div>
+                )}
+              </dl>
+            </Reveal>
+          )}
+
           <Reveal delay={0.15}>
             <p className="mt-5 max-w-3xl text-base leading-relaxed text-fg-muted sm:text-lg">
               {project.overview}
@@ -194,6 +213,12 @@ export default async function ProjectPage({ params }: PageProps) {
               title="Overview"
               content={project.overview}
             />
+            {project.contributions && (
+              <CaseStudySection
+                title="My Contributions"
+                content={project.contributions}
+              />
+            )}
             {project.problem && (
               <CaseStudySection title="Problem" content={project.problem} />
             )}

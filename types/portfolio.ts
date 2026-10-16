@@ -35,7 +35,9 @@ export type ProjectCategory =
   | "Game Development"
   | "Mobile Game Development"
   | "Machine Learning"
-  | "Data Science & Fintech";
+  | "Data Science & Fintech"
+  | "Simulation & Analytics"
+  | "AI & Knowledge Graphs";
 
 /** A single screenshot in a project's detail-page gallery. */
 export interface GalleryImage {
@@ -114,6 +116,12 @@ export interface BaseProject {
   lessons?: string;
   /** Optional list of bullet points shown as "Highlights" on the detail page */
   highlights?: string[];
+  /**
+   * Team projects only: the user's own verified contributions, shown as a
+   * "My Contributions" section. Keep it to work traceable to the user
+   * (commits, documented ownership); never attribute teammates' work.
+   */
+  contributions?: string;
 }
 
 /**

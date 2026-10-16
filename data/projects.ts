@@ -141,6 +141,81 @@ export const projects: ProjectItem[] = [
       "Performance-optimized with vectorized NumPy math and data caching.",
     ],
   },
+  // Source: github.com/Rytsia1/Game-Economy-Simulator (README, requirements.txt, module layout). Solo repo.
+  {
+    type: "web",
+    slug: "game-economy-simulator",
+    title: "Game Economy Simulator",
+    tagline: "Vectorized Stochastic Simulation & Auto-Tuning for Virtual Game Economies",
+    shortDescription: "A Streamlit tool that models a game's gold sources, sinks, and player archetypes with vectorized NumPy simulation, then diagnoses, auto-tunes, and stress-tests the economy.",
+    overview: "Game Economy Simulator treats game-economy balancing as a quantitative simulation and optimization problem instead of a spreadsheet exercise. A designer configures gold sources (quests, enemy drops), gold sinks (potions, gear purchases), and a heterogeneous player population, then sees how wealth spreads across player archetypes over time, whether the economy is healthy, inflating, or trapping casual players in poverty, which parameter value approximately hits a target progression milestone, and how the economy behaves under stress scenarios and Monte Carlo variation. Everything runs in a four-tab Streamlit dashboard with no backend, database, or external API calls.",
+    category: "Simulation & Analytics",
+    year: "2026",
+    role: "Software Engineer",
+    team: "Solo Project",
+    tags: ["Python", "Streamlit", "NumPy", "Pandas", "Plotly", "Pytest", "Monte Carlo", "Stochastic Simulation"],
+    githubUrl: "https://github.com/Rytsia1/Game-Economy-Simulator",
+    liveUrl: "https://game-economy-simulator.streamlit.app/",
+    // Screenshots captured from the live Streamlit app with its default inputs (seed 42).
+    coverImage: "/projects/game-economy-simulator/cover.png",
+    gallery: [
+      { src: "/projects/game-economy-simulator/cover.png", alt: "Dashboard & Health", caption: "Economy KPIs, the automated health verdict, and gauges for flow ratio, Gini coefficient, and casual fail rate." },
+      { src: "/projects/game-economy-simulator/screen1.png", alt: "Monte Carlo Risk Lab", caption: "Monte Carlo fan chart of player wealth with median, 50% and 90% confidence bands (default 50 runs)." },
+      { src: "/projects/game-economy-simulator/screen2.png", alt: "Scenario Stress-Test", caption: "Median wealth trajectories across the four economic regimes." }
+    ],
+    featured: false,
+    problem: "Most game economies start life as a spreadsheet, which computes deterministic averages well but hides what matters in play: players don't behave uniformly (a Grinder farms far more than a Casual), drops are random (Poisson quest completions and clipped-Normal enemy drops skew wealth), and pacing depends on a cumulative balance over time rather than a single reward-to-price ratio.",
+    solution: "• Dashboard & Health: run the core engine to see wealth curves, archetype breakdowns, and time-to-afford milestones, alongside automated diagnostics (macro flow ratio, Gini coefficient, casual fail rate) with rule-based alert cards and prescriptions.\n• Scenario Stress-Test: four economic regimes (Normal, Gold Rush, Economic Crisis, Demographic Shock) side by side.\n• Monte Carlo Risk Lab: jitters economy parameters across a configurable number of runs (20–200, default 50) and shows P5–P95 confidence fan charts and empirical risk probabilities.\n• Auto-Tuning Lab: a binary-search solver that finds the parameter value that approximately meets a target milestone day.",
+    architecture: "• Configuration: EconomyConfig, SimulationConfig, and archetype profiles (Casual, Grinder, Collector, Optimizer) in config/.\n• Simulation core: a vectorized (players × days) engine plus a Monte Carlo risk engine in simulation/.\n• Analytics: the diagnostics rule engine and the binary-search auto-tuner in analytics/.\n• Presentation: Plotly chart builders and health-card renderers in visualization/, wired into a four-tab Streamlit app.",
+    implementation: "• Vectorized engine: archetypes are assigned with numpy.random.Generator.choice, and the full players × days activity matrices for quests, enemies, and potions are drawn up front, so the only Python loop runs over days, not players.\n• Diagnostics: the Gini coefficient is computed with a vectorized Lorenz formula on final balances; each check emits a severity-graded alert with a concrete prescription.\n• Auto-tuner: probes run on a smaller population at the midpoint of a search interval, halve the interval on the signed milestone error, and the recommendation is re-validated on the full configured population.\n• Reproducibility: all randomness uses numpy.random.default_rng with a configurable seed.\n• Testing: a Pytest suite of unit and integration tests, plus a CLI validation script.",
+    quantMethodology: "Stochastic model: daily quest completions are Poisson draws and enemy drops are clipped Normal draws, scaled per archetype by quest, enemy, potion, and saving multipliers.\n\nHealth metrics: macro flow ratio (total income / total spending) classifies the economy as Balanced, Inflating, or a Poverty Trap; the Gini coefficient measures wealth inequality; the casual fail rate is the share of Casual players who never reach the target milestone.\n\nAuto-tuning: binary search on one parameter, stopping when the milestone error is within one day or the interval narrows to one gold. It assumes a monotonic parameter-to-milestone relationship, which holds in expectation but not strictly under stochastic noise, so the result is an approximate estimate.\n\nRisk analysis: Monte Carlo parameter jitter across 20–200 configurable runs, summarized as P5–P95 fan charts and empirical risk probabilities.",
+    challenges: "• Keeping interactive parameter sweeps and multi-run Monte Carlo studies responsive in Streamlit, solved by pre-computing the full income tensor instead of looping over every player on every day (trading some memory for speed).\n• Being honest about the auto-tuner: binary search relies on monotonicity that stochastic noise does not guarantee, so results are presented as approximations and re-validated on the full population.",
+    results: "Deployed on Streamlit Community Cloud and open-source on GitHub, with unit and integration tests and a CLI validation script.",
+    highlights: [
+      "Vectorized players × days NumPy simulation engine.",
+      "Economy Doctor diagnostics: flow ratio, Gini coefficient, casual fail rate.",
+      "Binary-search auto-tuner for progression milestones.",
+      "Four-scenario stress test and Monte Carlo P5–P95 fan charts.",
+      "Reproducible runs via seeded numpy.random.default_rng.",
+    ],
+  },
+  // Source: github.com/Aku-Ge-Es-A-Team/churn-graph (docs/PRD.md, package.json, src/). Team project; the
+  // "My Contributions" text only covers Dio's own commits and the PRD's "B = Dio (Backend & AI)" ownership.
+  {
+    type: "web",
+    slug: "churn-graph",
+    title: "Churn Graph",
+    tagline: "Churn Early-Warning Context Graph with Evidence-Cited AI Answers",
+    shortDescription: "A Next.js and Neo4j hackathon app that unifies six customer-data sources into one context graph to rank accounts by churn risk, with clickable evidence paths and AI answers that cite graph records.",
+    overview: "Churn Graph was built by a three-person team at the Road to PENS Hackathon 2026 for a case-study SaaS company whose customer-success team could not tell which accounts would really churn before renewal: the dashboard health score misjudged accounts, and the evidence was scattered and contradictory across six systems (CRM, email and meetings, product usage, support tickets, contracts and billing, and a decision log). The app loads those sources into a single Neo4j context graph, detects risk signals and places where the sources disagree, ranks accounts by risk with clickable evidence, suggests retention actions with precedents from the decision log, and answers ad-hoc questions with citations back to graph records.",
+    category: "AI & Knowledge Graphs",
+    year: "2026",
+    role: "Backend Developer",
+    team: "Hackathon team of 3 (Road to PENS Hackathon 2026)",
+    tags: ["TypeScript", "Next.js", "Neo4j", "Cypher", "Vercel AI SDK", "Google Gemini", "Zod", "Bun"],
+    githubUrl: "https://github.com/Aku-Ge-Es-A-Team/churn-graph",
+    liveUrl: "https://churn-graph.vercel.app/",
+    // Screenshots captured from the live deployment (fictional case-study data, snapshot 1 Oct 2026).
+    coverImage: "/projects/churn-graph/cover.png",
+    gallery: [
+      { src: "/projects/churn-graph/cover.png", alt: "Risk Radar Dashboard", caption: "Most at-risk account, accounts needing attention, revenue at risk, and priority renewals." },
+      { src: "/projects/churn-graph/screen1.png", alt: "Account Risk Breakdown", caption: "Risk score, renewal window, triggered signals with their weights, and the rule checks behind the level." },
+      { src: "/projects/churn-graph/screen2.png", alt: "Evidence Subgraph", caption: "Clickable evidence subgraph linking CRM, email, decision-log, and contract records to the account." }
+    ],
+    featured: false,
+    problem: "The customer-success team relied on a dashboard health score that rated several at-risk accounts as healthy. The signals that explained the risk (a departed champion, a competitor mention, an unkept feature promise, unanswered renewal emails, late payments) lived in separate systems, and some looked negative only out of context, such as a usage drop caused by a sync bug rather than a customer leaving.",
+    solution: "• Context graph: six raw sources reconciled by an ETL pipeline and loaded into Neo4j.\n• Risk signals: Cypher rules for patterns such as a departed champion, broken promises, competitor mentions, unanswered outreach, payment risk, and usage anomalies tied to release bugs.\n• Risk ranking: accounts scored and ranked, with evidence paths and source-versus-source comparison cards.\n• Retention actions: suggested actions that reference precedents in the decision log.\n• Ask Graph (Tanya Graph): natural-language questions answered by an LLM that can only use fixed, parameterised graph tools, with every claim checked against the records it cites.",
+    architecture: "• Next.js App Router application with API routes for questions (/api/ask), evidence, and health checks.\n• Neo4j AuraDB accessed through neo4j-driver read sessions; signal rules and schema written in Cypher.\n• TypeScript ETL scripts (run with Bun) that clean, resolve, derive, and load the raw CSV / JSONL data into the graph.\n• AI layer built on the Vercel AI SDK with Google Gemini and an OpenAI-compatible fallback provider.\n• Frontend dashboard with a React Flow evidence-subgraph viewer, Recharts usage charts, and shadcn/ui components.",
+    contributions: "• Role: Backend Developer. The team's PRD assigns me ownership of Backend & AI, while teammates owned the data-graph / ETL pipeline and the frontend, pitch, and demo. The items below are traceable to my own commits.\n• Backend foundation: integrated the Neo4j driver with a read-session query helper, environment configuration, and a health-check route, plus a Google Gemini connectivity spike.\n• Cypher query guard: a pure validation function that rejects write and other dangerous clauses (matched on word boundaries while ignoring strings and comments), refuses multi-statement queries, and caps LIMIT, layered on top of the driver's read-only sessions; together with Zod schemas for the shared graph types.\n• Citation validator: checks every claim in an AI answer against the registry of records the tools actually returned, discarding any claim whose cited evidence or numbers cannot be matched.\n• Risk scoring and ranking: score = Σ signal weight × a renewal-proximity factor, mapped to risk levels, and flagging accounts the dashboard marks green while the findings rate them high.\n• Initial Ask Graph pipeline: the POST /api/ask route, six fixed parameterised graph tools so the model never writes Cypher, the system prompt, preset questions, and an evaluation script.\n• Testing: each of these shipped with unit tests; several modules were later extended by teammates.",
+    results: "Built during the Road to PENS Hackathon 2026 and deployed on Vercel; the source is public on GitHub.",
+    highlights: [
+      "Six-source customer context graph in Neo4j.",
+      "Cypher risk-signal rules and account risk ranking.",
+      "LLM answers restricted to fixed, parameterised graph tools.",
+      "Citation validator that drops unsupported claims.",
+      "Clickable evidence subgraphs in the dashboard.",
+    ],
+  },
 
   // ─────────────────────────── GAME DEVELOPMENT ───────────────────────────
 
