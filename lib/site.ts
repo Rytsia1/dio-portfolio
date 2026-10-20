@@ -40,7 +40,7 @@ export const siteConfig = {
   name: "Dio Stania Adinata",
   role: "Software Engineer · Quantitative Finance & Computational Systems",
   description:
-    "Portfolio of Dio Stania Adinata — Software Engineer specialising in quantitative finance, computational systems, and full-stack engineering. Explore projects in financial modeling, Monte Carlo simulation, risk analytics, and production software.",
+    "Portfolio of Dio Stania Adinata, a Game Technology student at PENS building quantitative finance tools and backend web systems. Projects in actuarial valuation, portfolio optimization, Monte Carlo simulation, and full-stack development.",
   url: siteUrl,
 } as const;
 

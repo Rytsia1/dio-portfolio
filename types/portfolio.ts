@@ -119,6 +119,8 @@ export interface BaseProject {
   quantMethodology?: string;
   challenges?: string;
   results?: string;
+  /** Known limitations and modelling assumptions, shown after Results. */
+  limitations?: string;
   lessons?: string;
   /** Optional list of bullet points shown as "Highlights" on the detail page */
   highlights?: string[];

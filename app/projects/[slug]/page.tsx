@@ -136,18 +136,8 @@ export default async function ProjectPage({ params }: PageProps) {
 
           <Reveal delay={0.15}>
             <p className="mt-5 max-w-3xl text-base leading-relaxed text-fg-muted sm:text-lg">
-              {project.overview}
+              {project.shortDescription}
             </p>
-          </Reveal>
-
-          <Reveal delay={0.2}>
-            <ul className="mt-8 flex flex-wrap gap-1.5">
-              {project.tags.map((tag) => (
-                <li key={tag}>
-                  <Tag>{tag}</Tag>
-                </li>
-              ))}
-            </ul>
           </Reveal>
 
           <Reveal delay={0.25}>
@@ -251,6 +241,12 @@ export default async function ProjectPage({ params }: PageProps) {
             )}
             {project.results && (
               <CaseStudySection title="Results" content={project.results} />
+            )}
+            {project.limitations && (
+              <CaseStudySection
+                title="Limitations & Assumptions"
+                content={project.limitations}
+              />
             )}
             {project.lessons && (
               <CaseStudySection

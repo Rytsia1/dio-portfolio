@@ -10,9 +10,9 @@ export const profile: Profile = {
   name: "Dio Stania Adinata",
   role: "Software Engineer",
   tagline:
-    "I build software at the intersection of engineering, quantitative finance, and data-intensive systems.",
+    "Final-year Game Technology student at PENS building quantitative tools and backend web systems.",
   shortBio:
-    "Software Engineer with a foundation in game technology and a growing focus on quantitative computing, financial systems, and full-stack engineering. Built quantitative finance tools implementing Modern Portfolio Theory and Monte Carlo risk analytics. Delivered production full-stack systems in Java and Python during an international software internship. National finalist placements in competitive programming events.",
+    "D4 Game Technology student at PENS (graduating 2027) with a growing focus on quantitative computing and backend / full-stack engineering. Built quantitative finance tools implementing Modern Portfolio Theory, Monte Carlo simulation, and actuarial valuation. Completed a Software Engineering exchange semester at SDUST, China.",
   // Based in Indonesia.
   location: "Indonesia",
   email: "mailto:dioadinata520@gmail.com",

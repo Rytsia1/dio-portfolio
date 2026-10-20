@@ -19,8 +19,14 @@ export function ContactFloor() {
                 You&apos;ve seen what I build. Let&apos;s build something together.
               </p>
               <p className="mt-1 font-mono text-xs leading-relaxed text-fg-subtle">
-                Surabaya, Indonesia · Available for Quantitative Systems &amp; Software Engineering (Remote / Hybrid)
+                Surabaya, Indonesia · Open to Quantitative Developer &amp; Software Engineering internships or junior roles (Remote / Hybrid)
               </p>
+              <a
+                href={profile.email}
+                className="mt-2 inline-block break-all rounded-sm font-mono text-sm font-semibold text-fg underline decoration-border-strong underline-offset-4 transition-colors duration-200 hover:text-accent hover:decoration-accent"
+              >
+                {profile.emailDisplay}
+              </a>
             </div>
           </div>
 
@@ -62,8 +68,7 @@ export function ContactFloor() {
             </div>
 
             <div className="h-5 w-px bg-border" />
-            <CopyEmailButton email={profile.emailDisplay} />
-          </div>
+            <CopyEmailButton email={profile.emailDisplay} />          </div>
         </div>
       </Container>
     </div>

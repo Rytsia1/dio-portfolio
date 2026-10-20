@@ -7,6 +7,11 @@ type Size = "sm" | "md" | "lg";
 type ButtonOwnProps = {
   variant?: Variant;
   size?: Size;
+  /**
+   * "span" renders the same styles without an <a>: a visual-only button
+   * for use inside a card that is already a link (no nested anchors).
+   */
+  as?: "a" | "span";
   children: ReactNode;
   className?: string;
   /**
@@ -51,6 +56,7 @@ type ButtonProps = ButtonOwnProps &
 export function Button({
   variant = "primary",
   size = "md",
+  as = "a",
   className,
   children,
   ...rest
@@ -104,11 +110,19 @@ export function Button({
     lg: "h-12 px-5 text-sm sm:text-base",
   };
 
+  const classes = cn(base, variants[variant], sizes[size], className);
+
+  if (as === "span") {
+    // Visual only: the enclosing card link handles navigation.
+    return (
+      <span aria-hidden={rest["aria-hidden"]} className={classes}>
+        {children}
+      </span>
+    );
+  }
+
   return (
-    <a
-      {...rest}
-      className={cn(base, variants[variant], sizes[size], className)}
-    >
+    <a {...rest} className={classes}>
       {children}
     </a>
   );
