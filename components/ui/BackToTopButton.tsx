@@ -18,9 +18,9 @@ export function BackToTopButton({ className }: { className?: string }) {
       onClick={() => window.scrollTo({ top: 0 })}
       className={className}
     >
-      <span>TOP</span>
+      <span>Back to top</span>
       <ArrowUp
-        className="h-3.5 w-3.5 transition-transform duration-200 group-hover:-translate-y-0.5"
+        className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5"
         aria-hidden
       />
     </button>

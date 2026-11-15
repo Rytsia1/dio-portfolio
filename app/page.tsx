@@ -1,13 +1,15 @@
-import { Board1 } from "@/components/boards/Board1";
-import { Board2 } from "@/components/boards/Board2";
-import { Board3 } from "@/components/boards/Board3";
-import { ContactFloor } from "@/components/boards/ContactFloor";
+import { Hero } from "@/components/sections/Hero";
+import { Work } from "@/components/sections/Work";
+import { Story } from "@/components/sections/Story";
+import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/layout/Footer";
-
+import { profile } from "@/data/profile";
 import { siteConfig } from "@/lib/site";
 
 export const metadata = {
-  title: `${siteConfig.name} | ${siteConfig.role}`,
+  // Short role in the tab so the title survives truncation. The full role
+  // stays in the Open Graph and Twitter titles below.
+  title: { absolute: `${siteConfig.name} | ${profile.role}` },
   description: siteConfig.description,
   alternates: { canonical: "/" },
   openGraph: {
@@ -25,25 +27,23 @@ export const metadata = {
 };
 
 /**
- * Single-page home. Section order walks the visitor through the
- * career narrative using the "Columns, not bands" architectural pattern:
+ * Single-page home, in the order a recruiter reads it:
  *
- *   Board 1 -> Identity & Quick Links
- *   Board 2 -> Current Work (Dense 2-column)
- *   Board 3 -> How I got here (Origin story & Stack)
- *   Contact floor -> pinned onto the footer's grass edge
+ *   Hero    -> who this is, and the areas of practice
+ *   Work    -> the flagship project and two supporting ones
+ *   Story   -> background, stack, experience, recognition
+ *   Contact -> the one card that sits on the footer's grass
  *
- * Game projects live in the /projects archive (linked from Board 2).
+ * Every other project lives in the /projects archive (linked from Work).
  */
 export default function Home() {
   return (
     <>
-      <Board1 />
-      <Board2 />
-      <Board3 />
-      <ContactFloor />
-      {/* Footer merges with the ground under the contact floor */}
-      <Footer />
+      <Hero />
+      <Work />
+      <Story />
+      <Contact />
+      <Footer overlap />
     </>
   );
 }

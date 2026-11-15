@@ -4,8 +4,7 @@
  *
  * Runs the same sanity checks the old Windows batch file performed:
  *   1. Leftover-artifact check  (was: if exist ...)
- *   2. globals.css grid classes (was: findstr /C:".bg-grid" "app\globals.css" ...)
- *   3. Project detail page hover classes (was: findstr /C:"hover:bg-surface-..." ...)
+ *   2. Project detail page hover classes (was: findstr /C:"hover:bg-surface-..." ...)
  *
  * Content checks are hard failures (exit code 1) so CI pipelines catch
  * regressions. Leftover-artifact checks are warnings only, since those
@@ -81,16 +80,7 @@ for (const name of ['_verify.bat', 'install-deps.bat', 'install-deps.log', 'nul'
   }
 }
 
-// 2. globals.css grid classes (was: findstr /C:".bg-grid" "app\globals.css" ...)
-console.log('\n=== globals.css grid check ===');
-expectContent(join('app', 'globals.css'), '.bg-grid', {
-  description: '.bg-grid class: FOUND',
-});
-expectContent(join('app', 'globals.css'), '.bg-pixel-grid', {
-  description: '.bg-pixel-grid class: FOUND',
-});
-
-// 3. Project detail page hover classes (was: findstr /C:"hover:bg-surface-..." ...)
+// 2. Project detail page hover classes (was: findstr /C:"hover:bg-surface-..." ...)
 console.log('\n=== project detail page hover check ===');
 const detailPage = join('app', 'projects', '[slug]', 'page.tsx');
 expectContent(detailPage, 'hover:bg-surface-soft', {
@@ -101,7 +91,7 @@ expectContent(detailPage, 'hover:bg-surface-hover', {
   description: 'still uses bg-surface-hover: NO',
 });
 
-// 4. Project data integrity. Regex over the TS source (no TS loader needed);
+// 3. Project data integrity. Regex over the TS source (no TS loader needed);
 // matches `slug: "…"`, `coverImage: "/…"` and gallery `src: "/…"` literals.
 console.log('\n=== project data check ===');
 const projectsSrc = readProjectFile(join('data', 'projects.ts'));

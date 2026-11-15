@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
-import { CloudBackground } from "@/components/layout/CloudBackground";
+import { profile } from "@/data/profile";
 import { siteConfig } from "@/lib/site";
 import "./globals.css";
 
@@ -23,8 +23,8 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — ${siteConfig.role}`,
-    template: `%s — ${siteConfig.name}`,
+    default: `${siteConfig.name} | ${profile.role}`,
+    template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
   keywords: [
@@ -46,13 +46,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
-    title: `${siteConfig.name} — ${siteConfig.role}`,
+    title: `${siteConfig.name} | ${siteConfig.role}`,
     description: siteConfig.description,
     siteName: siteConfig.name,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} — ${siteConfig.role}`,
+    title: `${siteConfig.name} | ${siteConfig.role}`,
     description: siteConfig.description,
   },
   robots: {
@@ -62,8 +62,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#dceeff",
-  colorScheme: "light",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#dceeff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0c1626" },
+  ],
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -73,17 +76,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-scroll-behavior="smooth"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-bg text-fg">
-        {/* Fixed persistent ambient pixel cloud atmosphere */}
-        <CloudBackground />
+      <body className="flex min-h-full flex-col text-fg">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-accent focus:px-3 focus:py-2 focus:text-sm focus:font-medium focus:text-white"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-sm focus:bg-accent-fill focus:px-3 focus:py-2 focus:text-sm focus:font-medium focus:text-on-accent"
         >
           Skip to content
         </a>
         <Navbar />
-        <main id="main" className="relative z-10 flex flex-col">
+        <main id="main" className="flex flex-1 flex-col">
           {children}
         </main>
       </body>

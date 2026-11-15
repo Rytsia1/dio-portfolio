@@ -1,17 +1,10 @@
 @import "tailwindcss";
 
 /*
- * Design tokens — light, editorial, sky-blue + warm orange.
- *
- * Visual direction:
- *   - Soft sky-blue background.
- *   - White content cards.
- *   - Dark navy text.
- *   - Warm orange accent for important words and CTAs.
- *   - Pixel-art decorations sparingly used as visual punctuation.
- *
- * Tokens are exposed via Tailwind v4's `@theme inline` so they can be
- * used as classes like `bg-bg`, `text-fg`, `border-border`, etc.
+ * Design tokens: day sky by default, night sky under prefers-color-scheme.
+ * Names and values mirror the Dio Portfolio design system. Everything is
+ * exposed through `@theme inline`, so classes like `bg-bg`, `text-fg` and
+ * `border-border` follow the theme without `dark:` variants.
  */
 :root {
   --bg: #dceeff;
@@ -22,20 +15,54 @@
   --border-strong: #bbd2e5;
   --fg: #0f1b2d;
   --fg-muted: #4a5a6e;
-  --fg-subtle: #5b6b80; /* ≥4.5:1 on white, surface-soft, and the sky bg */
-  --accent: #c2410c;
+  --fg-subtle: #5b6b80; /* lowest text step, still 4.5:1 on bg and surface */
+  --accent: #c2410c; /* on surface only; use accent-strong on the sky */
   --accent-strong: #9a3412;
   --accent-soft: #ffede3;
+  --accent-fill: #c2410c; /* primary button, same in both themes */
+  --accent-fill-hover: #9a3412;
+  --on-accent: #ffffff;
+  --panel: #0a121e; /* the dark flagship card, dark in both themes */
+  --panel-fg: #ffffff;
+  --panel-muted: #c8e2f5;
+  --panel-subtle: #9ec5e6;
+  --panel-accent: #ff8a4c;
+  --panel-border: #243247;
+  --cloud: #ffffff;
+  --cloud-shade: #9ec5e6;
+  --grass: #6cc04a;
   --earth: #5a3a22;
   --earth-deep: #3d2616;
-  --grass: #6cc04a;
   --ring: #c2410c;
+  --shadow-soft: 0 2px 8px -2px rgba(15, 27, 45, 0.06);
   --shadow-card: 0 8px 24px -12px rgba(15, 27, 45, 0.12);
   --shadow-card-hover: 0 18px 40px -18px rgba(15, 27, 45, 0.24);
-  --shadow-soft: 0 2px 8px -2px rgba(15, 27, 45, 0.06);
-  --cloud: #ffffff;
-  --sky-1: #dceeff;
-  --sky-2: #c8e2f5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0c1626;
+    --bg-deep: #091120;
+    --surface: #14233a;
+    --surface-soft: #1a2c47;
+    --border: #26395a;
+    --border-strong: #3f5d8c;
+    --fg: #e8f1fb;
+    --fg-muted: #a9bad0;
+    --fg-subtle: #8da0b8;
+    --accent: #ff8a4c;
+    --accent-strong: #ffb08a;
+    --accent-soft: #3a2012;
+    --panel: #060c15;
+    --cloud: #2a3d5c;
+    --cloud-shade: #1b2a44;
+    --grass: #4f9a34;
+    --earth: #3d2616;
+    --earth-deep: #2a1a0f;
+    --ring: #ff8a4c;
+    --shadow-card: 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+    --shadow-card-hover: 0 18px 40px -18px rgba(0, 0, 0, 0.7);
+  }
 }
 
 @theme inline {
@@ -51,60 +78,66 @@
   --color-accent: var(--accent);
   --color-accent-strong: var(--accent-strong);
   --color-accent-soft: var(--accent-soft);
+  --color-accent-fill: var(--accent-fill);
+  --color-accent-fill-hover: var(--accent-fill-hover);
+  --color-on-accent: var(--on-accent);
+  --color-panel: var(--panel);
+  --color-panel-fg: var(--panel-fg);
+  --color-panel-muted: var(--panel-muted);
+  --color-panel-subtle: var(--panel-subtle);
+  --color-panel-accent: var(--panel-accent);
+  --color-panel-border: var(--panel-border);
   --color-earth: var(--earth);
   --color-earth-deep: var(--earth-deep);
   --color-grass: var(--grass);
-  /* Focus-ring offset colour — bound to the page background so the
-   * keyboard focus ring stays visible against any surface. Used by
-   * `ring-offset-ring-offset` in component Tailwind classes. */
-  --color-ring-offset: var(--bg);
-  /* Shape lock: cards = rounded-card, buttons/pills/badges = rounded-full. */
+  /* Shape lock: containers are rounded-card, anything nested 12px inside a
+   * card is rounded-sm (20 - 12 = 8), everything interactive is rounded-full. */
   --radius-card: 20px;
+  --radius-sm: 8px;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-/* Base reset / setup. Must live in the base layer: unlayered rules beat
- * every Tailwind utility, which silently cancelled border-* and text-*
- * classes on links. */
+/* Must live in the base layer: unlayered rules beat every Tailwind utility. */
 @layer base {
-* {
-  border-color: var(--border);
-}
+  * {
+    border-color: var(--border);
+  }
 
-html {
-  background-color: var(--bg);
-  color-scheme: light;
-  scroll-behavior: smooth;
-  /* Account for the sticky navbar when jumping to in-page anchors. */
-  scroll-padding-top: 5rem;
-}
+  html {
+    background-color: var(--bg);
+    color-scheme: light dark;
+    scroll-behavior: smooth;
+    /* Clear the sticky navbar when jumping to in-page anchors. */
+    scroll-padding-top: 6rem;
+  }
 
-body {
-  background-color: var(--bg);
-  color: var(--fg);
-  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-  font-feature-settings: "ss01", "cv11";
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
+  body {
+    /* The sky, deepening toward the ground at the bottom of the page. */
+    background: linear-gradient(180deg, var(--bg) 0%, var(--bg) 72%, var(--bg-deep) 100%);
+    color: var(--fg);
+    font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
+      "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 
-:where(a, button, [role="button"], input, textarea, select):focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 3px;
-}
+  :where(a, button, [role="button"], input, textarea, select):focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
 
-::selection {
-  background: var(--accent-soft);
-  color: var(--fg);
-}
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--fg);
+  }
 }
 
 /* Honor reduced-motion users globally. */
@@ -119,81 +152,54 @@ a {
   }
 }
 
-/* Editorial helpers */
-.text-balance {
-  text-wrap: balance;
-}
-
-.text-pretty {
-  text-wrap: pretty;
-}
-
-.headline-display {
-  font-size: clamp(2.75rem, 6vw + 1rem, 5.5rem);
+/* Type styles from the design system. */
+@utility type-display {
+  font-size: clamp(2.625rem, 3vw + 1.875rem, 4rem);
   line-height: 0.98;
   letter-spacing: -0.035em;
   font-weight: 800;
 }
 
-.headline-section {
-  font-size: clamp(2rem, 3.5vw + 0.5rem, 3.25rem);
+@utility type-section {
+  font-size: clamp(1.875rem, 2vw + 1.375rem, 2.5rem);
   line-height: 1.05;
   letter-spacing: -0.025em;
   font-weight: 700;
 }
 
-.eyebrow {
-  font-family: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  color: var(--accent);
+@utility type-card {
+  font-size: 1.75rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+@utility type-item {
+  font-size: 1.25rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
   font-weight: 600;
 }
 
-/* Soft pixel-grid backdrop used in select sections. */
-.bg-pixel-grid {
-  background-image:
-    linear-gradient(to right, rgba(15, 27, 45, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(15, 27, 45, 0.05) 1px, transparent 1px);
-  background-size: 24px 24px;
+/* Mono is for data: measured numbers, dates, stack lists, the email address. */
+@utility type-data {
+  font-family: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
 }
 
-/* Coarser editorial grid backdrop used by the 404 and project-detail
- * hero sections. Slightly larger cells + lower contrast so it reads as a
- * quiet surface pattern rather than a pixel grid. */
-.bg-grid {
-  background-image:
-    linear-gradient(to right, rgba(15, 27, 45, 0.045) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(15, 27, 45, 0.045) 1px, transparent 1px);
-  background-size: 32px 32px;
+/* Uppercase mono label. Rationed: a real category on a real item. */
+@utility type-label {
+  font-family: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
-/* Soft sky gradient used at the top of the page. */
-.bg-sky-fade {
-  background: linear-gradient(
-    180deg,
-    var(--sky-1) 0%,
-    var(--sky-1) 60%,
-    var(--sky-2) 100%
-  );
-}
-
-/* Soft cloud wash used at the bottom of the page before the earth footer. */
-.bg-clouds {
-  background: radial-gradient(
-      ellipse 60% 30% at 25% 30%,
-      rgba(255, 255, 255, 0.85) 0%,
-      rgba(255, 255, 255, 0) 70%
-    ),
-    radial-gradient(
-      ellipse 50% 25% at 75% 60%,
-      rgba(255, 255, 255, 0.7) 0%,
-      rgba(255, 255, 255, 0) 70%
-    );
-}
-
-/* Card shadow utility used by white cards. */
 .card-shadow {
   box-shadow: var(--shadow-card);
 }
@@ -202,56 +208,81 @@ a {
   box-shadow: var(--shadow-soft);
 }
 
-/* Interactive card (whole card is a link): lift on hover, press on active. */
+/* A card that is a link: lift on hover, press on active. */
 .card-link {
   transition:
     transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card-link:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-card-hover);
-  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
 }
 
 .card-link:active {
   transform: translateY(0) scale(0.995);
 }
 
-/* Ambient pixel cloud floating / drifting keyframes */
-@keyframes cloud-drift-slow {
-  0%, 100% {
-    transform: translate3d(0, 0, 0);
+/* Loading placeholder. Blocks are shaped like the content they stand in for. */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--border);
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--surface) 70%, transparent),
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: skeleton-shimmer 1.6s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+  to {
+    transform: translateX(100%);
   }
+}
+
+/* Confirmation tick on the copy button. */
+.animate-pop {
+  animation: pop 250ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+}
+
+/* Pixel cloud drift, used in the hero and on the 404 page. */
+@keyframes cloud-drift-slow {
   50% {
     transform: translate3d(24px, -6px, 0);
   }
 }
 
 @keyframes cloud-drift-medium {
-  0%, 100% {
-    transform: translate3d(0, 0, 0);
-  }
   50% {
     transform: translate3d(-20px, 5px, 0);
   }
 }
 
 @keyframes cloud-drift-fast {
-  0%, 100% {
-    transform: translate3d(0, 0, 0);
-  }
   50% {
     transform: translate3d(16px, -8px, 0);
   }
 }
 
 @keyframes cloud-drift-reverse {
-  0%, 100% {
-    transform: translate3d(0, 0, 0);
-  }
   50% {
     transform: translate3d(-18px, -5px, 0);
   }

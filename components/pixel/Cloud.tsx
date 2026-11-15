@@ -118,8 +118,8 @@ export function Cloud({
       }}
     >
       {/* Defined shadow tone with high contrast against the sky background */}
-      <path d={shadow} fill="#9ec5e6" />
-      <path d={body}   fill="#ffffff" />
+      <path d={shadow} fill="var(--cloud-shade)" />
+      <path d={body}   fill="var(--cloud)" />
     </svg>
   );
 }

@@ -107,25 +107,25 @@ export function ImageGallery({ items, pixelated = false }: ImageGalleryProps) {
                 lastTriggerRef.current = event.currentTarget;
                 setActiveIndex(index);
               }}
-              aria-label={`${item.alt} — open full-size preview`}
-              className="group block w-full overflow-hidden rounded-xl border border-slate-200 bg-surface text-left shadow-sm transition-all hover:border-accent hover:shadow-md"
+              aria-label={`${item.alt}: open full-size preview`}
+              className="card-link block h-full w-full cursor-pointer rounded-card border border-border bg-surface p-3 text-left card-shadow"
             >
-              <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
+              <div className="relative aspect-video w-full overflow-hidden rounded-sm bg-bg-deep">
                 <Image
                   src={item.src}
                   alt={item.alt || "Project screenshot"}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="object-cover"
                   style={pixelated ? { imageRendering: "pixelated" } : undefined}
                 />
               </div>
-              <div className="border-t border-slate-200 px-3.5 py-2.5">
-                <span className="block text-sm font-medium text-fg">
+              <div className="px-3 pb-2 pt-4">
+                <span className="block text-[15px] font-semibold text-fg">
                   {item.alt}
                 </span>
                 {item.caption && (
-                  <span className="mt-0.5 block text-xs leading-relaxed text-fg-subtle">
+                  <span className="mt-1 block text-sm leading-[1.55] text-fg-muted">
                     {item.caption}
                   </span>
                 )}
@@ -140,7 +140,7 @@ export function ImageGallery({ items, pixelated = false }: ImageGalleryProps) {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label={`${active.alt} — full-size preview`}
+          aria-label={`${active.alt}: full-size preview`}
           className="fixed inset-0 z-[90] flex items-center justify-center bg-fg/80 p-4 backdrop-blur-sm sm:p-8"
           onClick={close}
         >
@@ -149,7 +149,7 @@ export function ImageGallery({ items, pixelated = false }: ImageGalleryProps) {
             className="relative flex h-[80vh] w-full max-w-5xl flex-col"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="relative min-h-0 flex-1 overflow-hidden rounded-2xl border border-white/15">
+            <div className="relative min-h-0 flex-1 overflow-hidden rounded-card border border-white/15">
               <Image
                 key={active.src}
                 src={active.src}
@@ -172,7 +172,7 @@ export function ImageGallery({ items, pixelated = false }: ImageGalleryProps) {
                   </p>
                 )}
               </div>
-              <p className="shrink-0 font-mono text-xs text-white/60">
+              <p className="shrink-0 font-mono text-xs tabular-nums text-white/70">
                 {(activeIndex ?? 0) + 1} / {items.length}
               </p>
             </div>
